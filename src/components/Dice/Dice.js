@@ -1,36 +1,41 @@
 import React, { useState } from 'react';
 import DiceStyled from './Dice.styled';
+import DiceRow from './DiceRow';
 
 const Dice = () => {
     const range = Array.from(Array(9), (_, i) => ++i);
     const multipliers = range.map(i => <button key={i} data-key={i}>{i}</button>);
+    const [k4results, setK4results] = useState(<span></span>);
     const [k6results, setK6results] = useState(<span></span>);
-
-    const multiplierClickHandler = e => {
-        if (e.target.dataset.key) {
-            let results = [];
-            for (let i = 0; i < e.target.dataset.key; i++) {
-                results.push(Math.floor(Math.random() * 6) + 1);
-            }
-            results = results.map((el, i) => <span key={i}>{el}</span>);
-            setK6results(results);
-        }
-    }
+    const [k10results, setK10results] = useState(<span></span>);
+    const [k100results, setK100results] = useState(<span></span>);
 
     return (
         <DiceStyled>
-            <div className="dice__row">
-                <div className="dice__value">K6</div>
-                <div className='dice__multipliers' onClick={multiplierClickHandler}>
-                    {multipliers}
-                </div>
-                <div className="dice__display">
-                    { k6results.length ? 'Results:' : ''}
-                    <div className="dice__results">
-                        {k6results}
-                    </div>
-                </div>
-            </div>
+            <DiceRow value={4}
+                multipliers={multipliers}
+                results={k4results}
+                resultOffset={1}
+                setResultsFunction={setK4results}
+            />
+            <DiceRow value={6} 
+                multipliers={multipliers} 
+                results={k6results} 
+                resultOffset={1}
+                setResultsFunction={setK6results}
+            />
+            <DiceRow value={10}
+                multipliers={multipliers}
+                results={k10results}
+                resultOffset={0}
+                setResultsFunction={setK10results}
+            />
+            <DiceRow value={100}
+                multipliers={multipliers}
+                results={k100results}
+                resultOffset={0}
+                setResultsFunction={setK100results}
+            />
         </DiceStyled>
     )
 }

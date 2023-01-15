@@ -4,14 +4,18 @@ const DiceStyled = styled.main`
     padding: 24px 48px;
     .dice {
         &__row {
+            border-bottom: 1px solid #ccc;
             display: flex;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
         }
 
         &__multipliers {
             display: flex;
             flex-wrap: wrap;
             height: 90px;
-            width: 90px;
+            max-width: 90px;
+            min-width: 90px;
             button {
                 background-color: #16a0ce;
                 border: 0;
@@ -34,7 +38,7 @@ const DiceStyled = styled.main`
         }
         &__value {
             font-size: 48px;
-            width: 140px;
+            min-width: 140px;
             justify-content: flex-start;
         }
         &__display {
