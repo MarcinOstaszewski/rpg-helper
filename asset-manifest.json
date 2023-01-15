@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/rpg-helper/static/css/main.469a2960.css",
+    "main.js": "/rpg-helper/static/js/main.85ba5824.js",
+    "index.html": "/rpg-helper/index.html",
+    "main.469a2960.css.map": "/rpg-helper/static/css/main.469a2960.css.map",
+    "main.85ba5824.js.map": "/rpg-helper/static/js/main.85ba5824.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.469a2960.css",
+    "static/js/main.85ba5824.js"
+  ]
+}
