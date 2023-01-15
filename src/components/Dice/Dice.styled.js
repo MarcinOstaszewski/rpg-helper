@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const DiceStyled = styled.main`
-    padding: 24px 48px;
+    padding: 24px 0 24px 48px;
     .dice {
         &__row {
             border-bottom: 1px solid #ccc;
