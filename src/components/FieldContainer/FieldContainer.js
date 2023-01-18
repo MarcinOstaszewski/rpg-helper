@@ -1,4 +1,5 @@
 import React from 'react';
+import Canvas from '../Canvas/Canvas';
 import RandomizeButton from '../RandomizeButton/RandomizeButton';
 import FieldContainerStyled from './FieldContainer.styled';
 
@@ -12,7 +13,9 @@ const FieldContainer = () => {
           </div>
           <div className="field__container--middle">
               <div className="field__size-input">size-input</div>
-              <div className="field__display-canvas">canvas</div>
+              <div className="field__display-canvas">
+                <Canvas  />
+              </div>
               <div className="field__range-selector">range</div>
           </div>
           <div className="field__container--right">

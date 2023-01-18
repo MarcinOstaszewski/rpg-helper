@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 
 const FieldContainerStyled = styled.main`
     padding: 24px 48px;
-    border: 1px solid blue;
     display: flex;
     .field {
         &--left,
