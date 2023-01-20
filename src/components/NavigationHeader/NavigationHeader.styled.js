@@ -5,7 +5,7 @@ const NavigationHeaderStyled = styled.header`
     nav {
         ul {
             border-left: 1px solid black;
-            margin-left: 48px;
+            margin-left: 24px;
             padding: 12px 0;
             display: flex;
             justify-content: flex-start;

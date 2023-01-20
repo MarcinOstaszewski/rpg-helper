@@ -2,23 +2,23 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import NavigationHeaderStyled from './NavigationHeader.styled';
 
-const NavigationHeader = () => {
+const NavigationHeader = props => {
   return (
     <NavigationHeaderStyled>
         <nav>
             <ul>
                 <li>
-                    <NavLink className={navData => navData.isActive ? 'active' : ''}to='/dice'>
+                    <NavLink className={navData => navData.isActive ? 'active' : ''}to={`${props.pageRoot}dice`}>
                         Dice
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink className={navData => navData.isActive ? 'active' : ''} to='/field'>
+                    <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}field`}>
                         Field
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink className={navData => navData.isActive ? 'active' : ''} to='/direction'>
+                    <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}direction`}>
                         Direction
                     </NavLink>
                 </li>

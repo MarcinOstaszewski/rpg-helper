@@ -4,12 +4,13 @@ import { Dice, NavigationHeader } from './components';
 import Field from './pages/Field/Field';
 
 function App() {
+  const pageRoot = '/rpg-helper/'
   return (
     <div className="App">
-      <NavigationHeader />
+      <NavigationHeader pageRoot={pageRoot} />
       <Routes>
-        <Route path='/dice' element={<Dice />} />
-        <Route path='/field' element={<Field />} />
+        <Route path={`${pageRoot}dice`} element={<Dice />} />
+        <Route path={`${pageRoot}field`} element={<Field />} />
         {/* <Route path='/direction' element={<Direction />} /> */}
       </Routes>
     </div>
