@@ -6,9 +6,13 @@ const Canvas = props => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#f8f8f8';
-        ctx.fillRect(0,0, ctx.canvas.width, ctx.canvas.height);
-    }, [])
+        drawLines(ctx, props);
+    }, []);
+
+    const drawLines = (ctx, props) => {
+        ctx.fillStyle = '#f4f4f4';
+        ctx.fillRect(0, 0, props.width, props.height);
+    }
 
     return (
         <canvas ref={canvasRef} {...props} />
