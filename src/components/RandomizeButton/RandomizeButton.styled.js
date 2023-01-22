@@ -6,8 +6,8 @@ const RandomizeButtonStyled = styled.button`
     border-radius: 4px;
     padding: 0;
     margin: 0;
-    height: 80px;
-    width: 80px;
+    height: 64px;
+    width: 64px;
 `
 
 export default RandomizeButtonStyled;
