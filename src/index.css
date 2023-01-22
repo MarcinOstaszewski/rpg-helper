@@ -1,4 +1,5 @@
-body, ul, li, nav, div {
+body, ul, li, nav, div, input {
+  border: 0;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -16,4 +17,19 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
