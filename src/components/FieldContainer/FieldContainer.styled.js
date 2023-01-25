@@ -17,6 +17,7 @@ const FieldContainerStyled = styled.main`
         &--left,
         &--right {
             justify-content: space-between;
+            width: 64px;
         }
 
         &__size-input,
@@ -27,19 +28,10 @@ const FieldContainerStyled = styled.main`
             min-height: 64px;
         }
         &__size-input {
-            justify-content: space-around;
-
-            input {
-                font-size: 16px;
-                font-weight: bold;
-                height: 64px;
-                border-bottom: 1px solid black;
-                background-color: #f9f9f9;
-                width: 64px;
-                text-align: center;
-            }
+            justify-content: space-evenly;
         }
-        &__display-canvas {
+        &__display-canvas,
+        &__sets {
             padding: 12px;
         }
         &__range-selector {
