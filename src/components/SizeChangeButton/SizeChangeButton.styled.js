@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const SizeChangeButtonStyled = styled.button`
-    background-color: #f3f3f3;
+    background-color: #e6e6e6;
     border-radius: 6px;
     min-height: ${props => props.maxSize}px;
     min-width: ${props => props.maxSize}px;

@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import Canvas from '../Canvas/Canvas';
 import RandomizeButton from '../RandomizeButton/RandomizeButton';
+import RandomValuesDisplay from '../RandomValuesDisplay/RandomValuesDisplay';
 import SizeInput from '../SizeInput/SizeInput';
 import FieldContainerStyled from './FieldContainer.styled';
 
 const FieldContainer = () => {
-    const [verticalLines, setVerticalLines] = useState(3);
-    const [horizontalLines, setHorizontalLines] = useState(3);
+    const [verticalLines, setVerticalLines] = useState(30);
+    const [horizontalLines, setHorizontalLines] = useState(30);
+    const [randomHori, setRandomHori] = useState(-1);
+    const [randomVert, setRandomVert] = useState(-1);
+
     let maxSize = 60;
 
     const handleSizeChange = e => {
@@ -27,12 +31,30 @@ const FieldContainer = () => {
         } else {
             setVerticalLines(newValue > 0 ? newValue : 1);
         }
+        setRandomHori(-1);
+        setRandomVert(-1);
     }
+
+    const handleRandomizeButtonClick = () => {
+        setRandomHori(Math.floor(Math.random() * horizontalLines));
+        setRandomVert(Math.floor(Math.random() * verticalLines));
+    }
+
+    const randomDisplay = (
+        randomHori >= -1 
+            ? <RandomValuesDisplay
+                randomHori={randomHori}
+                randomVert={randomVert}
+                maxSize={maxSize} />
+            : ''
+    );
 
     return (
         <FieldContainerStyled>
             <div className="field__container--left">
-                <RandomizeButton maxSize={maxSize} />
+                <RandomizeButton 
+                    maxSize={maxSize} 
+                    onClick={handleRandomizeButtonClick}/>
                 <div className="field__size-input flex-column">
                     <SizeInput
                         handleSizeChange={handleSizeChange}
@@ -47,6 +69,7 @@ const FieldContainer = () => {
             </div>
             <div className="field__container--middle">
                 <div className="field__size-input">
+                    {randomDisplay}
                     <SizeInput 
                         handleSizeChange={handleSizeChange}
                         value={verticalLines}
@@ -61,6 +84,8 @@ const FieldContainer = () => {
                         height={window.innerHeight - 240}
                         verticalLines={verticalLines}
                         horizontalLines={horizontalLines}
+                        randomHori={randomHori}
+                        randomVert={randomVert}
                     />
                 </div>
                 <div className="field__range-selector">range</div>

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const RandomizeButtonStyled = styled.button`
-    background-color: #ddd;
+    background-color: #ccc;
     border: 0;
     border-radius: 4px;
     padding: 0;

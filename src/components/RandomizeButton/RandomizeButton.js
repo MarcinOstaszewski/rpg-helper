@@ -4,7 +4,10 @@ import RandomizeButtonStyled from './RandomizeButton.styled';
 
 const RandomizeButton = props => {
     return (
-        <RandomizeButtonStyled maxSize={props.maxSize}>
+        <RandomizeButtonStyled 
+            maxSize={props.maxSize}
+            onClick={props.onClick}
+        >
             <RepeatIcon />
         </RandomizeButtonStyled>
     )
