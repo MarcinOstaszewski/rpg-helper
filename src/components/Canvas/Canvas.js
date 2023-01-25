@@ -8,6 +8,9 @@ const Canvas = props => {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         drawLines(ctx, props);
+        if (props.randomHori >= -1) {
+            paintField(ctx, props);
+        }
     }, [props]);
 
     const drawLines = (ctx, props) => {
@@ -27,6 +30,15 @@ const Canvas = props => {
             ctx.lineTo(xPos, props.height);
         }
         ctx.stroke();
+    }
+
+    const paintField = (ctx, props) => {
+        const fieldWidth = props.width / props.verticalLines;
+        const fieldHeight = props.height / props.horizontalLines;
+        const rectStartX = fieldWidth * props.randomVert;
+        const rectStartY = fieldHeight * props.randomHori;
+        ctx.fillStyle = '#dd2222';
+        ctx.fillRect(rectStartX, rectStartY, fieldWidth, fieldHeight);
     }
 
     return (

@@ -13,7 +13,7 @@ const RandomValuesDisplay = props => {
     ;
 
     return (
-        <RandomValuesDisplayStyled>
+        <RandomValuesDisplayStyled maxSize={props.maxSize}>
             {display}  
         </RandomValuesDisplayStyled>
     )

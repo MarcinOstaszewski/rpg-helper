@@ -13,9 +13,7 @@ const DiceRow = (props) => {
         }
     }    
     if (isResults) {
-        console.log(props.results);
         resultsSum = props.results.reduce((sum, val) => {
-            console.log(parseInt(sum), parseInt(val));
             return sum + val;
         }, 0);
     }
