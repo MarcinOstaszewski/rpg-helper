@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const DiceStyled = styled.main`
-    padding: 24px 0 24px 48px;
+    padding: 24px 0 24px 24px;
     .dice {
         &__row {
             border-bottom: 1px solid #ccc;
@@ -38,7 +38,7 @@ const DiceStyled = styled.main`
         }
         &__value {
             font-size: 48px;
-            min-width: 140px;
+            min-width: 120px;
             justify-content: flex-start;
         }
         &__display {
@@ -55,6 +55,13 @@ const DiceStyled = styled.main`
                 font-size: 24px;
                 padding-right: 16px;
             }
+        }
+        &__sum {
+            border-left: 3px solid #16a0ce;
+            border-right: 3px solid #16a0ce;
+            color: #16a0ce;
+            margin-left: 12px;
+            padding-left: 12px;
         }
     }
 `;

@@ -1,22 +1,28 @@
 import React from 'react'
 
 const DiceRow = (props) => {
-
+    const isResults = props.results.length;
+    let resultsSum;
     const multiplierClickHandler = e => {
         if (e.target.dataset.key) {
-            // const value = e.currentTarget.dataset.value;
             let results = [];
             for (let i = 0; i < e.target.dataset.key; i++) {
                 results.push(Math.floor(Math.random() * props.value) + props.resultOffset);
             }
-            results = results.map((el, i) => <span key={i}>{el}</span>);
             props.setResultsFunction(results);
         }
+    }    
+    if (isResults) {
+        console.log(props.results);
+        resultsSum = props.results.reduce((sum, val) => {
+            console.log(parseInt(sum), parseInt(val));
+            return sum + val;
+        }, 0);
     }
 
     return (
         <div className="dice__row">
-            <div className="dice__value">K{props.value}</div>
+            <div className="dice__value">k{props.value}</div>
             <div className='dice__multipliers'
                 data-value={props.value}
                 onClick={multiplierClickHandler}
@@ -24,9 +30,12 @@ const DiceRow = (props) => {
                 {props.multipliers}
             </div>
             <div className="dice__display">
-                {props.results.length ? 'Results:' : ''}
+                {isResults ? 'Results:' : ''}
                 <div className="dice__results">
-                    {props.results}
+                    {props.results !== -1 
+                        ? props.results.map((el, i) => <span key={i}>{el}</span>) 
+                        : ''}
+                    <span className="dice__sum">{isResults ? `Sum: ${resultsSum}` : ''}</span>
                 </div>
             </div>
         </div>

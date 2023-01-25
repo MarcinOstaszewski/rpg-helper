@@ -5,10 +5,11 @@ import DiceRow from './DiceRow';
 const Dice = () => {
     const range = Array.from(Array(9), (_, i) => ++i);
     const multipliers = range.map(i => <button key={i} data-key={i}>{i}</button>);
-    const [k4results, setK4results] = useState(<span></span>);
-    const [k6results, setK6results] = useState(<span></span>);
-    const [k10results, setK10results] = useState(<span></span>);
-    const [k100results, setK100results] = useState(<span></span>);
+    const [k4results, setK4results] = useState(-1);
+    const [k6results, setK6results] = useState(-1);
+    const [k10results, setK10results] = useState(-1);
+    const [k20results, setK20results] = useState(-1);
+    const [k100results, setK100results] = useState(-1);
 
     return (
         <DiceStyled>
@@ -29,6 +30,12 @@ const Dice = () => {
                 results={k10results}
                 resultOffset={0}
                 setResultsFunction={setK10results}
+            />
+            <DiceRow value={20}
+                multipliers={multipliers}
+                results={k20results}
+                resultOffset={1}
+                setResultsFunction={setK20results}
             />
             <DiceRow value={100}
                 multipliers={multipliers}
