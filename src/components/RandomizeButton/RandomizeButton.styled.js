@@ -1,13 +1,18 @@
 import styled from '@emotion/styled';
 
 const RandomizeButtonStyled = styled.button`
-    background-color: #f1f1f1;
+    background-color: #f4f4f4;
     border: 0;
     border-radius: 4px;
     padding: 0;
     margin: 0;
-    height: 64px;
-    width: 64px;
+    height: ${props => props.maxSize}px;
+    width: ${props => props.maxSize}px;
+    svg {
+        height: 80%;
+        width: 80%;
+        fill: #333;
+    }
 `
 
 export default RandomizeButtonStyled;
