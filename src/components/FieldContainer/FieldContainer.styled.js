@@ -12,12 +12,12 @@ const FieldContainerStyled = styled.main`
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                width: 64px;
             }
-        }
-        &--left,
-        &--right {
-            justify-content: space-between;
-            width: 64px;
+            &--middle {
+                width: calc(100% - 124px);
+            }
+
         }
 
         &__size-input,
