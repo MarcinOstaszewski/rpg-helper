@@ -9,7 +9,7 @@ const Canvas = props => {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         drawLines(ctx, props);
         if (props.randomHori >= -1) {
-            paintField(ctx, props);
+            paintRandomField(ctx, props);
         }
     }, [props]);
 
@@ -32,7 +32,7 @@ const Canvas = props => {
         ctx.stroke();
     }
 
-    const paintField = (ctx, props) => {
+    const paintRandomField = (ctx, props) => {
         const fieldWidth = props.width / props.verticalLines;
         const fieldHeight = props.height / props.horizontalLines;
         const rectStartX = fieldWidth * props.randomVert;

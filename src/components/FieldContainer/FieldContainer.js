@@ -11,7 +11,7 @@ const FieldContainer = () => {
     const [randomHori, setRandomHori] = useState(-1);
     const [randomVert, setRandomVert] = useState(-1);
 
-    let maxSize = 60;
+    let maxSize = window.innerHeight / 24;
 
     const handleSizeChange = e => {
         const isHorizontal = e.target.dataset.isHorizontal;
@@ -50,7 +50,7 @@ const FieldContainer = () => {
     );
 
     return (
-        <FieldContainerStyled>
+        <FieldContainerStyled maxSize={maxSize}>
             <div className="field__container--left">
                 <RandomizeButton 
                     maxSize={maxSize} 
@@ -61,7 +61,7 @@ const FieldContainer = () => {
                         isHorizontal={true}
                         value={horizontalLines}
                         xMargin={0}
-                        yMargin={6}
+                        yMargin={maxSize / 10}
                         maxSize={maxSize}
                     />
                 </div>
@@ -73,15 +73,15 @@ const FieldContainer = () => {
                     <SizeInput 
                         handleSizeChange={handleSizeChange}
                         value={verticalLines}
-                        xMargin={6}
+                        xMargin={maxSize / 10}
                         yMargin={0}
                         maxSize={maxSize}
                     />
                 </div>
                 <div className="field__display-canvas">
                     <Canvas 
-                        width={window.innerWidth - 264}
-                        height={window.innerHeight - 240}
+                        width={window.innerWidth - maxSize * 4}
+                        height={window.innerHeight - maxSize * 4}
                         verticalLines={verticalLines}
                         horizontalLines={horizontalLines}
                         randomHori={randomHori}

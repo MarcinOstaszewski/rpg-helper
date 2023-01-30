@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 const RandomizeButtonStyled = styled.button`
     background-color: #ccc;
     border: 0;
-    border-radius: 4px;
+    border-radius: ${props => props.maxSize / 12}px;
     padding: 0;
     margin: 0;
     height: ${props => props.maxSize}px;

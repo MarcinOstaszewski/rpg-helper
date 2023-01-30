@@ -4,7 +4,7 @@ const SizeInputStyled = styled.div`
     justify-content: space-between;
 
     input {
-        font-size: 16px;
+        font-size: ${props => props.maxSize / 3}px;
         font-weight: bold;
         height: ${props => props.maxSize}px;
         border-bottom: 1px solid black;
