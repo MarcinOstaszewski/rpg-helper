@@ -5,3 +5,8 @@
 .font-bold {
     font-weight: bold;
 }
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
