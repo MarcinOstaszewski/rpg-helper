@@ -40,6 +40,7 @@ const DiceStyled = styled.main`
             font-size: 48px;
             min-width: 120px;
             justify-content: flex-start;
+            align-items: baseline;
         }
         &__display {
             padding-left: 24px;

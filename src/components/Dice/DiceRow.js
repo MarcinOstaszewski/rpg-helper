@@ -20,8 +20,9 @@ const DiceRow = (props) => {
 
     return (
         <div className="dice__row">
-            <div className="dice__value">k{props.value}</div>
+            <div className="dice__value"><span className="font-75-percent">D</span>{props.value}</div>
             <div className='dice__multipliers'
+                title="Throw a certain number of dice"
                 data-value={props.value}
                 onClick={multiplierClickHandler}
             >
