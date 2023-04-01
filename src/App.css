@@ -1,3 +1,14 @@
+body {
+    box-sizing: border-box;
+    font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
+}
+a, button, div, input, select, span {
+    font-size: 16px;
+}
+a, div, input, select, span {
+    color: #333;
+}
+
 .flex-column {
     flex-direction: column;
 }
