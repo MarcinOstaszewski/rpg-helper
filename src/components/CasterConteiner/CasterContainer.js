@@ -1,57 +1,27 @@
 import React, { useState} from 'react';
 import StyledCasterContainer from './CasterContainer.styled';
-import { wizardStats, magicSchools } from '../../helpers/constants';
+import { createStatLine, getApprenticeStats, getCasterNameField, getCasterTypeField, getMagicSchoolSelect, getSchoolField } from '../../helpers/helperFunctions';
 
-const CasterContainer = ({wizard, apprentice}) => {
-  // TODO: Add saving all team members' values in LocalStorage;
-  // TODO: Add checking if there are team values in LocalStorage;
-  const [casterStats, setCasterStats] = useState(wizardStats);
+const CasterContainer = ({wizardStats, baseStats, magicSchools, casterName, handleCasterNameChange}) => {
+  const isWizard = wizardStats && Object.keys(wizardStats).length > 0;
+  const initialCasterStats = isWizard ? wizardStats : getApprenticeStats(baseStats);
+  const [casterStats, setCasterStats] = useState(initialCasterStats);
+  const statLine = createStatLine(casterStats);
 
-  const handleTestStatClick = e => {
-    console.log(e)
-  }
-  
-  const columnsWithPlus = [1, 2, 4];
-  const shouldAddPlus = i => columnsWithPlus.includes(i);
-  const statNames = Object.keys(casterStats).map((name, i) => <span key={`names${i}`}>{name}</span>);
-  const statValues = Object.values(casterStats).map((value, i) => {
-    return <span key={`values${i}`}>
-      {shouldAddPlus(i) ? '+' : ''}{value}</span>
-    });
-  const magicSchoolsOptions = magicSchools
-    .map((school, i) => <option value={school} key={i}>{school}</option>)
-  const schoolField = wizard ? 
-    <span className='type highlighted'>School</span> 
-    : <span></span>;
-  const schoolInput = wizard ? (
-    <span>
-      <select name="magic-schools">
-        {magicSchoolsOptions}
-      </select>
-    </span>) 
-    : '';
-  const casterType = wizard ? 'Wizard' : 'Apprentice';
+  const casterType = isWizard ? 'Wizard' : 'Apprentice';
+  const schoolField = getSchoolField(isWizard);
+  const magicSchoolSelect = getMagicSchoolSelect(magicSchools);
 
   return (
     <StyledCasterContainer>
-      <div className={`character-header
-        ${wizard ? ' wizard' : ''}
-        ${apprentice ? ' apprentice' : ''}`}
-      >
-        <span className='main highlighted'>{casterType}</span>
-        <span>
-          <input defaultValue="Name" />
-        </span>
+      <div className={`character-header ${isWizard ? 'wizard' : 'apprentice'}`}>
+        {getCasterTypeField(casterType)}
+        {getCasterNameField(casterName, handleCasterNameChange, isWizard)}
         {schoolField}
-        {schoolInput}
+        {magicSchoolSelect}
       </div>
       <div>
-        <div className='character-stats-names'>
-          {statNames}
-        </div>
-        <div className='character-stats-values'>
-          {statValues}
-        </div>
+        {statLine}
       </div>
     </StyledCasterContainer>
   )

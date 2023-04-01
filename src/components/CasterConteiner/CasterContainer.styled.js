@@ -18,13 +18,20 @@ const StyledCasterContainer = styled.section`
 
         &.wizard {
             grid-template-columns: 2fr 6fr 2fr 6fr;
+            .highlighted {
+                background-color: #abe;
+                border-bottom: 3px solid #9ad;
+            }
         }
         &.apprentice {
-            grid-template-columns: 2fr 6fr 8fr;
+            grid-template-columns: 2fr 14fr;
         }
 
         .highlighted {
-            background-color: #cde;
+            color: #111;
+            background-color: #bce;
+            border-bottom: 3px solid #abd;
+            padding-bottom: 3px;
         }
 
         input, select {
@@ -40,16 +47,22 @@ const StyledCasterContainer = styled.section`
             height: 100%;
         }
     }
-    .character-stats-names {
+    .stats-line {
         display: grid;
         grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
         span {
             font-weight: bold;
+            display: flex;
+            flex-direction: column;
         }
-    }
-    .character-stats-values {
-        display: grid;
-        grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+        .stats-field {
+            border: 0;
+            padding: 0;
+            
+            span:last-child {
+                height: 20px;
+            }
+        }
     }
 `
 export default StyledCasterContainer;
