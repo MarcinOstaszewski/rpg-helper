@@ -1,5 +1,5 @@
 import React from 'react'
-import RepeatIcon from '@mui/icons-material/Repeat';
+import { GiRollingDices } from 'react-icons/gi'
 import RandomizeButtonStyled from './RandomizeButton.styled';
 
 const RandomizeButton = props => {
@@ -8,7 +8,7 @@ const RandomizeButton = props => {
             maxSize={props.maxSize}
             onClick={props.onClick}
         >
-            <RepeatIcon />
+            <GiRollingDices />
         </RandomizeButtonStyled>
     )
 }
