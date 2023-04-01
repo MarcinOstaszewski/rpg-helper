@@ -21,10 +21,11 @@ const NavigationHeaderStyled = styled.header`
                         background-color: #70c2de;
                     }
                     &.active {
-                        background-color: #16a0ce;
-                        color: #fff;
+                        padding-bottom: 6px;
+                        border-bottom: 6px solid #16a0ce;
                         &:hover {
-                            background-color: #70c2de;
+                            background-color: #16a0ce;
+                            color: #fff;
                         }
                     }
                 }
