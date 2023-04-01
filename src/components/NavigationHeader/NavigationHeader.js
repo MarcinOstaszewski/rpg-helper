@@ -17,9 +17,14 @@ const NavigationHeader = props => {
                         Field
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}direction`}>
                         Direction
+                    </NavLink>
+                </li> */}
+                <li>
+                    <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}frostgrave`}>
+                        Wizard & Warband
                     </NavLink>
                 </li>
             </ul>
