@@ -2,11 +2,11 @@ import React, { useState} from 'react';
 import StyledCasterContainer from './CasterContainer.styled';
 import { createStatLine, getApprenticeStats, getCasterNameField, getCasterTypeField, getMagicSchoolSelect, getSchoolField } from '../../helpers/helperFunctions';
 
-const CasterContainer = ({wizardStats, baseStats, magicSchools, casterName, handleCasterNameChange}) => {
+const CasterContainer = ({ wizardStats, baseStats, magicSchools, casterName, handleCasterNameChange, showTestModal }) => {
   const isWizard = wizardStats && Object.keys(wizardStats).length > 0;
   const initialCasterStats = isWizard ? wizardStats : getApprenticeStats(baseStats);
   const [casterStats, setCasterStats] = useState(initialCasterStats);
-  const statLine = createStatLine(casterStats);
+  const statLine = createStatLine(casterStats, showTestModal);
 
   const casterType = isWizard ? 'Wizard' : 'Apprentice';
   const schoolField = getSchoolField(isWizard);

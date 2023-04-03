@@ -13,7 +13,10 @@ const FrostgraveWarbandContainer = () => {
 	// const [castersList, setCastersList] = useState([]);
 	const [warbandCost, setWarbandCost] = useState(0);
 	const [showModal, setShowModal] = useState(false);
+	const [showRemoveContent, setShowRemoveContent] = useState(false);
+	const [showStatTestContent, setShowStatTestContent] = useState(false);
 	const [soldierToRemoveData, setSoldierToRemoveData] = useState({});
+	const [statToBeTested, setStatToBeTested] = useState();
 
 	const updateWizardName = wizardName => {
 		setWizardName(wizardName);
@@ -54,21 +57,28 @@ const FrostgraveWarbandContainer = () => {
 	}
 	const handleModalRemove = e => {
 		const index =  e.target.parentElement.dataset.index;
-		console.log(index);
 		const newSoldiersList = [...soldiersList];
 		newSoldiersList.splice(index, 1);
 		updateSoldiersList(newSoldiersList);
 		setShowModal(false);
+		setShowRemoveContent(false);
 	}
-	const handleModalCancel = e => {
-		console.log(e.target);
+	const handleModalCancel = () => {
 		setShowModal(false);
+		setShowRemoveContent(false);
+		setShowStatTestContent(false);
 	}
-	const handleShowModal = e => {
+	const handleShowRemoveModal = e => {
 		const index =  e.target.parentElement.dataset.index;
-		console.log(index);
 		const soldierName = soldiersList[index].name;
 		setSoldierToRemoveData({index: index, name: soldierName});
+		setShowRemoveContent(true)
+		setShowModal(true);
+	}
+	const showTestModal = e => {
+		if (e.currentTarget.dataset.index > 5) return;
+		console.log(e.currentTarget.dataset);
+		setShowStatTestContent(true)
 		setShowModal(true);
 	}
 
@@ -99,20 +109,25 @@ const FrostgraveWarbandContainer = () => {
 				wizardStats={wizardStats}
 				magicSchools={magicSchools}
 				casterName={wizardName}
-				handleCasterNameChange={handleCasterNameChange}/>
+				handleCasterNameChange={handleCasterNameChange}
+				showTestModal={showTestModal}/>
 			<CasterContainer
 				baseStats={wizardStats}
 				casterName={apprenticeName}
-				handleCasterNameChange={handleCasterNameChange}/>
+				handleCasterNameChange={handleCasterNameChange}
+				showTestModal={showTestModal}/>
 
 			<SoldiersContainer
 				soldiersList={soldiersList}
 				handleSoldierChange={handleSoldierChange}
-				handleShowModal={handleShowModal}/>
+				handleShowRemoveModal={handleShowRemoveModal}
+				showTestModal={showTestModal}/>
 			
 			{showModal && <Modal 
 				handleRemove={handleModalRemove} 
 				handleCancel={handleModalCancel}
+				showRemoveContent={showRemoveContent}
+				showStatTestContent={showStatTestContent}
 				soldierData={soldierToRemoveData}
 			/>}
 

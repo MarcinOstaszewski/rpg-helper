@@ -3,12 +3,12 @@ import StyledSoldiersContainer from './SoldiersContainer.styled';
 import { soldierTypesStats, soldierStatNames } from '../../helpers/constants';
 import { createSoldierTypeSelect, createStatLine, getSoldiersFullStats } from '../../helpers/helperFunctions';
 
-const SoldiersContainer = ({soldiersList, handleSoldierChange, handleShowModal}) => {
+const SoldiersContainer = ({soldiersList, handleSoldierChange, handleShowRemoveModal, showTestModal}) => {
 	const soldiersFullStats = getSoldiersFullStats(soldierTypesStats, soldierStatNames);
 	const soldates = soldiersList.map((soldier, i) => {
 		const soldierType = soldier.type;
 		const stats = soldiersFullStats[soldierType].stats;
-		const statLine = createStatLine(stats);
+		const statLine = createStatLine(stats, showTestModal);
 		
 		return (
 			<StyledSoldiersContainer key={i}>
@@ -19,7 +19,7 @@ const SoldiersContainer = ({soldiersList, handleSoldierChange, handleShowModal})
 					</span>
 					<span className='highlighted'>Type</span>
 					{createSoldierTypeSelect(soldierTypesStats, handleSoldierChange, soldierType)}
-					<span className='soldier-remove' onClick={handleShowModal}>&times;</span>
+					<span className='soldier-remove' onClick={handleShowRemoveModal}>&times;</span>
 				</div>
 				<div className='soldier-stats'>
 					{statLine}
