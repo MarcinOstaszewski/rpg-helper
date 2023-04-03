@@ -1,4 +1,4 @@
-import { columnsWithPlusIndexes } from './constants';
+import { columnsWithPlusIndexes, targetNumbersArray, modifiersNumberArray } from './constants';
 import { soldiersNames } from './randomNames';
 
 const getCasterTypeField = casterType => <span className='main highlighted'>{casterType}</span>;
@@ -44,11 +44,6 @@ const conditionallyAddSign = (i, value) => {
 	return columnsWithPlusIndexes.includes(i) ? sign : ''
 };
 
-const statTest = e => {
-	if (e.currentTarget.dataset.index > 5) return;
-	console.log(e.currentTarget.dataset);
-}
-
 const getSoldiersFullStats = (soldierTypesStats, soldierStatNames) => {
 	const soldiersFullStats = {};
 	Object.keys(soldierTypesStats).forEach(type => {
@@ -64,7 +59,7 @@ const getSoldiersFullStats = (soldierTypesStats, soldierStatNames) => {
 	return soldiersFullStats;	
 };
 
-const createStatLine = (stats) => {
+const createStatLine = (stats, showTestModal) => {
   return <div className='stats-line'>
 		{Object.keys(stats).map((key, i) => {
 			if (i > 7) return;
@@ -73,7 +68,7 @@ const createStatLine = (stats) => {
 			return (
 				<span key={i}
 					className='stats-field'
-					onClick={statTest}
+					onClick={showTestModal}
 					data-value={value}
 					data-stat={key}
 					data-index={i}
@@ -117,6 +112,26 @@ const getRandomSoldierName = () => {
 	return [Math.floor(Math.random() * soldiersNames.length + 2)];
 }
 
+const createTangetNumberButtons = () => {
+	return targetNumbersArray.map((number, i) => (
+		<button data-number={number} key={i}>{number}</button>
+	));
+}
+
+const createModifierButtons = () => {
+	return modifiersNumberArray.map((number, i) => {
+		const sign = number > 0 ? '+' : '';
+		return (
+			<button key={i}
+				data-value={number}
+				data-modifier={true}
+				className={sign ? 'plus' : 'minus'}>
+					{sign}{number}
+			</button>
+		);
+	})
+}
+
 export {
 	getCasterTypeField,
 	getCasterNameField,
@@ -127,5 +142,7 @@ export {
 	createStatLine,
 	createSoldierTypeSelect,
 	saveToLocalStorage,
-	getRandomSoldierName
+	getRandomSoldierName,
+	createTangetNumberButtons,
+	createModifierButtons,
 };
