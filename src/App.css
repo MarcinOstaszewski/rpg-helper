@@ -5,6 +5,11 @@ body {
 a, button, div, input, select, span {
     font-size: 16px;
 }
+
+h1, h2, h3 {
+    margin: 0;
+}
+
 a, div, input, select, span {
     color: #333;
 }
