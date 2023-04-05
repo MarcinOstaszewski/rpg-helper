@@ -8,7 +8,6 @@ const CasterContainer = (
   { wizardStats, baseStats, magicSchools, casterName, setCasterName, handleCasterNameChange, showTestModal }
 ) => {
   const isWizard = wizardStats && Object.keys(wizardStats).length > 0;
-  console.log(isWizard, casterName);
   const initialCasterStats = isWizard ? wizardStats : getApprenticeStats(baseStats);
   const [casterStats, setCasterStats] = useState(initialCasterStats);
   const statLine = createStatLine(casterStats, showTestModal, casterName);
