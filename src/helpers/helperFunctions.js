@@ -122,20 +122,28 @@ const getRandomCharacterName = (isCaster) => {
 	return namesList[Math.floor(Math.random() * namesList.length + 2)];
 }
 
-const createTangetNumberButtons = () => {
-	return targetNumbersArray.map((number, i) => (
-		<button data-number={number} key={i}>{number}</button>
-	));
-}
-
-const createModifierButtons = () => {
-	return modifiersNumberArray.map((number, i) => {
-		const sign = number > 0 ? '+' : '';
+const createTangetNumberButtons = chosenTN => {
+	console.log('create TN', chosenTN);
+	return targetNumbersArray.map((number, i) => {
 		return (
 			<button key={i}
-				data-value={number}
-				data-modifier={true}
-				className={sign ? 'plus' : 'minus'}>
+				data-number={number}
+				className={number === chosenTN ? 'active' : ''}
+			>{number}</button>
+		);
+	});
+}
+
+const createModifierButtons = chosenModifier => {
+	console.log('create Modifiers', chosenModifier)
+	return modifiersNumberArray.map((number, i) => {
+		const active = number === chosenModifier ? 'active' : '';
+		const sign = number > 0 ? '+' : '';
+		const signClassName = sign ? 'plus' : 'minus';
+		return (
+			<button key={i}
+				data-modifier={number}
+				className={`${active} ${signClassName}`}>
 					{sign}{number}
 			</button>
 		);
