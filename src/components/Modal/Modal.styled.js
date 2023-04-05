@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const StyledModal = styled.div`
-	background-color: #00000040;
+	background-color: #000000bb;
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -19,9 +19,9 @@ const StyledModal = styled.div`
 		display: flex;
 		justify-content: center;
 		padding: 12śpx 0;
-		border: 6px solid #d77;
+		border: 6px solid #666;
 		border-radius: 12px;
-		background-color: #fdf2f2;
+		background-color: #fcfcfe;
 
 		div {
 			font-size: 28px;
@@ -56,10 +56,13 @@ const StyledModal = styled.div`
 		padding: 24px 0;
 
 		button {
-				padding: 12px 24px;
-				font-size: 24px;
-				border-radius: 12px;
-				border: 0;
+			padding: 12px 24px;
+			font-size: 24px;
+			border-radius: 12px;
+			border: 0;
+			&:disabled {
+				background-color: #ccc;
+			}
 		}
 		.danger {
 			background-color: #d77;
@@ -105,6 +108,11 @@ const StyledModal = styled.div`
 				strong {
 					font-size: 16px;
 					padding: 12px 0;
+					&.text-big span {
+						font-size: 24px;
+						line-height: 36px;
+						margin: 0 12px;
+					}
 				}
 			}
 
@@ -122,21 +130,30 @@ const StyledModal = styled.div`
 					border-radius: 6px;
 					&:hover,
 					&.active {
-						background-color: #16a;
 						color: #fff;
+					}
+					&:hover {
+						background-color: #38c;
+					}
+					&.active {
+						background-color: #059;
 					}
 					&.minus {
 						background-color: #d55;
-						&:hover,
+						&:hover {
+							background-color: #c44;
+						}
 						&.active {
-							background-color: #b22;
+							background-color: #a11;
 						}
 					}
 					&.plus {
 						background-color: #6b6;
-						&:hover,
+						&:hover {
+							background-color: #494;
+						}
 						&.active {
-							background-color: #282;
+							background-color: #171;
 						}
 					}
 				}
