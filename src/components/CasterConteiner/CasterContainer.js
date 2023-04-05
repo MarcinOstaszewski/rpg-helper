@@ -1,12 +1,17 @@
 import React, { useState} from 'react';
 import StyledCasterContainer from './CasterContainer.styled';
-import { createStatLine, getApprenticeStats, getCasterNameField, getCasterTypeField, getMagicSchoolSelect, getSchoolField } from '../../helpers/helperFunctions';
+import { 
+  createStatLine, getApprenticeStats, getCasterNameField, getCasterTypeField, getMagicSchoolSelect, getSchoolField 
+} from '../../helpers/helperFunctions';
 
-const CasterContainer = ({ wizardStats, baseStats, magicSchools, casterName, handleCasterNameChange, showTestModal }) => {
+const CasterContainer = (
+  { wizardStats, baseStats, magicSchools, casterName, setCasterName, handleCasterNameChange, showTestModal }
+) => {
   const isWizard = wizardStats && Object.keys(wizardStats).length > 0;
+  console.log(isWizard, casterName);
   const initialCasterStats = isWizard ? wizardStats : getApprenticeStats(baseStats);
   const [casterStats, setCasterStats] = useState(initialCasterStats);
-  const statLine = createStatLine(casterStats, showTestModal);
+  const statLine = createStatLine(casterStats, showTestModal, casterName);
 
   const casterType = isWizard ? 'Wizard' : 'Apprentice';
   const schoolField = getSchoolField(isWizard);
@@ -16,7 +21,7 @@ const CasterContainer = ({ wizardStats, baseStats, magicSchools, casterName, han
     <StyledCasterContainer>
       <div className={`character-header ${isWizard ? 'wizard' : 'apprentice'}`}>
         {getCasterTypeField(casterType)}
-        {getCasterNameField(casterName, handleCasterNameChange, isWizard)}
+        {getCasterNameField({casterName, handleCasterNameChange, isWizard, setCasterName})}
         {schoolField}
         {magicSchoolSelect}
       </div>

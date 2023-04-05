@@ -8,7 +8,7 @@ const SoldiersContainer = ({soldiersList, handleSoldierChange, handleShowRemoveM
 	const soldates = soldiersList.map((soldier, i) => {
 		const soldierType = soldier.type;
 		const stats = soldiersFullStats[soldierType].stats;
-		const statLine = createStatLine(stats, showTestModal);
+		const statLine = createStatLine(stats, showTestModal, soldier.name);
 		
 		return (
 			<StyledSoldiersContainer key={i}>

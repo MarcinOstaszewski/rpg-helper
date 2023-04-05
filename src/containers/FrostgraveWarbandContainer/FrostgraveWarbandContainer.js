@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { wizardStats, magicSchools } from '../../helpers/constants';
-import { getRandomSoldierName, saveToLocalStorage } from '../../helpers/helperFunctions';
+import { getRandomCharacterName, saveToLocalStorage, saveWarbandDataInLocalStorage } from '../../helpers/helperFunctions';
 import SoldiersContainer from '../../components/SoldiersContainer/SoldiersContainer';
 import StyledFrostgraveWarbandContainer from './FrostgraveWarbandContainer.styles';
 import CasterContainer from '../../components/CasterConteiner/CasterContainer';
@@ -10,13 +10,13 @@ const FrostgraveWarbandContainer = () => {
 	const [wizardName, setWizardName] = useState('');
 	const [apprenticeName, setApprenticeName] = useState('');
 	const [soldiersList, setSoldiersList] = useState([]);
-	// const [castersList, setCastersList] = useState([]);
+	// const [castersStats, setCastersStats] = useState([]);
 	const [warbandCost, setWarbandCost] = useState(0);
 	const [showModal, setShowModal] = useState(false);
 	const [showRemoveContent, setShowRemoveContent] = useState(false);
 	const [showStatTestContent, setShowStatTestContent] = useState(false);
 	const [soldierToRemoveData, setSoldierToRemoveData] = useState({});
-	const [statToBeTested, setStatToBeTested] = useState();
+	const [statsToBeTested, setStatsToBeTested] = useState();
 
 	const updateWizardName = wizardName => {
 		setWizardName(wizardName);
@@ -52,7 +52,7 @@ const FrostgraveWarbandContainer = () => {
 	}
 	const addSoldier = () => {
 		const newSoldiersList = [...soldiersList];
-		newSoldiersList.push({name: getRandomSoldierName, type: 'Thug'});
+		newSoldiersList.push({name: getRandomCharacterName(false), type: 'Thug'});
 		updateSoldiersList(newSoldiersList);
 	}
 	const handleModalRemove = e => {
@@ -77,20 +77,14 @@ const FrostgraveWarbandContainer = () => {
 	}
 	const showTestModal = e => {
 		if (e.currentTarget.dataset.index > 5) return;
-		console.log(e.currentTarget.dataset);
-		setShowStatTestContent(true)
+		const {stat, value, name} = e.currentTarget.dataset;
+		setStatsToBeTested({stat, value, name});
+		setShowStatTestContent(true);
 		setShowModal(true);
 	}
 
 	useEffect(() => {
-		const lsWizardName = JSON.parse(localStorage.getItem('wizard-name'));
-		const lsApprenticeName = JSON.parse(localStorage.getItem('apprentice-name'));
-		// const lsCastersList = localStorage.getItem('casters-list') || [];
-		const lsSoldiersList = JSON.parse(localStorage.getItem('soldiers-list'));
-		lsWizardName && setWizardName(lsWizardName);
-		lsApprenticeName && setApprenticeName(lsApprenticeName);
-		// lsCastersList && setCastersList(lsCastersList);
-		lsSoldiersList && setSoldiersList(lsSoldiersList);
+		saveWarbandDataInLocalStorage({setWizardName, setApprenticeName, setSoldiersList});
 	},[]);
 
   return (
@@ -101,7 +95,7 @@ const FrostgraveWarbandContainer = () => {
 					<button onClick={addSoldier}>Add Soldier</button>
 				</div>
 				<div className='warband-cost'>
-					<span className='font-bold'>Warband Cost: </span><span>{warbandCost} gc</span>
+					<span className='font-bold'>Warband cost: </span><span>{warbandCost} gc</span>
 				</div>
 			</div>
 
@@ -109,11 +103,13 @@ const FrostgraveWarbandContainer = () => {
 				wizardStats={wizardStats}
 				magicSchools={magicSchools}
 				casterName={wizardName}
+				setCasterName={updateWizardName}
 				handleCasterNameChange={handleCasterNameChange}
 				showTestModal={showTestModal}/>
 			<CasterContainer
 				baseStats={wizardStats}
 				casterName={apprenticeName}
+				setCasterName={updateApprenticeName}
 				handleCasterNameChange={handleCasterNameChange}
 				showTestModal={showTestModal}/>
 
@@ -129,6 +125,7 @@ const FrostgraveWarbandContainer = () => {
 				showRemoveContent={showRemoveContent}
 				showStatTestContent={showStatTestContent}
 				soldierData={soldierToRemoveData}
+				statsToBeTested={statsToBeTested}
 			/>}
 
     </StyledFrostgraveWarbandContainer>

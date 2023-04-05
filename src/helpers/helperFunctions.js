@@ -1,17 +1,24 @@
+import { GiRollingDices } from 'react-icons/gi';
 import { columnsWithPlusIndexes, targetNumbersArray, modifiersNumberArray } from './constants';
-import { soldiersNames } from './randomNames';
+import { castersNames, soldiersNames } from './randomNames';
 
 const getCasterTypeField = casterType => <span className='main highlighted'>{casterType}</span>;
 
-const getCasterNameField = (casterName, handleCasterNameChange, isWizard) => {
+const getCasterNameField = ({casterName, handleCasterNameChange, isWizard, setCasterName}) => {
 	return (
-		<span>
-			<input 
+		<span className='name-input-container'>
+			<input className='name-input'
 				onChange={handleCasterNameChange} 
 				value={casterName} 
 				data-is-wizard={isWizard}
 				placeholder='Choose a name...'
 			/>
+			<button 
+				className='random-change-name' 
+				onClick={() => setCasterName(getRandomCharacterName(true))}
+			>
+				<GiRollingDices />
+			</button>
 		</span>
 )}
 
@@ -24,7 +31,7 @@ const getMagicSchoolSelect = magicSchools => {
 		return '';
 	}
 	return <span>
-		<select name='magic-schools'>
+		<select name='magic-schools' className='magic-school-select'>
 			{magicSchools.map((school, i) => <option value={school} key={i}>{school}</option>)}
 		</select>
 	</span>
@@ -59,7 +66,7 @@ const getSoldiersFullStats = (soldierTypesStats, soldierStatNames) => {
 	return soldiersFullStats;	
 };
 
-const createStatLine = (stats, showTestModal) => {
+const createStatLine = (stats, showTestModal, characterName) => {
   return <div className='stats-line'>
 		{Object.keys(stats).map((key, i) => {
 			if (i > 7) return;
@@ -72,6 +79,7 @@ const createStatLine = (stats, showTestModal) => {
 					data-value={value}
 					data-stat={key}
 					data-index={i}
+					data-name={characterName}
 				>
 					<span>{key}</span>
 					<span>
@@ -105,11 +113,13 @@ const createSoldierTypeSelect = (soldierTypesStats, handleSoldierChange, soldier
 }
 
 const saveToLocalStorage = (key, value) => {
+	key = key == undefined ? '' : key;
 	localStorage.setItem(key, JSON.stringify(value));
 };
 
-const getRandomSoldierName = () => {
-	return [Math.floor(Math.random() * soldiersNames.length + 2)];
+const getRandomCharacterName = (isCaster) => {
+	const namesList = (isCaster) ? castersNames : soldiersNames;
+	return namesList[Math.floor(Math.random() * namesList.length + 2)];
 }
 
 const createTangetNumberButtons = () => {
@@ -132,6 +142,31 @@ const createModifierButtons = () => {
 	})
 }
 
+const saveWarbandDataInLocalStorage = (
+	{setWizardName, setApprenticeName, setSoldiersList}
+) => {
+	const lsWizardName = JSON.parse(localStorage.getItem('wizard-name'));
+		const lsApprenticeName = JSON.parse(localStorage.getItem('apprentice-name'));
+		// const lsCastersStats = localStorage.getItem('casters-list') || [];
+		const lsSoldiersList = JSON.parse(localStorage.getItem('soldiers-list'));
+		if (lsWizardName) {
+			setWizardName(lsWizardName);
+		} else {
+			const randomName = getRandomCharacterName(true)
+			setWizardName(randomName);
+			saveToLocalStorage('wizard-name', randomName);
+		};
+		if (lsApprenticeName) {
+			setApprenticeName(lsApprenticeName);
+		} else {
+			const randomName = getRandomCharacterName(true)
+			setApprenticeName(randomName);
+			saveToLocalStorage('apprentice-name', randomName);
+		};
+		// lsCastersStats.length && setCastersStats(lsCastersStats);
+		lsSoldiersList?.length && setSoldiersList(lsSoldiersList);
+}
+
 export {
 	getCasterTypeField,
 	getCasterNameField,
@@ -142,7 +177,8 @@ export {
 	createStatLine,
 	createSoldierTypeSelect,
 	saveToLocalStorage,
-	getRandomSoldierName,
+	getRandomCharacterName,
 	createTangetNumberButtons,
 	createModifierButtons,
+	saveWarbandDataInLocalStorage,
 };

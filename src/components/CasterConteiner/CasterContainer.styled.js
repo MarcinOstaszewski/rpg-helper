@@ -11,7 +11,7 @@ const StyledCasterContainer = styled.section`
         padding: 6px;
         text-align: center;
     }
-    
+
     .character-header {
         border-top: 1px solid #ccc;
         display: grid;
@@ -27,6 +27,12 @@ const StyledCasterContainer = styled.section`
             grid-template-columns: 2fr 14fr;
         }
 
+        .name-input-container {
+            display: flex;
+            align-items: center;
+            padding: 0 0 0 6px;
+        }
+
         .highlighted {
             color: #111;
             background-color: #bce;
@@ -34,27 +40,46 @@ const StyledCasterContainer = styled.section`
             padding-bottom: 3px;
         }
 
-        input, select {
+        .name-input {
+            width: calc(100% - 30px);
+        }
+
+        .magic-school-select {
             width: 100%;
+            outline: none;
+            border: 0;
+            height: 100%;
+        }
+
+        .name-input, .magic-school-select {
             text-transform: uppercase;
             font-weight: bold;
             padding: 0px 12px;
         }
 
-        select {
-            outline: none;
+        .random-change-name {
+            width: 60px;
+            height: 30px;
             border: 0;
-            height: 100%;
+            margin: 0;
+            font-size: 24px;
+            background-color: #00000010;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
+
     .stats-line {
         display: grid;
         grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+
         span {
             font-weight: bold;
             display: flex;
             flex-direction: column;
         }
+
         .stats-field {
             border: 0;
             padding: 0;
