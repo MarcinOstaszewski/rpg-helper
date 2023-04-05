@@ -1,14 +1,22 @@
 body {
     box-sizing: border-box;
-    font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Lato', Verdana, 'Geneva', Tahoma, sans-serif;
 }
-a, button, div, input, select, span {
+body, a, button, div, input, select, span {
     font-size: 16px;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
     margin: 0;
+    font-weight: bold;
 }
+
+h1 {font-size: 32px;}
+h2 {font-size: 28px;}
+h3 {font-size: 22px;}
+h4 {font-size: 18px;}
+h5 {font-size: 16px;}
+h6 {font-size: 12px;}
 
 a, div, input, select, span {
     color: #333;
