@@ -76,7 +76,11 @@ const FrostgraveWarbandContainer = () => {
 		setShowModal(true);
 	}
 	const showTestModal = e => {
-		if (e.currentTarget.dataset.index > 5) return;
+		const index = parseInt(e.currentTarget.dataset.index);
+		if (index === 5) {
+			console.log('TODO health modification!');
+		};
+		if (index > 4) return;
 		const {stat, value, name} = e.currentTarget.dataset;
 		setStatsToBeTested({stat, value, name});
 		setShowStatTestContent(true);
