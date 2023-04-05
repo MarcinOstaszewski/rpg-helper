@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createTangetNumberButtons, createModifierButtons } from '../../helpers/helperFunctions';
 import StyledModal from './Modal.styled';
 
-const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestContent, soldierData}) => {
+const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestContent, soldierData, statsToBeTested}) => {
 	const [chosenTN, setChoseTN] = useState();
 	const [chosenModifier, setChoseModifier] = useState();
 	const targetNumbersButtons = createTangetNumberButtons();
@@ -28,14 +28,14 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 
 	const statTestContent = showStatTestContent && (
 		<div className='stat-test content-container'>
-			<h3>Test your <span>...</span> skill</h3>
+			<h3><strong>{statsToBeTested.stat} {statsToBeTested.value}</strong> test</h3>
 			<div className='test-settings'>
 				<div className='target-numbers-and-modifiers'>
-					<strong>choose TN (Target Number)</strong>
+					<strong>Target Number</strong>
 					<div className='target-numbers' onClick={handleButtonClick}>
 						{targetNumbersButtons}
 					</div>
-					<strong>select a Modifier</strong>
+					<strong>Modifier</strong>
 					<div className='modifiers' onClick={handleButtonClick}>
 						{modifierNumberButtons}
 					</div>
@@ -46,7 +46,7 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 			</div>
 			<div className='buttons'>
 				<button className='success' onClick={handleRemove}>Test Stat</button>
-				<button className='danger' onClick={handleRemove}>Test & Close</button>
+				<button className='danger' onClick={handleRemove}>Test and Close</button>
 				<button className='info' onClick={handleCancel}>Cancel</button>
 			</div>
 		</div>

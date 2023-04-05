@@ -35,6 +35,7 @@ const StyledModal = styled.div`
 		flex-direction: column;
 		justify-content: space-around;
 		align-items: center;
+		padding-bottom: 24px;
 	}
 
 	.remove-soldier {
@@ -52,6 +53,7 @@ const StyledModal = styled.div`
 		display: flex;
 		width: 100%;
 		justify-content: space-around;
+		padding: 24px 0;
 
 		button {
 				padding: 12px 24px;
@@ -76,6 +78,13 @@ const StyledModal = styled.div`
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
+
+		h3 {
+			color: #999;
+			strong {
+				color: #222;
+			}
+		}
 
 		.test-settings {
 			display: flex;
@@ -108,27 +117,27 @@ const StyledModal = styled.div`
 					width: calc(20% - 10px);
 					font-weight: bold;
 					padding: 3px 0;
-					background-color: #6bf;
+					background-color: #5ae;
 					border: 0;
 					border-radius: 6px;
-					&:hover {
-						background-color: #7df;
-					}
-					&.minus {
-						background-color: #e66;
-						&.active {
-							background-color: #b33;
-						}
-					}
-					&.plus {
-						background-color: #4c4;
-						&.active {
-							background-color: #080;
-						}
-					}
+					&:hover,
 					&.active {
 						background-color: #16a;
 						color: #fff;
+					}
+					&.minus {
+						background-color: #d55;
+						&:hover,
+						&.active {
+							background-color: #b22;
+						}
+					}
+					&.plus {
+						background-color: #6b6;
+						&:hover,
+						&.active {
+							background-color: #282;
+						}
 					}
 				}
 			}
