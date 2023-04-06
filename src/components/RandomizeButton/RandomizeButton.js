@@ -1,5 +1,5 @@
-import React from 'react'
-import { GiRollingDices } from 'react-icons/gi'
+import React from 'react';
+import { GiRollingDices } from 'react-icons/gi';
 import RandomizeButtonStyled from './RandomizeButton.styled';
 
 const RandomizeButton = props => {
