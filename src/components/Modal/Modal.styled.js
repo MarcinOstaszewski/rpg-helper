@@ -42,7 +42,6 @@ const StyledModal = styled.div`
 		flex-direction: column;
 		justify-content: space-around;
 		align-items: center;
-		padding-bottom: 24px;
 	}
 
 	.remove-soldier {
@@ -60,7 +59,6 @@ const StyledModal = styled.div`
 		display: flex;
 		width: 100%;
 		justify-content: space-around;
-		padding: 24px 0;
 
 		button {
 			padding: 12px 24px;
@@ -109,32 +107,30 @@ const StyledModal = styled.div`
 			display: flex;
 			width: 100%;
 
-			.combat-settings-and-result,
-			.combat-oponent-settings,
-			.target-numbers-and-modifiers {
+			.target-numbers-and-modifiers,
+			.combat-settings {
 				display: flex;
 				flex-grow: 1;
+				flex-direction: column;
+				justify-content: flex-start;
+				align-items: center;
+			}
+
+			.title {
+				padding: 12px 0;
+				font-size: 16px;
 			}
 
 			.target-numbers-and-modifiers {
-				align-items: center;
-				flex-direction: column;
-				justify-content: space-around;
-
-				.title {
-					padding: 12px 0;
-					font-size: 16px;
-				}
-
 				.test-chosen-values, 
 				.test-results {
 					padding: 12px 24px;
 					span {
-						margin: 0 6px;
+						margin: 0 3px;
 					}
 				}
 				.test-results {
-					font-size: 24px;
+					font-size: 16px;
 
 					&.success {
 						color: #fff;
@@ -146,11 +142,16 @@ const StyledModal = styled.div`
 						background-color: #d22;
 						border-radius: 12px 0;
 					}
+
+					svg {
+						margin: 0 12px -2px 5px;
+					}
 				}
 			}
 
 			.target-numbers,
-			.modifiers {
+			.modifiers,
+			.combat-opponent-fight {
 				display: flex;
 				flex-wrap: wrap;
 				width: 50%;
@@ -193,6 +194,12 @@ const StyledModal = styled.div`
 						}
 					}
 				}
+			}
+
+			.combat-settings-and-modifiers {
+				display: flex;
+				align-items: center;
+				flex-direction: column;
 			}
 		}
 		.modal-close, button {

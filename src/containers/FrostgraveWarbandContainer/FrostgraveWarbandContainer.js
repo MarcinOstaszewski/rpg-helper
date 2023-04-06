@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { wizardStats, magicSchools } from '../../helpers/constants';
 import { getRandomCharacterName, getSoldiersCost, saveToLocalStorage, saveWarbandDataInLocalStorage } from '../../helpers/helperFunctions';
+import { BsPersonPlusFill } from 'react-icons/bs';
 import SoldiersContainer from '../../components/SoldiersContainer/SoldiersContainer';
 import StyledFrostgraveWarbandContainer from './FrostgraveWarbandContainer.styles';
 import CasterContainer from '../../components/CasterConteiner/CasterContainer';
@@ -99,10 +100,11 @@ const FrostgraveWarbandContainer = () => {
 			<div className='top-container'>
 				<h1>Frostgrave Warband Sheet</h1>
 				<div className='buttons-container'>
-					<button onClick={addSoldier}>Add Soldier</button>
+					<button onClick={addSoldier} className='add-soldier'><BsPersonPlusFill />Add Soldier</button>
 				</div>
 				<div className='warband-cost'>
-					<span className='font-bold'>Warband cost: </span><span>{warbandCost} gc</span>
+					<span>Warband cost: </span>
+					<span className={warbandCost > 400 ? 'text-danger' : ''}>{warbandCost} gc</span>
 				</div>
 			</div>
 

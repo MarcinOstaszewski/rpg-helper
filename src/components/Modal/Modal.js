@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { createTangetNumberButtons, createModifierButtons, getRandomFromRange } from '../../helpers/helperFunctions';
+import { createTangetNumberButtons, createModifierButtons, getRandomFromRange, createOpponentFightButtons } from '../../helpers/helperFunctions';
+import { FiArrowRight } from 'react-icons/fi';
 import StyledModal from './Modal.styled';
 
 const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestContent, soldierData, statToBeTested}) => {
@@ -7,20 +8,25 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 	const [chosenModifier, setChoseModifier] = useState(0);
 	const [wasTestSuccessful, setWasTestSuccessful] = useState(undefined);
 	const [randomNumber, setRandomNumber] = useState(undefined);
+	const [opponentFight, setOpponentFight] = useState(undefined);
+	const [opponentModifier, setOpponentModifier] = useState(undefined);
+	const statValue = parseInt(statToBeTested.value);
 	const targetNumbersButtons = createTangetNumberButtons(chosenTN);
-	const modifierNumberButtons = createModifierButtons(chosenModifier);
 
 	const handleButtonClick = e => {
-		const modifier = parseInt(e.target.dataset.modifier || 0);
-		const number = parseInt(e.target.dataset.number || 0);
+		const targetNumber = parseInt(e.target.dataset.targetNumber || 0);
+		const yourModifier = parseInt(e.target.dataset.modifier || 0);
+		const newOpponentFight = parseInt(e.target.dataset.opponentFight || 0);
+		const newOpponentModifier = parseInt(e.target.dataset.opponentModifier || 0);
 		setRandomNumber(undefined);
-		if (modifier) setChoseModifier(modifier);
-		if (number) setChoseTN(number);
+		if (yourModifier) setChoseModifier(yourModifier);
+		if (targetNumber) setChoseTN(targetNumber);
+		if (newOpponentModifier) setOpponentModifier(newOpponentModifier);
+		if (newOpponentFight) setOpponentFight(newOpponentFight);
 	}
 
 	const performStatTest = e => {
 		const diceThrow = getRandomFromRange(20, 1);
-		const statValue = parseInt(statToBeTested.value);
 		const testSuccessful = ((statValue + chosenModifier + diceThrow) >= chosenTN) ? true : false;
 		setWasTestSuccessful(testSuccessful);
 		setRandomNumber(diceThrow);
@@ -52,38 +58,51 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 
 	const statTestContent = showStatTestContent && (
 		<div className='stat-test content-container'>
-			<h3><strong>{statToBeTested.stat} {statToBeTested.value}</strong> test</h3>
 			<div className='modal-close' onClick={handleCancel}>&times;</div>
 			<div className='test-settings'>
 				<div className='target-numbers-and-modifiers'>
+					<h3>Stat Test - <strong>{statToBeTested.stat} {statValue}</strong></h3>
 					<strong className='title'>choose Target Number</strong>
 					<div className='target-numbers' onClick={handleButtonClick}>
 						{targetNumbersButtons}
 					</div>
 					<strong className='title'>add Modifier?</strong>
 					<div className='modifiers' onClick={handleButtonClick}>
-						{modifierNumberButtons}
+						{createModifierButtons(chosenModifier, false)}
 					</div>
 					<strong className='test-chosen-values'>
-						<span>{chosenTN ? `${statToBeTested.stat}: ${statToBeTested.value}` : ''}</span>
+						<span>{chosenTN ? `${statToBeTested.stat}: ${statValue}` : ''}</span>
 						<span>{chosenTN ? `TN: ${chosenTN}` : ''}</span>
 						{chosenModifier ? <span>modifier: {chosenModifier > 0 ? '+' : ''}{chosenModifier}</span> : ''}
+						{randomNumber ? <span>dice: {randomNumber}</span> : ''}
 					</strong>
 					<strong className={`test-results ${getTestResultText()}`}>
-						<span>{randomNumber ? `sum: ${chosenTN + chosenModifier + randomNumber}` : ''}</span>
+						<span>{randomNumber ? `sum: ${statValue + chosenModifier + randomNumber}` : ''}</span>
 						<span>{randomNumber && (wasTestSuccessful ? '>=' : '<')}</span>
-						<span>{randomNumber ? `dice: ${randomNumber}` : ''}</span>
-						<span>{randomNumber && ` === result: ${getTestResultText()?.toUpperCase()}`}</span>
+						<span>{randomNumber ? `TN: ${chosenTN}` : ''}</span>
+						{(randomNumber && <span><FiArrowRight />{` result: ${getTestResultText()?.toUpperCase()}`}</span>)}
+						
 					</strong>
 				</div>
 
-				{/* <div className='combat-settings-and-result'></div>
-				<div className='combat-oponent-settings'></div> */}
+				<div className='combat-settings'>
+					<div className='combat-settings-and-modifiers'>
+						<h3>Combat Roll - <strong>Fight: {statValue}</strong></h3>
+						<strong className='title'>Your opponent's {statToBeTested.stat}</strong>
+						<div className='combat-opponent-fight' onClick={handleButtonClick}>
+							{createOpponentFightButtons(opponentFight)}
+						</div>
+						<strong className='title'>Your opponent's Modifier</strong>
+						<div className='modifiers' onClick={handleButtonClick}>
+							{createModifierButtons(opponentModifier, true)}
+						</div>
+					</div>
+				</div>
 			</div>
 			<div className='buttons'>
 				<button className='success' disabled={!chosenTN} onClick={performStatTest}>Test Stat</button>
 				<button className='danger' disabled={!chosenTN} onClick={performStatTest} data-close={true}>Test and Close</button>
-				<button className='info' onClick={handleCancel}>Cancel</button>
+				<button className='info' onClick={handleCancel}>Close</button>
 			</div>
 		</div>
 	)

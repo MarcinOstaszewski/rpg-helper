@@ -46,6 +46,12 @@ const StyledSoldiersContainer = styled.div`
 	.soldier-remove {
 		font-weight: bold;
 		color: #d22;
+
+		svg {
+			width: 20px;
+			height: 20px;
+			margin-bottom: -4px;
+		}
 	}
 	
 	.stats-line {
@@ -68,7 +74,7 @@ const StyledSoldiersContainer = styled.div`
 				height: 20px;
 			}
 			&:last-child span:last-child {
-				font-size: 50%;
+				font-size: 75%;
 				display: flex;
 				justify-content: center;
 			}

@@ -1,5 +1,6 @@
 import React from 'react';
 import StyledSoldiersContainer from './SoldiersContainer.styled';
+import { BsPersonXFill } from 'react-icons/bs';
 import { soldierTypesStats, soldierStatNames } from '../../helpers/constants';
 import { createSoldierTypeSelect, createStatLine, getSoldiersFullStats } from '../../helpers/helperFunctions';
 
@@ -19,7 +20,7 @@ const SoldiersContainer = ({soldiersList, handleSoldierChange, handleShowRemoveM
 					</span>
 					<span className='highlighted'>Type</span>
 					{createSoldierTypeSelect(soldierTypesStats, handleSoldierChange, soldierType)}
-					<span className='soldier-remove' onClick={handleShowRemoveModal}>&times;</span>
+					<span className='soldier-remove' onClick={handleShowRemoveModal}><BsPersonXFill /></span>
 				</div>
 				<div className='soldier-stats'>
 					{statLine}

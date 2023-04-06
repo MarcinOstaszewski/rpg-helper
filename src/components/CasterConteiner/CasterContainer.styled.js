@@ -58,15 +58,23 @@ const StyledCasterContainer = styled.section`
         }
 
         .random-change-name {
-            width: 60px;
-            height: 30px;
+            width: 50px;
+            height: 28px;
             border: 0;
-            margin: 0;
+            margin: 1px 2px;
             font-size: 24px;
-            background-color: #00000010;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
+
+            &:hover {
+                /* color: #fff; */
+                background-color: #00000010;
+            }
         }
     }
 
