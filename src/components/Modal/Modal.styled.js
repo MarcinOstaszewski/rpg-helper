@@ -14,17 +14,24 @@ const StyledModal = styled.div`
 	
 	.modal-content {
 		padding: 0 2.5%;
-		width: 75%;
-		height: 75%;
+		width: ${props => props.showRemoveContent ? "50%" : "85%"};
+		height: ${props => props.showRemoveContent ? "50%" : "85%"};;
 		display: flex;
 		justify-content: center;
 		padding: 12śpx 0;
 		border: 6px solid #666;
 		border-radius: 12px;
 		background-color: #fcfcfe;
+		position: relative;
 
-		div {
-			font-size: 28px;
+		.modal-close {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 6px 12px;
+			font-size: 32px;
+			line-height: 32px;
+			font-weight: bold;
 		}
 	}
 
@@ -65,13 +72,22 @@ const StyledModal = styled.div`
 			}
 		}
 		.danger {
-			background-color: #d77;
+			background-color: #fbb;
+			&:hover:not(:disabled) {
+				background-color: #eaa;
+			}
 		}
 		.info {
-			background-color: #6bf;
+			background-color: #adf;
+			&:hover:not(:disabled) {
+				background-color: #9ce;
+			}
 		}
 		.success {
-			background-color: #4c9;
+			background-color: #aec;
+			&:hover:not(:disabled) {
+				background-color: #9db;
+			}
 		}
 	}
 
@@ -101,31 +117,51 @@ const StyledModal = styled.div`
 			}
 
 			.target-numbers-and-modifiers {
-				display: flex;
 				align-items: center;
 				flex-direction: column;
 				justify-content: space-around;
-				strong {
-					font-size: 16px;
+
+				.title {
 					padding: 12px 0;
-					&.text-big span {
-						font-size: 24px;
-						line-height: 36px;
-						margin: 0 12px;
+					font-size: 16px;
+				}
+
+				.test-chosen-values, 
+				.test-results {
+					padding: 12px 24px;
+					span {
+						margin: 0 6px;
+					}
+				}
+				.test-results {
+					font-size: 24px;
+
+					&.success {
+						color: #fff;
+						background-color: #4a4;
+						border-radius: 0 12px;
+					}
+					&.failure {
+						color: #fff;
+						background-color: #d22;
+						border-radius: 12px 0;
 					}
 				}
 			}
 
-			.target-numbers, .modifiers {
+			.target-numbers,
+			.modifiers {
 				display: flex;
 				flex-wrap: wrap;
 				width: 50%;
 				gap: 6px 12px;
+
 				button {
 					width: calc(20% - 10px);
 					font-weight: bold;
-					padding: 3px 0;
-					background-color: #5ae;
+					padding: 3px;
+					font-size: 16px;
+					background-color: #8df;
 					border: 0;
 					border-radius: 6px;
 					&:hover,
@@ -139,7 +175,7 @@ const StyledModal = styled.div`
 						background-color: #059;
 					}
 					&.minus {
-						background-color: #d55;
+						background-color: #f88;
 						&:hover {
 							background-color: #c44;
 						}
@@ -148,7 +184,7 @@ const StyledModal = styled.div`
 						}
 					}
 					&.plus {
-						background-color: #6b6;
+						background-color: #9d9;
 						&:hover {
 							background-color: #494;
 						}
@@ -158,6 +194,9 @@ const StyledModal = styled.div`
 					}
 				}
 			}
+		}
+		.modal-close, button {
+			cursor: pointer;
 		}
 	}
 `
