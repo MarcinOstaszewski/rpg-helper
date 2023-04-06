@@ -1,6 +1,10 @@
 import { GiRollingDices } from 'react-icons/gi';
-import { columnsWithPlusIndexes, targetNumbersArray, modifiersNumberArray } from './constants';
+import { columnsWithPlusIndexes, targetNumbersArray, modifiersNumberArray, soldierTypesStats } from './constants';
 import { castersNames, soldiersNames } from './randomNames';
+
+const getRandomFromRange = (value, offset) => {
+	return Math.floor(Math.random() * value) + offset;
+}
 
 const getCasterTypeField = casterType => <span className='main highlighted'>{casterType}</span>;
 
@@ -95,8 +99,7 @@ const createStatLine = (stats, showTestModal, characterName) => {
 const createSoldierTypeSelect = (soldierTypesStats, handleSoldierChange, soldierType) => {
 	const options = Object.keys(soldierTypesStats)
 		.map((type, i) => (
-			<option key={i}
-				value={type}>
+			<option key={i} value={type}>
 					{type}
 			</option>
 		))
@@ -112,6 +115,12 @@ const createSoldierTypeSelect = (soldierTypesStats, handleSoldierChange, soldier
 	</>
 }
 
+const getSoldiersCost = (soldiersList) => {
+	return soldiersList.reduce((curr, prev) => {
+		return curr + soldierTypesStats[prev.type][6];
+	}, 0);
+}
+
 const saveToLocalStorage = (key, value) => {
 	key = key == undefined ? '' : key;
 	localStorage.setItem(key, JSON.stringify(value));
@@ -123,7 +132,6 @@ const getRandomCharacterName = (isCaster) => {
 }
 
 const createTangetNumberButtons = chosenTN => {
-	console.log('create TN', chosenTN);
 	return targetNumbersArray.map((number, i) => {
 		return (
 			<button key={i}
@@ -135,7 +143,6 @@ const createTangetNumberButtons = chosenTN => {
 }
 
 const createModifierButtons = chosenModifier => {
-	console.log('create Modifiers', chosenModifier)
 	return modifiersNumberArray.map((number, i) => {
 		const active = number === chosenModifier ? 'active' : '';
 		const sign = number > 0 ? '+' : '';
@@ -151,31 +158,33 @@ const createModifierButtons = chosenModifier => {
 }
 
 const saveWarbandDataInLocalStorage = (
-	{setWizardName, setApprenticeName, setSoldiersList}
+	{setWizardName, setApprenticeName, setSoldiersList, setWarbandCost}
 ) => {
 	const lsWizardName = JSON.parse(localStorage.getItem('wizard-name'));
-		const lsApprenticeName = JSON.parse(localStorage.getItem('apprentice-name'));
-		// const lsCastersStats = localStorage.getItem('casters-list') || [];
-		const lsSoldiersList = JSON.parse(localStorage.getItem('soldiers-list'));
-		if (lsWizardName) {
-			setWizardName(lsWizardName);
-		} else {
-			const randomName = getRandomCharacterName(true)
-			setWizardName(randomName);
-			saveToLocalStorage('wizard-name', randomName);
-		};
-		if (lsApprenticeName) {
-			setApprenticeName(lsApprenticeName);
-		} else {
-			const randomName = getRandomCharacterName(true)
-			setApprenticeName(randomName);
-			saveToLocalStorage('apprentice-name', randomName);
-		};
-		// lsCastersStats.length && setCastersStats(lsCastersStats);
-		lsSoldiersList?.length && setSoldiersList(lsSoldiersList);
+	const lsApprenticeName = JSON.parse(localStorage.getItem('apprentice-name'));
+	// const lsCastersStats = localStorage.getItem('casters-list') || [];
+	const lsSoldiersList = JSON.parse(localStorage.getItem('soldiers-list'));
+	if (lsWizardName) {
+		setWizardName(lsWizardName);
+	} else {
+		const randomName = getRandomCharacterName(true);
+		setWizardName(randomName);
+		saveToLocalStorage('wizard-name', randomName);
+	};
+	if (lsApprenticeName) {
+		setApprenticeName(lsApprenticeName);
+	} else {
+		const randomName = getRandomCharacterName(true);
+		setApprenticeName(randomName);
+		saveToLocalStorage('apprentice-name', randomName);
+	};
+	// lsCastersStats.length && setCastersStats(lsCastersStats);
+	lsSoldiersList?.length && setSoldiersList(lsSoldiersList);
+	setWarbandCost(getSoldiersCost(lsSoldiersList));
 }
 
 export {
+	getRandomFromRange,
 	getCasterTypeField,
 	getCasterNameField,
 	getSchoolField,
@@ -184,6 +193,7 @@ export {
 	getSoldiersFullStats,
 	createStatLine,
 	createSoldierTypeSelect,
+	getSoldiersCost,
 	saveToLocalStorage,
 	getRandomCharacterName,
 	createTangetNumberButtons,

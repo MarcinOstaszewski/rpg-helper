@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { wizardStats, magicSchools } from '../../helpers/constants';
-import { getRandomCharacterName, saveToLocalStorage, saveWarbandDataInLocalStorage } from '../../helpers/helperFunctions';
+import { getRandomCharacterName, getSoldiersCost, saveToLocalStorage, saveWarbandDataInLocalStorage } from '../../helpers/helperFunctions';
 import SoldiersContainer from '../../components/SoldiersContainer/SoldiersContainer';
 import StyledFrostgraveWarbandContainer from './FrostgraveWarbandContainer.styles';
 import CasterContainer from '../../components/CasterConteiner/CasterContainer';
@@ -16,7 +16,7 @@ const FrostgraveWarbandContainer = () => {
 	const [showRemoveContent, setShowRemoveContent] = useState(false);
 	const [showStatTestContent, setShowStatTestContent] = useState(false);
 	const [soldierToRemoveData, setSoldierToRemoveData] = useState({});
-	const [statsToBeTested, setStatsToBeTested] = useState();
+	const [statToBeTested, setStatsToBeTested] = useState();
 
 	const updateWizardName = wizardName => {
 		setWizardName(wizardName);
@@ -37,6 +37,7 @@ const FrostgraveWarbandContainer = () => {
 	const updateSoldiersList = (newSoldiersList) => {
 		setSoldiersList(newSoldiersList);
 		saveToLocalStorage('soldiers-list', newSoldiersList);
+		setWarbandCost(getSoldiersCost(newSoldiersList));
 	}
 	const handleSoldierChange = e => {
 		const target = e.target;
@@ -88,7 +89,9 @@ const FrostgraveWarbandContainer = () => {
 	}
 
 	useEffect(() => {
-		saveWarbandDataInLocalStorage({setWizardName, setApprenticeName, setSoldiersList});
+		saveWarbandDataInLocalStorage({
+			setWizardName, setApprenticeName, setSoldiersList, setWarbandCost
+		});
 	},[]);
 
   return (
@@ -129,7 +132,7 @@ const FrostgraveWarbandContainer = () => {
 				showRemoveContent={showRemoveContent}
 				showStatTestContent={showStatTestContent}
 				soldierData={soldierToRemoveData}
-				statsToBeTested={statsToBeTested}
+				statToBeTested={statToBeTested}
 			/>}
 
     </StyledFrostgraveWarbandContainer>

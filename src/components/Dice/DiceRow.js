@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { getRandomFromRange } from '../../helpers/helperFunctions';
 
 const DiceRow = (props) => {
     const isResults = props.results.length;
@@ -7,7 +8,7 @@ const DiceRow = (props) => {
         if (e.target.dataset.key) {
             let results = [];
             for (let i = 0; i < e.target.dataset.key; i++) {
-                results.push(Math.floor(Math.random() * props.value) + props.resultOffset);
+                results.push(getRandomFromRange(props.value, props.resultOffset));
             }
             props.setResultsFunction(results);
         }
