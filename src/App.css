@@ -1,9 +1,8 @@
 body {
     box-sizing: border-box;
     font-family: 'Lato', Verdana, 'Geneva', Tahoma, sans-serif;
-}
-body, a, button, div, input, select, span {
     font-size: 16px;
+    color: #333;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -17,10 +16,6 @@ h3 {font-size: 22px;}
 h4 {font-size: 18px;}
 h5 {font-size: 16px;}
 h6 {font-size: 12px;}
-
-a, div, input, select, span {
-    color: #333;
-}
 
 .flex-column {
     flex-direction: column;
