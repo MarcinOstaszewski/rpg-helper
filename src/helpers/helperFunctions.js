@@ -1,5 +1,5 @@
 import { GiRollingDices } from 'react-icons/gi';
-import { columnsWithPlusIndexes, targetNumbersArray, modifiersNumberArray, soldierTypesStats } from './constants';
+import { columnsWithPlusIndexes, targetNumbersArray, modifiersNumberArray, soldierTypesStats, opponentFightArray } from './constants';
 import { castersNames, soldiersNames } from './randomNames';
 
 const getRandomFromRange = (value, offset) => {
@@ -135,23 +135,35 @@ const createTangetNumberButtons = chosenTN => {
 	return targetNumbersArray.map((number, i) => {
 		return (
 			<button key={i}
-				data-number={number}
+				data-target-number={number}
 				className={number === chosenTN ? 'active' : ''}
 			>{number}</button>
 		);
 	});
 }
 
-const createModifierButtons = chosenModifier => {
-	return modifiersNumberArray.map((number, i) => {
-		const active = number === chosenModifier ? 'active' : '';
-		const sign = number > 0 ? '+' : '';
+const createOpponentFightButtons = opponentFight => {
+	return opponentFightArray.map((number,i) => {
+		return (
+			<button key={i}
+				data-opponent-fight={number}
+				className={number === opponentFight ? 'active' : ''}
+			>{number}</button>
+		)
+	})
+}
+
+const createModifierButtons = (chosenModifier, isOpponent) => {
+	return modifiersNumberArray.map((modifier, i) => {
+		const active = modifier === chosenModifier ? 'active' : '';
+		const sign = modifier > 0 ? '+' : '';
 		const signClassName = sign ? 'plus' : 'minus';
 		return (
 			<button key={i}
-				data-modifier={number}
+				data-modifier={isOpponent ? '' : modifier}
+				data-opponent-modifier={isOpponent ? modifier : ''}
 				className={`${active} ${signClassName}`}>
-					{sign}{number}
+					{sign}{modifier}
 			</button>
 		);
 	})
@@ -196,6 +208,7 @@ export {
 	getSoldiersCost,
 	saveToLocalStorage,
 	getRandomCharacterName,
+	createOpponentFightButtons,
 	createTangetNumberButtons,
 	createModifierButtons,
 	saveWarbandDataInLocalStorage,
