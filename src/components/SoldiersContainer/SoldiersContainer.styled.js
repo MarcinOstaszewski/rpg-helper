@@ -44,7 +44,7 @@ const StyledSoldiersContainer = styled.div`
 		padding-left: 12px;
 	}
 	.soldier-remove {
-		font-weight: bold;
+		font-weight: 700;
 		color: #d22;
 
 		svg {
@@ -60,7 +60,7 @@ const StyledSoldiersContainer = styled.div`
 		
 		span {
 			&:not(:last-child) {
-				font-weight: bold;
+				font-weight: 700;
 			}
 			display: flex;
 			flex-direction: column;

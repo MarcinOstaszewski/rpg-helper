@@ -32,7 +32,7 @@ const DiceStyled = styled.main`
         &__value,
         &__display {
             align-content: center;
-            font-weight: bold;
+            font-weight: 700;
             display: flex;
             flex-wrap: wrap;
         }

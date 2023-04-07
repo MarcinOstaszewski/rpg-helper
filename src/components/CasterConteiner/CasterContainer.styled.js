@@ -53,7 +53,7 @@ const StyledCasterContainer = styled.section`
 
         .name-input, .magic-school-select {
             text-transform: uppercase;
-            font-weight: bold;
+            font-weight: 700;
             padding: 0px 12px;
         }
 
@@ -83,7 +83,7 @@ const StyledCasterContainer = styled.section`
         grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
 
         span {
-            font-weight: bold;
+            font-weight: 700;
             display: flex;
             flex-direction: column;
         }

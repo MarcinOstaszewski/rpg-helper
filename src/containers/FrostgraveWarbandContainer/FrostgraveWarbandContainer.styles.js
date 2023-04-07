@@ -14,7 +14,7 @@ const StyledFrostgraveWarbandContainer = styled.main`
         .add-soldier {
             margin-right: 24px;
             padding: 12px;
-            font-weight: bold;
+            font-weight: 700;
             border-radius: 6px;
             border: 0;
             background-color: #79c3f0;
@@ -26,8 +26,11 @@ const StyledFrostgraveWarbandContainer = styled.main`
                 margin-bottom: -4px;
             }
         }
+        .wizards-gold {
+            font-weight: 700;
+        }
         .warband-cost {
-            font-weight: bold;
+            font-weight: 700;
 
             .text-danger {
                 color: #d22;
@@ -36,7 +39,7 @@ const StyledFrostgraveWarbandContainer = styled.main`
     }
 
     .font-bold {
-        font-weight: bold;
+        font-weight: 700;
     }
 `
 

@@ -8,7 +8,7 @@ const NavigationHeader = props => {
         <nav>
             <ul>
                 <li>
-                    <NavLink className={navData => navData.isActive ? 'active' : ''}to={`${props.pageRoot}dice`}>
+                    <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}dice`}>
                         Dice
                     </NavLink>
                 </li>
