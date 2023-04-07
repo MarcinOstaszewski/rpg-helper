@@ -7,7 +7,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 h1 {font-size: 32px;}
@@ -22,7 +22,7 @@ h6 {font-size: 12px;}
 }
 
 .font-bold {
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .mx-auto {
