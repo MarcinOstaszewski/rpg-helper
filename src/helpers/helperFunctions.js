@@ -55,13 +55,13 @@ const conditionallyAddSign = (i, value) => {
 	return columnsWithPlusIndexes.includes(i) ? sign : ''
 };
 
-const getSoldiersFullStats = (soldierTypesStats, soldierStatNames) => {
+const getSoldiersFullStats = (soldierTypesStats, statNames) => {
 	const soldiersFullStats = {};
 	Object.keys(soldierTypesStats).forEach(type => {
 		const statValues = soldierTypesStats[type];
 		const stats = {};
 		statValues.forEach((stat,i) => {
-			stats[soldierStatNames[i]] = stat;
+			stats[statNames[i]] = stat;
 		});
 		soldiersFullStats[type] = {
 			stats
@@ -195,6 +195,49 @@ const saveWarbandDataInLocalStorage = (
 	setWarbandCost(getSoldiersCost(lsSoldiersList));
 }
 
+const updateAllTestVariables = ({
+	e, yourModifier, setYourModifier, yourTN, setYourTN, setYourDiceResult, setWasTestSuccessful,
+	opponentModifier, setOpponentModifier, opponentStat, setOpponentStat, setOpponentDiceResult
+}) => {
+	const yourNewTN = parseInt(e.target.dataset.targetNumber || 0);
+	const yourNewModifier = parseInt(e.target.dataset.modifier || 0);
+	const opponentNewStat = parseInt(e.target.dataset.opponentFight || 0);
+	const opponentNewModifier = parseInt(e.target.dataset.opponentModifier || 0);
+	setWasTestSuccessful(undefined);
+	setYourDiceResult(undefined);
+	setOpponentDiceResult(undefined);
+	if (yourNewModifier) {
+		if (yourNewModifier === yourModifier) {
+			setYourModifier(0);
+			return;
+		};
+		setYourModifier(yourNewModifier)
+	};
+	if (yourNewTN) {
+		if (yourNewTN === yourTN) {
+			setYourTN(0);
+			return;
+		};
+		setYourTN(yourNewTN);
+		setOpponentStat(undefined);
+	};
+	if (opponentNewModifier) {
+		if (opponentNewModifier === opponentModifier) {
+			setOpponentModifier(0);
+			return;
+		};
+		setOpponentModifier(opponentNewModifier)
+	};
+	if (opponentNewStat) {
+		if (opponentNewStat === opponentStat) {
+			setOpponentStat(undefined);
+			return;
+		}
+		setYourTN(0);
+		setOpponentStat(opponentNewStat);
+	};
+}
+
 export {
 	getRandomFromRange,
 	getCasterTypeField,
@@ -212,4 +255,5 @@ export {
 	createTangetNumberButtons,
 	createModifierButtons,
 	saveWarbandDataInLocalStorage,
+	updateAllTestVariables,
 };
