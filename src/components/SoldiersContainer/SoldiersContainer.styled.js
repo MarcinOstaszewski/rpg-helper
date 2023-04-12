@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const StyledSoldiersContainer = styled.div`
+const StyledSoldiersContainer = styled.section`
   display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
@@ -78,6 +78,23 @@ const StyledSoldiersContainer = styled.div`
 				display: flex;
 				justify-content: center;
 			}
+		}
+		.health-field {
+			flex-direction: row;
+			justify-content: center;
+            .divider {
+                margin: 0 12px;
+            }
+            .health-select {
+                font-size: inherit;
+                font-family: inherit;
+                font-weight: inherit;
+                border: none;
+                width: 40%;
+                :focus {
+                    outline: 0;
+                }
+            }
 		}
 	}
 `

@@ -24,7 +24,19 @@ const StyledCasterContainer = styled.section`
             }
         }
         &.apprentice {
-            grid-template-columns: 2fr 14fr;
+            grid-template-columns: 2fr 6fr 8fr;
+            
+            .spell-book {
+                font-weight: 700;
+                color: blue;
+                text-align: right;
+                padding: 2px 12px;
+                
+                svg {
+                    font-size: 24px;
+                    margin: 0 0 -4px 12px;
+                }
+            }
         }
 
         .name-input-container {
@@ -96,6 +108,23 @@ const StyledCasterContainer = styled.section`
                 height: 20px;
             }
         }
+        .health-field {
+			flex-direction: row;
+			justify-content: center;
+            .divider {
+                margin: 0 12px;
+            }
+            .health-select {
+                font-size: inherit;
+                font-family: inherit;
+                font-weight: inherit;
+                border: none;
+                width: 40%;
+                :focus {
+                    outline: 0;
+                }
+            }
+		}
     }
 `
 export default StyledCasterContainer;

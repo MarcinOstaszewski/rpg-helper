@@ -5,7 +5,7 @@ const SizeInputStyled = styled.div`
 
     input {
         font-size: ${props => props.maxSize / 3}px;
-        font-weight: bold;
+        font-weight: 700;
         height: ${props => props.maxSize}px;
         border-bottom: 1px solid black;
         background-color: #f6f6f6;
