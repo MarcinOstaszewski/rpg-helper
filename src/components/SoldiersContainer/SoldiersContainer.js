@@ -1,26 +1,47 @@
 import React from 'react';
 import StyledSoldiersContainer from './SoldiersContainer.styled';
 import { BsPersonXFill } from 'react-icons/bs';
-import { soldierTypesStats, soldierStatNames } from '../../helpers/constants';
+import { statNames } from '../../helpers/constants';
 import { createSoldierTypeSelect, createStatLine, getSoldiersFullStats } from '../../helpers/helperFunctions';
 
-const SoldiersContainer = ({soldiersList, handleSoldierChange, handleShowRemoveModal, showTestModal}) => {
-	const soldiersFullStats = getSoldiersFullStats(soldierTypesStats, soldierStatNames);
-	const soldates = soldiersList.map((soldier, i) => {
-		const soldierType = soldier.type;
-		const stats = soldiersFullStats[soldierType].stats;
-		const statLine = createStatLine(stats, showTestModal, soldier.name);
+const SoldiersContainer = ({
+	soldiersList, handleSoldierChange, handleShowRemoveModal, showTestModal, handleHealthChange
+}) => {
+	const soldiersFullStats = getSoldiersFullStats(statNames);
+	const soldiersMarkup = soldiersList.map((soldier, index) => {
+		const { name, currentHealth, type } = soldier;
+		const characterData = {
+			name, 
+			currentHealth, 
+			type,
+			stats: soldiersFullStats[type].stats
+		}
+		const stats = soldiersFullStats[type].stats;
+		const statLine = createStatLine({
+			type: 'Soldier',
+			characterData,
+			showTestModal,
+			handleSoldierChange,
+			index
+			// handleHealthChange
+		});
 		
 		return (
-			<StyledSoldiersContainer key={i}>
-				<div className={`soldier-header ${stats.Type.toLowerCase()}`} data-index={i}>
+			<StyledSoldiersContainer key={index} data-index={index}>
+				<div className={`soldier-header ${stats.Type.toLowerCase()}`} data-index={index}>
 					<span className='highlighted'>{stats.Type}</span>
 					<span>
-						<input className='soldier-name js-name-input' value={soldier.name} onChange={handleSoldierChange}/>
+						<input data-property={name}
+							className='soldier-name js-name-input' 
+							value={name}
+							onChange={handleSoldierChange}/>
 					</span>
 					<span className='highlighted'>Type</span>
-					{createSoldierTypeSelect(soldierTypesStats, handleSoldierChange, soldierType)}
-					<span className='soldier-remove' onClick={handleShowRemoveModal}><BsPersonXFill /></span>
+					{createSoldierTypeSelect({handleSoldierChange, type, index})}
+					<span className='soldier-remove' 
+						onClick={handleShowRemoveModal}>
+						<BsPersonXFill />
+					</span>
 				</div>
 				<div className='soldier-stats'>
 					{statLine}
@@ -29,13 +50,7 @@ const SoldiersContainer = ({soldiersList, handleSoldierChange, handleShowRemoveM
 		);
 	});
 
-
-  return (
-		<>
-			{/* <>{soldiers}</> */}
-			<>{soldates}</>
-		</>
-  )
+  return <>{soldiersMarkup}</>
 }
 
 export default SoldiersContainer;

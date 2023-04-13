@@ -1,28 +1,34 @@
-import React, { useState} from 'react';
+import React from 'react';
 import StyledCasterContainer from './CasterContainer.styled';
+import { GiBookmarklet } from 'react-icons/gi';
 import { 
-  createStatLine, getApprenticeStats, getCasterNameField, getCasterTypeField, getMagicSchoolSelect, getSchoolField 
+  createStatLine, getCasterNameField, getCasterTypeField, getMagicSchoolSelect, getSchoolField 
 } from '../../helpers/helperFunctions';
+import { casterTypes } from '../../helpers/constants';
 
 const CasterContainer = (
-  { wizardStats, baseStats, magicSchools, casterName, setCasterName, handleCasterNameChange, showTestModal }
+  { isWizard, castersData, updateCastersData, showTestModal, 
+  }
 ) => {
-  const isWizard = wizardStats && Object.keys(wizardStats).length > 0;
-  const initialCasterStats = isWizard ? wizardStats : getApprenticeStats(baseStats);
-  const [casterStats, setCasterStats] = useState(initialCasterStats);
-  const statLine = createStatLine(casterStats, showTestModal, casterName);
-
-  const casterType = isWizard ? 'Wizard' : 'Apprentice';
-  const schoolField = getSchoolField(isWizard);
-  const magicSchoolSelect = getMagicSchoolSelect(magicSchools);
+  const casterType = isWizard ? casterTypes.WIZ : casterTypes.APP;
+  if (castersData[casterType] === undefined) return;
+  const casterData = castersData[casterType];
+  const { wizardsSchool } = casterData;
+  const statLine = createStatLine({
+    type: casterType,
+    characterData: casterData,
+    updateCastersData,
+    showTestModal
+  });
 
   return (
     <StyledCasterContainer>
-      <div className={`character-header ${isWizard ? 'wizard' : 'apprentice'}`}>
+      <div className={`character-header ${casterType.toLowerCase()}`}>
         {getCasterTypeField(casterType)}
-        {getCasterNameField({casterName, handleCasterNameChange, isWizard, setCasterName})}
-        {schoolField}
-        {magicSchoolSelect}
+        {getCasterNameField({casterType, castersData, updateCastersData})}
+        {getSchoolField(casterType)}
+        {getMagicSchoolSelect({casterType, wizardsSchool, updateCastersData})}
+        {!isWizard ? <span className='spell-book'><strong>SPELL BOOK</strong><GiBookmarklet /></span> : ''}
       </div>
       <div>
         {statLine}

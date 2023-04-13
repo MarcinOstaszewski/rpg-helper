@@ -1,61 +1,83 @@
 import { GiRollingDices } from 'react-icons/gi';
-import { columnsWithPlusIndexes, targetNumbersArray, modifiersNumberArray, soldierTypesStats, opponentFightArray } from './constants';
+import { columnsWithPlusIndexes, targetNumbersArray, modifiersNumberArray, soldierTypesStats, 
+	opponentFightArray, opponentArmourArray, weaponDamageModifierArray, wizardStats, casterTypes, 
+	magicSchools, propertyNames, localStorageKeys
+} from './constants';
 import { castersNames, soldiersNames } from './randomNames';
 
+const isString = variable => {
+	return typeof variable === 'string' || variable instanceof String;
+}
 const getRandomFromRange = (value, offset) => {
 	return Math.floor(Math.random() * value) + offset;
 }
 
 const getCasterTypeField = casterType => <span className='main highlighted'>{casterType}</span>;
 
-const getCasterNameField = ({casterName, handleCasterNameChange, isWizard, setCasterName}) => {
+const getCasterNameField = ({casterType, castersData, updateCastersData}) => {
+	if (!Object.keys(castersData).length) return;
+	const {name} = castersData[casterType];
 	return (
 		<span className='name-input-container'>
 			<input className='name-input'
-				onChange={handleCasterNameChange} 
-				value={casterName} 
-				data-is-wizard={isWizard}
+				onChange={updateCastersData}
+				value={name}
+				data-type={casterType}
+				data-property={propertyNames.NAME}
 				placeholder='Choose a name...'
 			/>
 			<button 
-				className='random-change-name' 
-				onClick={() => setCasterName(getRandomCharacterName(true))}
+				className='random-change-name'
+				onClick={updateCastersData}
+				value={getRandomCharacterName(true)}
+				data-type={casterType}
+				data-property={propertyNames.NAME}
 			>
 				<GiRollingDices />
 			</button>
 		</span>
-)}
-
-const getSchoolField = isWizard => {
-	return isWizard ? <span className='type highlighted'>School</span> : '';
+)
 }
 
-const getMagicSchoolSelect = magicSchools => {
-	if (!magicSchools) {
-		return '';
-	}
+const getSchoolField = casterType => { 
+	return casterType === casterTypes.WIZ ? <span className='type highlighted'>School</span> : '';
+}
+
+const getMagicSchoolSelect = ({casterType, wizardsSchool, updateCastersData}) => {
+	if (!wizardsSchool) return '';
 	return <span>
-		<select name='magic-schools' className='magic-school-select'>
+		<select 
+			name='magic-schools' 
+			className='magic-school-select'
+			value={wizardsSchool} 
+			onChange={updateCastersData} 
+			data-type={casterType}
+			data-property={propertyNames.WIZARDS_SCHOOL}
+		>
 			{magicSchools.map((school, i) => <option value={school} key={i}>{school}</option>)}
 		</select>
 	</span>
 };
 
-const getApprenticeStats = (wizardStats) => ({
-  Move: wizardStats.Move,
-  Fight: wizardStats.Fight - 2,
-  Shoot: wizardStats.Shoot,
-  Armour: wizardStats.Armour,
-  Will: wizardStats.Will - 2,
-  Health: wizardStats.Health - 2,
-});
+const getApprenticeStats = wizardStats => {
+	const stats = wizardStats ? {
+		Move: wizardStats.Move,
+		Fight: wizardStats.Fight - 2,
+		Shoot: wizardStats.Shoot,
+		Armour: wizardStats.Armour,
+		Will: wizardStats.Will - 2,
+		Health: wizardStats.Health - 2,
+	} : {};
+	const currentHealth = wizardStats ? wizardStats.Health - 2 : 0;
+	return {stats, currentHealth};
+};
 
 const conditionallyAddSign = (i, value) => {
 	const sign = value >= 0 ? '+' : '';
 	return columnsWithPlusIndexes.includes(i) ? sign : ''
 };
 
-const getSoldiersFullStats = (soldierTypesStats, statNames) => {
+const getSoldiersFullStats = statNames => {
 	const soldiersFullStats = {};
 	Object.keys(soldierTypesStats).forEach(type => {
 		const statValues = soldierTypesStats[type];
@@ -70,12 +92,43 @@ const getSoldiersFullStats = (soldierTypesStats, statNames) => {
 	return soldiersFullStats;	
 };
 
-const createStatLine = (stats, showTestModal, characterName) => {
-  return <div className='stats-line'>
+const createHealthChangeSelect = ({maxHealth, currentHealth, updateCastersData, type, handleSoldierChange, index}) => {
+	const healthOptions = [];
+	const onChangeFunction = type === 'Soldier' ? handleSoldierChange : updateCastersData;
+	for (let i = maxHealth; i > 0; i--) {
+		healthOptions.push(
+			<option value={i} key={i}>{i}</option>
+		)
+	}
+	return <select 
+		className='health-select' 
+		onChange={onChangeFunction}
+		value={currentHealth}
+		data-type={type}
+		data-index={index}
+		data-property={propertyNames.CURRENT_HEALTH}
+	>
+		{healthOptions}
+	</select>;
+}
+
+const createStatLine = ({characterData, showTestModal, type, updateCastersData, handleSoldierChange, index}) => {
+	const { name, currentHealth, stats } = characterData;
+	return <div className='stats-line'>
 		{Object.keys(stats).map((key, i) => {
-			if (i > 7) return;
-			
+			if (i > 7) return; // TODO: create editable Level and Experience fields */
 			const value = stats[key];
+			let statField;
+			if (i === 5) {
+				const maxHealth = stats.Health;
+				statField = <span className='health-field'>
+					<div>{value}</div>
+					<div className='divider'>/</div>
+					{createHealthChangeSelect({maxHealth, currentHealth, updateCastersData, type, handleSoldierChange, index})}
+				</span>
+			} else {
+				statField = <span>{conditionallyAddSign(i, value)}{value}</span>
+			}
 			return (
 				<span key={i}
 					className='stats-field'
@@ -83,39 +136,38 @@ const createStatLine = (stats, showTestModal, characterName) => {
 					data-value={value}
 					data-stat={key}
 					data-index={i}
-					data-name={characterName}
+					data-name={name}
 				>
 					<span>{key}</span>
-					<span>
-						{conditionallyAddSign(i, value)}
-						{value}
-					</span>
+					{statField}
 				</span>
 			);
 		})}
 	</div>;
 };
 
-const createSoldierTypeSelect = (soldierTypesStats, handleSoldierChange, soldierType) => {
+const createSoldierTypeSelect = ({handleSoldierChange, type, index}) => {
 	const options = Object.keys(soldierTypesStats)
 		.map((type, i) => (
 			<option key={i} value={type}>
-					{type}
+				{type}
 			</option>
 		))
 	return <>
 		<span>
 			<select 
-				className='soldier-type' 
+				className='soldier-type'
+				data-property={propertyNames.TYPE}
+				data-index={index}
 				onChange={handleSoldierChange}
-				value={soldierType}>
+				value={type}>
 				{options}
 			</select>
 		</span>
 	</>
 }
 
-const getSoldiersCost = (soldiersList) => {
+const getSoldiersCost = soldiersList => {
 	return soldiersList.reduce((curr, prev) => {
 		return curr + soldierTypesStats[prev.type][6];
 	}, 0);
@@ -126,7 +178,7 @@ const saveToLocalStorage = (key, value) => {
 	localStorage.setItem(key, JSON.stringify(value));
 };
 
-const getRandomCharacterName = (isCaster) => {
+const getRandomCharacterName = isCaster => {
 	const namesList = (isCaster) ? castersNames : soldiersNames;
 	return namesList[Math.floor(Math.random() * namesList.length + 2)];
 }
@@ -150,7 +202,7 @@ const createOpponentFightButtons = opponentFight => {
 				className={number === opponentFight ? 'active' : ''}
 			>{number}</button>
 		)
-	})
+	});
 }
 
 const createModifierButtons = (chosenModifier, isOpponent) => {
@@ -169,30 +221,69 @@ const createModifierButtons = (chosenModifier, isOpponent) => {
 	})
 }
 
-const saveWarbandDataInLocalStorage = (
-	{setWizardName, setApprenticeName, setSoldiersList, setWarbandCost}
-) => {
-	const lsWizardName = JSON.parse(localStorage.getItem('wizard-name'));
-	const lsApprenticeName = JSON.parse(localStorage.getItem('apprentice-name'));
-	// const lsCastersStats = localStorage.getItem('casters-list') || [];
-	const lsSoldiersList = JSON.parse(localStorage.getItem('soldiers-list'));
-	if (lsWizardName) {
-		setWizardName(lsWizardName);
+const createOpponentArmourButtons = ({opponentArmour, handleSetOpponentArmour}) => {
+	return opponentArmourArray.map((number,i) => {
+		const numberDisplay = number > 15 ? `[ ${number} ]` : number;
+		return (
+			<button key={i}
+				data-opponent-armour={number}
+				onClick={handleSetOpponentArmour}
+				className={opponentArmour === number ? 'active' : ''}
+			>
+				{numberDisplay}
+			</button>
+		)
+	});
+}
+
+const createWeaponDamageModifierButtons = ({weaponDamageModifier, handleSetWeaponDamageModifier}) => {
+	return weaponDamageModifierArray.map((modifier,i) => {
+		const sign = modifier > 0 ? '+' : '';
+		const signClassName = sign ? 'plus' : 'minus';
+		return (
+			<button key={i}
+				data-weapon-damage-modifier={modifier}
+				onClick={handleSetWeaponDamageModifier}
+				className={`${signClassName} 
+				 ${parseInt(weaponDamageModifier) === parseInt(modifier) ? 'active' : ''}`}
+			>
+				{sign}{modifier}
+			</button>
+		)
+	})
+}
+
+const saveWarbandDataInLocalStorage = ({
+	setWizardName, setApprenticeName, setSoldiersList, setWarbandCost, setCastersData
+}) => {
+	const lsCastersData = JSON.parse(localStorage.getItem(localStorageKeys.CASTERS_DATA));
+	const lsSoldiersList = JSON.parse(localStorage.getItem(localStorageKeys.SOLDIERS_DATA));
+	if (lsCastersData) {
+		setCastersData(lsCastersData);
 	} else {
-		const randomName = getRandomCharacterName(true);
-		setWizardName(randomName);
-		saveToLocalStorage('wizard-name', randomName);
-	};
-	if (lsApprenticeName) {
-		setApprenticeName(lsApprenticeName);
-	} else {
-		const randomName = getRandomCharacterName(true);
-		setApprenticeName(randomName);
-		saveToLocalStorage('apprentice-name', randomName);
-	};
-	// lsCastersStats.length && setCastersStats(lsCastersStats);
-	lsSoldiersList?.length && setSoldiersList(lsSoldiersList);
-	setWarbandCost(getSoldiersCost(lsSoldiersList));
+		const baseStats = {...wizardStats};
+		const { stats, currentHealth } = getApprenticeStats(baseStats);
+		const tmpCastersData = {
+			Wizard: {
+				name: getRandomCharacterName(true),
+				stats: baseStats,
+				currentHealth: baseStats.Health,
+				wizardsSchool: magicSchools[getRandomFromRange(10, 0)]
+			},
+			Apprentice : {
+				name: getRandomCharacterName(true),
+				stats, 
+				currentHealth
+			}
+		};
+		saveToLocalStorage(localStorageKeys.CASTERS_DATA, tmpCastersData);
+		setCastersData(tmpCastersData);
+	}
+	
+	if (lsSoldiersList?.length) {
+		setSoldiersList(lsSoldiersList);
+		setWarbandCost(getSoldiersCost(lsSoldiersList));
+	}
 }
 
 const updateAllTestVariables = ({
@@ -239,6 +330,7 @@ const updateAllTestVariables = ({
 }
 
 export {
+	isString,
 	getRandomFromRange,
 	getCasterTypeField,
 	getCasterNameField,
@@ -255,5 +347,7 @@ export {
 	createTangetNumberButtons,
 	createModifierButtons,
 	saveWarbandDataInLocalStorage,
+	createOpponentArmourButtons,
+	createWeaponDamageModifierButtons,
 	updateAllTestVariables,
 };

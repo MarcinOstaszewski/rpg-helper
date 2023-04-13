@@ -174,7 +174,7 @@ const StyledModal = styled.div`
 			}
 
 			svg {
-				margin: 0 12px 2px 5px;
+				margin: 0 6px 2px;
 			}
 		}
 

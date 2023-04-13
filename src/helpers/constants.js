@@ -9,7 +9,7 @@ const wizardStats = {
     Experience: 0,
 }
 
-const soldierStatNames = [
+const statNames = [
     'Move',
     'Fight',
     'Shoot',
@@ -19,6 +19,11 @@ const soldierStatNames = [
     'Cost',
     'Notes',
 		'Type'
+];
+
+const statsEligibleForCombatTest = [
+  statNames[1],
+  statNames[2]
 ];
 
 const soldierTypesStats = {
@@ -52,18 +57,44 @@ const magicSchools = [
   'Witch',
 ];
 
+const casterTypes = {
+  WIZ: 'Wizard',
+  APP: 'Apprentice'
+};
+
+const propertyNames = {
+  CURRENT_HEALTH: 'currentHealth',
+  NAME: 'name',
+  WIZARDS_SCHOOL: 'wizardsSchool',
+  STATS: 'stats',
+  TYPE: 'type'
+};
+
+const localStorageKeys = {
+  SOLDIERS_DATA: 'soldiers-data',
+  CASTERS_DATA: 'casters-data'
+}
+
 const columnsWithPlusIndexes = [1, 2, 4];
 const targetNumbersArray = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 const modifiersNumberArray = [-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9,10];
 const opponentFightArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+const opponentArmourArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+const weaponDamageModifierArray = [-1,1,2];
 
 export {
     wizardStats,
-    soldierStatNames,
+    statNames,
+    statsEligibleForCombatTest,
     soldierTypesStats,
     magicSchools,
+    casterTypes,
+    propertyNames,
+    localStorageKeys,
 		columnsWithPlusIndexes,
 		targetNumbersArray,
 		modifiersNumberArray,
     opponentFightArray,
+    opponentArmourArray,
+    weaponDamageModifierArray,
 }

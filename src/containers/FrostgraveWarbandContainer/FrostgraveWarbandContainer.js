@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { wizardStats, magicSchools } from '../../helpers/constants';
-import { getRandomCharacterName, getSoldiersCost, saveToLocalStorage, saveWarbandDataInLocalStorage } from '../../helpers/helperFunctions';
+import { casterTypes, localStorageKeys } from '../../helpers/constants';
+import { getRandomCharacterName, getSoldiersCost, isString, saveToLocalStorage, 
+	saveWarbandDataInLocalStorage } from '../../helpers/helperFunctions';
 import { BsPersonPlusFill } from 'react-icons/bs';
 import SoldiersContainer from '../../components/SoldiersContainer/SoldiersContainer';
 import StyledFrostgraveWarbandContainer from './FrostgraveWarbandContainer.styles';
@@ -8,10 +9,8 @@ import CasterContainer from '../../components/CasterConteiner/CasterContainer';
 import Modal from '../../components/Modal/Modal';
 
 const FrostgraveWarbandContainer = () => {
-	const [wizardName, setWizardName] = useState('');
-	const [apprenticeName, setApprenticeName] = useState('');
 	const [soldiersList, setSoldiersList] = useState([]);
-	// const [castersStats, setCastersStats] = useState([]);
+	const [castersData, setCastersData] = useState({});
 	const [warbandCost, setWarbandCost] = useState(0);
 	const [showModal, setShowModal] = useState(false);
 	const [showRemoveContent, setShowRemoveContent] = useState(false);
@@ -19,37 +18,23 @@ const FrostgraveWarbandContainer = () => {
 	const [soldierToRemoveData, setSoldierToRemoveData] = useState({});
 	const [statToBeTested, setStatsToBeTested] = useState();
 
-	const updateWizardName = wizardName => {
-		setWizardName(wizardName);
-		saveToLocalStorage('wizard-name', wizardName);
-	}
-	const updateApprenticeName = apprenticeName => {
-		setApprenticeName(apprenticeName);
-		saveToLocalStorage('apprentice-name', apprenticeName);
-	}
-	const handleCasterNameChange = e => {
-		const value = e.target.value;
-		if (Boolean(e.target.dataset.isWizard)) {
-			updateWizardName(value)
-		} else {
-			updateApprenticeName(value);
-		};
+	const updateCastersData = e => {
+		const {type, property} = e.currentTarget.dataset;
+		const newCastersData = {...castersData};
+		const newValue = isString(e.currentTarget.value) ? e.currentTarget.value : parseInt(e.currentTarget.value);
+		newCastersData[type][property] = newValue;
+		setCastersData(newCastersData);
+		saveToLocalStorage(localStorageKeys.CASTERS_DATA, newCastersData);
 	}
 	const updateSoldiersList = (newSoldiersList) => {
 		setSoldiersList(newSoldiersList);
-		saveToLocalStorage('soldiers-list', newSoldiersList);
+		saveToLocalStorage(localStorageKeys.SOLDIERS_DATA, newSoldiersList);
 		setWarbandCost(getSoldiersCost(newSoldiersList));
 	}
 	const handleSoldierChange = e => {
-		const target = e.target;
-		const isNameChanged = target.classList.contains('js-name-input');
-		const index = target.parentElement.parentElement.dataset.index;
+		const {property, index} = e.target.dataset;
 		const newSoldiersList = [...soldiersList];
-		if (isNameChanged) {
-			newSoldiersList[index].name = target.value;
-		} else {
-			newSoldiersList[index].type = target.value;
-		}
+		newSoldiersList[index][property] = e.target.value;
 		updateSoldiersList(newSoldiersList);
 	}
 	const addSoldier = () => {
@@ -58,7 +43,7 @@ const FrostgraveWarbandContainer = () => {
 		updateSoldiersList(newSoldiersList);
 	}
 	const handleModalRemove = e => {
-		const index =  e.target.parentElement.dataset.index;
+		const index =  e.target.parentElement.parentElement.dataset.index;
 		const newSoldiersList = [...soldiersList];
 		newSoldiersList.splice(index, 1);
 		updateSoldiersList(newSoldiersList);
@@ -71,7 +56,7 @@ const FrostgraveWarbandContainer = () => {
 		setShowStatTestContent(false);
 	}
 	const handleShowRemoveModal = e => {
-		const index =  e.target.parentElement.dataset.index;
+		const index = e.target.parentElement.parentElement.dataset.index;
 		const soldierName = soldiersList[index].name;
 		setSoldierToRemoveData({index: index, name: soldierName});
 		setShowRemoveContent(true)
@@ -79,11 +64,8 @@ const FrostgraveWarbandContainer = () => {
 	}
 	const showTestModal = e => {
 		const index = parseInt(e.currentTarget.dataset.index);
-		if (index === 5) {
-			console.log('TODO health modification!');
-		};
 		if (index > 4) return;
-		const {stat, value, name} = e.currentTarget.dataset;
+		const { stat, value, name } = e.currentTarget.dataset;
 		setStatsToBeTested({stat, value, name});
 		setShowStatTestContent(true);
 		setShowModal(true);
@@ -91,7 +73,7 @@ const FrostgraveWarbandContainer = () => {
 
 	useEffect(() => {
 		saveWarbandDataInLocalStorage({
-			setWizardName, setApprenticeName, setSoldiersList, setWarbandCost
+			setCastersData, setSoldiersList, setWarbandCost, setCastersData
 		});
 	},[]);
 
@@ -100,7 +82,13 @@ const FrostgraveWarbandContainer = () => {
 			<div className='top-container'>
 				<h1>Frostgrave Warband Sheet</h1>
 				<div className='buttons-container'>
-					<button onClick={addSoldier} className='add-soldier'><BsPersonPlusFill />Add Soldier</button>
+					<button onClick={addSoldier} className='add-soldier'>
+						<BsPersonPlusFill />Add Soldier
+					</button>
+				</div>
+				<div className='wizards-gold'>
+					<span>Wizards gold: </span>
+					<span>400 gc</span>
 				</div>
 				<div className='warband-cost'>
 					<span>Warband cost: </span>
@@ -109,17 +97,14 @@ const FrostgraveWarbandContainer = () => {
 			</div>
 
 			<CasterContainer
-				wizardStats={wizardStats}
-				magicSchools={magicSchools}
-				casterName={wizardName}
-				setCasterName={updateWizardName}
-				handleCasterNameChange={handleCasterNameChange}
+				isWizard={true}
+				castersData={castersData}
+				updateCastersData={updateCastersData}
 				showTestModal={showTestModal}/>
 			<CasterContainer
-				baseStats={wizardStats}
-				casterName={apprenticeName}
-				setCasterName={updateApprenticeName}
-				handleCasterNameChange={handleCasterNameChange}
+				isWizard={false}
+				castersData={castersData}
+				updateCastersData={updateCastersData}
 				showTestModal={showTestModal}/>
 
 			<SoldiersContainer
