@@ -1,4 +1,4 @@
-body {
+body, input, select {
     box-sizing: border-box;
     font-family: 'Lato', Verdana, 'Geneva', Tahoma, sans-serif;
     font-size: 16px;

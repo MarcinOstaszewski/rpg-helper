@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { casterTypes, localStorageKeys } from '../../helpers/constants';
+import { localStorageKeys } from '../../helpers/constants';
 import { getRandomCharacterName, getSoldiersCost, isString, saveToLocalStorage, 
 	saveWarbandDataInLocalStorage } from '../../helpers/helperFunctions';
 import { BsPersonPlusFill } from 'react-icons/bs';
@@ -7,6 +7,7 @@ import SoldiersContainer from '../../components/SoldiersContainer/SoldiersContai
 import StyledFrostgraveWarbandContainer from './FrostgraveWarbandContainer.styles';
 import CasterContainer from '../../components/CasterConteiner/CasterContainer';
 import Modal from '../../components/Modal/Modal';
+import SpellbookModal from '../../components/SpellbookModal/SpellbookModal';
 
 const FrostgraveWarbandContainer = () => {
 	const [soldiersList, setSoldiersList] = useState([]);
@@ -15,6 +16,7 @@ const FrostgraveWarbandContainer = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [showRemoveContent, setShowRemoveContent] = useState(false);
 	const [showStatTestContent, setShowStatTestContent] = useState(false);
+	const [showSpellbookModal, setShowSpellbookModal] = useState(false);
 	const [soldierToRemoveData, setSoldierToRemoveData] = useState({});
 	const [statToBeTested, setStatsToBeTested] = useState();
 
@@ -25,6 +27,9 @@ const FrostgraveWarbandContainer = () => {
 		newCastersData[type][property] = newValue;
 		setCastersData(newCastersData);
 		saveToLocalStorage(localStorageKeys.CASTERS_DATA, newCastersData);
+	}
+	const updateWizardSpells = e => {
+		console.log(e.target.innerText);
 	}
 	const updateSoldiersList = (newSoldiersList) => {
 		setSoldiersList(newSoldiersList);
@@ -55,6 +60,9 @@ const FrostgraveWarbandContainer = () => {
 		setShowRemoveContent(false);
 		setShowStatTestContent(false);
 	}
+	const handleSpellbookClose = () => {
+		setShowSpellbookModal(false);
+	}
 	const handleShowRemoveModal = e => {
 		const index = e.target.parentElement.parentElement.dataset.index;
 		const soldierName = soldiersList[index].name;
@@ -69,6 +77,9 @@ const FrostgraveWarbandContainer = () => {
 		setStatsToBeTested({stat, value, name});
 		setShowStatTestContent(true);
 		setShowModal(true);
+	}
+	const handleSpellbookClicked = e => {
+		setShowSpellbookModal(true);
 	}
 
 	useEffect(() => {
@@ -100,6 +111,7 @@ const FrostgraveWarbandContainer = () => {
 				isWizard={true}
 				castersData={castersData}
 				updateCastersData={updateCastersData}
+				handleSpellbookClicked={handleSpellbookClicked}
 				showTestModal={showTestModal}/>
 			<CasterContainer
 				isWizard={false}
@@ -120,6 +132,13 @@ const FrostgraveWarbandContainer = () => {
 				showStatTestContent={showStatTestContent}
 				soldierData={soldierToRemoveData}
 				statToBeTested={statToBeTested}
+			/>}
+
+			{showSpellbookModal && <SpellbookModal 
+				handleClose={handleSpellbookClose}
+				castersData={castersData}
+				updateCastersData={updateCastersData}
+				updateWizardSpells={updateWizardSpells}
 			/>}
 
     </StyledFrostgraveWarbandContainer>
