@@ -5,18 +5,16 @@ import { casterTypes, propertyNames } from '../../helpers/constants';
 
 const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWizardSpells}) => {
 	const [spellAndDescription, setSpellAndDescription] = useState({name: 'Click a spell above', descr: "to see it's description"});
-	const allSpellsDescriptions = {}; 
-	Object.keys(wizardSchoolsData).forEach(school => {
-		Object.keys(wizardSchoolsData[school].spells).forEach(spell => {
-			allSpellsDescriptions[spell] = wizardSchoolsData[school].spells[spell].description
-		})
-	});
-	const onSpellButtonClick = e => {
-		const spellWithDescription = {
-			name: e.target.innerText,
-			descr: allSpellsDescriptions[e.target.innerText]
+	const allSpellsList = {}; 
+	for (let school in wizardSchoolsData) {
+		for (let spell in wizardSchoolsData[school].spells) {
+			allSpellsList[spell] = {...wizardSchoolsData[school].spells[spell], school};
 		}
-		updateWizardSpells(e)
+	}
+	const onSpellButtonClick = e => {
+		const name = e.target.innerText;
+		const spellWithDescription = {name, ...allSpellsList[name]}
+		updateWizardSpells(spellWithDescription)
 		setSpellAndDescription(spellWithDescription);
 	}
 	const { wizardsSchool } = castersData[casterTypes.WIZ];

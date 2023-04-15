@@ -28,8 +28,8 @@ const FrostgraveWarbandContainer = () => {
 		setCastersData(newCastersData);
 		saveToLocalStorage(localStorageKeys.CASTERS_DATA, newCastersData);
 	}
-	const updateWizardSpells = e => {
-		console.log(e.target.innerText);
+	const updateWizardSpells = spellData => {
+		console.log(spellData);
 	}
 	const updateSoldiersList = (newSoldiersList) => {
 		setSoldiersList(newSoldiersList);
