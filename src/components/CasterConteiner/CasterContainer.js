@@ -2,12 +2,12 @@ import React from 'react';
 import StyledCasterContainer from './CasterContainer.styled';
 import { GiBookmarklet } from 'react-icons/gi';
 import { 
-  createStatLine, getCasterNameField, getCasterTypeField, getMagicSchoolSelect, getSchoolField 
+  createStatLine, getCasterNameField, getCasterTypeField, getSchoolField 
 } from '../../helpers/helperFunctions';
 import { casterTypes } from '../../helpers/constants';
 
 const CasterContainer = (
-  { isWizard, castersData, updateCastersData, showTestModal, 
+  { isWizard, castersData, updateCastersData, showTestModal, handleSpellbookClicked
   }
 ) => {
   const casterType = isWizard ? casterTypes.WIZ : casterTypes.APP;
@@ -27,8 +27,9 @@ const CasterContainer = (
         {getCasterTypeField(casterType)}
         {getCasterNameField({casterType, castersData, updateCastersData})}
         {getSchoolField(casterType)}
-        {getMagicSchoolSelect({casterType, wizardsSchool, updateCastersData})}
-        {!isWizard ? <span className='spell-book'><strong>SPELL BOOK</strong><GiBookmarklet /></span> : ''}
+        <span className='magic-school-field'>{wizardsSchool}</span>
+        {isWizard ? <span className='spell-book' onClick={handleSpellbookClicked}>
+          <strong>SPELLBOOK</strong><GiBookmarklet /></span> : ''}
       </div>
       <div>
         {statLine}

@@ -17,26 +17,26 @@ const StyledCasterContainer = styled.section`
         display: grid;
 
         &.wizard {
-            grid-template-columns: 2fr 6fr 2fr 6fr;
+            grid-template-columns: 2fr 6fr 2fr 2fr 4fr;
             .highlighted {
                 background-color: #abe;
                 border-bottom: 3px solid #9ad;
             }
-        }
-        &.apprentice {
-            grid-template-columns: 2fr 6fr 8fr;
-            
             .spell-book {
                 font-weight: 700;
                 color: blue;
                 text-align: right;
                 padding: 2px 12px;
+                cursor: pointer;
                 
                 svg {
                     font-size: 24px;
                     margin: 0 0 -4px 12px;
                 }
             }
+        }
+        &.apprentice {
+            grid-template-columns: 2fr 6fr 8fr;
         }
 
         .name-input-container {
@@ -56,19 +56,16 @@ const StyledCasterContainer = styled.section`
             width: calc(100% - 30px);
         }
 
-        .magic-school-select {
-            width: 100%;
-            outline: none;
-            border: 0;
-            height: 100%;
-        }
-
-        .name-input, .magic-school-select {
+        .name-input, .magic-school-field {
             text-transform: uppercase;
             font-weight: 700;
-            padding: 0px 12px;
+            padding: 0px 6px;
         }
-
+        
+        .magic-school-field {
+            font-size: 12px;
+            line-height: 30px;
+        }
         .random-change-name {
             width: 50px;
             height: 28px;
@@ -84,7 +81,6 @@ const StyledCasterContainer = styled.section`
             cursor: pointer;
 
             &:hover {
-                /* color: #fff; */
                 background-color: #00000010;
             }
         }
