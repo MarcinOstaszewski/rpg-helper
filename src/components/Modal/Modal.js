@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { createTangetNumberButtons, createModifierButtons, getRandomFromRange, createOpponentFightButtons,
 	createOpponentArmourButtons, updateAllTestVariables, createWeaponDamageModifierButtons } from '../../helpers/helperFunctions';
 import { FiArrowRight } from 'react-icons/fi';

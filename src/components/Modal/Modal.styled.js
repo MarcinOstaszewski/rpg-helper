@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const StyledModal = styled.div`
+const StyledModal = styled.section`
 	background-color: #000000bb;
 	position: absolute;
 	left: 0;
@@ -15,10 +15,10 @@ const StyledModal = styled.div`
 	.modal-content {
 		padding: 0 2.5%;
 		width: ${props => props.showRemoveContent ? "50%" : "95%"};
-		height: ${props => props.showRemoveContent ? "50%" : "85%"};;
+		height: ${props => props.showRemoveContent ? "50%" : "85%"};
 		display: flex;
 		justify-content: center;
-		padding: 12śpx 0;
+		padding: 12px 0;
 		border: 6px solid #666;
 		border-radius: 12px;
 		background-color: #fcfcfe;
