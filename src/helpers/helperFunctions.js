@@ -43,22 +43,6 @@ const getSchoolField = casterType => {
 	return casterType === casterTypes.WIZ ? <span className='type highlighted'>School</span> : '';
 }
 
-const getMagicSchoolSelect = ({casterType, wizardsSchool, updateCastersData}) => {
-	if (!wizardsSchool) return '';
-	return <span>
-		<select 
-			name='magic-schools' 
-			className='magic-school-select'
-			value={wizardsSchool} 
-			onChange={updateCastersData} 
-			data-type={casterType}
-			data-property={propertyNames.WIZARDS_SCHOOL}
-		>
-			{magicSchools.map((school, i) => <option value={school} key={i}>{school}</option>)}
-		</select>
-	</span>
-};
-
 const getApprenticeStats = wizardStats => {
 	const stats = wizardStats ? {
 		Move: wizardStats.Move,
@@ -335,7 +319,6 @@ export {
 	getCasterTypeField,
 	getCasterNameField,
 	getSchoolField,
-	getMagicSchoolSelect,
 	getApprenticeStats,
 	getSoldiersFullStats,
 	createStatLine,
