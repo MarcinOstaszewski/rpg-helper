@@ -10,6 +10,10 @@ const StyledCasterContainer = styled.section`
         border: 1px solid #ddd;
         padding: 6px;
         text-align: center;
+
+        &.spell-book {
+            border-color: #3c68ee;
+        }
     }
 
     .character-header {
@@ -24,14 +28,14 @@ const StyledCasterContainer = styled.section`
             }
             .spell-book {
                 font-weight: 700;
-                color: blue;
-                text-align: right;
+                color: #fff;
+                background-color: #3c68ee;
                 padding: 2px 12px;
                 cursor: pointer;
                 
                 svg {
                     font-size: 24px;
-                    margin: 0 0 -4px 12px;
+                    margin: 0 0 -4px 24px;
                 }
             }
         }

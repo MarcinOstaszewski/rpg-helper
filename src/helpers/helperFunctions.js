@@ -237,9 +237,7 @@ const createWeaponDamageModifierButtons = ({weaponDamageModifier, handleSetWeapo
 	})
 }
 
-const saveWarbandDataInLocalStorage = ({
-	setWizardName, setApprenticeName, setSoldiersList, setWarbandCost, setCastersData
-}) => {
+const saveWarbandDataInLocalStorage = ({ setSoldiersList, setWarbandCost, setCastersData }) => {
 	const lsCastersData = JSON.parse(localStorage.getItem(localStorageKeys.CASTERS_DATA));
 	const lsSoldiersList = JSON.parse(localStorage.getItem(localStorageKeys.SOLDIERS_DATA));
 	if (lsCastersData) {
@@ -252,7 +250,8 @@ const saveWarbandDataInLocalStorage = ({
 				name: getRandomCharacterName(true),
 				stats: baseStats,
 				currentHealth: baseStats.Health,
-				wizardsSchool: magicSchools[getRandomFromRange(10, 0)]
+				wizardsSchool: magicSchools[getRandomFromRange(10, 0)],
+				spellList: {}
 			},
 			Apprentice : {
 				name: getRandomCharacterName(true),

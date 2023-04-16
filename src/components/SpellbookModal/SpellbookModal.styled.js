@@ -11,7 +11,11 @@ const StyledSoldiersContainer = styled.section`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-    color: #219;
+    color: #999;
+
+    .primary-color {
+        color: #000;
+    }
 
     .spellbook-content {
 		width: 95%;
@@ -22,7 +26,7 @@ const StyledSoldiersContainer = styled.section`
 		padding: 32px;
 		border: 3px solid #32b;
 		border-radius: 12px;
-		background-color: #f2f1f9;
+		background-color: #fff;
 		position: relative;
 
         .modal-close {
@@ -39,24 +43,81 @@ const StyledSoldiersContainer = styled.section`
     .spellbook-header {
         min-height: 24px;
 
-        .header-text-field {
-            padding: 6px 24px 6px 0;
+        .header-text {
+            padding: 6px 0;
             font-size: 20px;
             font-weight: 700;
         }
-        .header-text-field:not(:first-of-type) {
-            padding-left: 24px;
+        .school-select-container {
+            margin: 0 24px;
         }
-        .primary-school-select {
+        .school-select {
             outline: none;
             padding: 6px;
             border: 0;
-            border-bottom: 1px solid #32b;
+            border-bottom: 1px solid #4da2ff;
             background-color: transparent;
             font-weight: 700;
             text-transform: uppercase;
-            color: #32b;
             font-size: 20px;
+
+            &:disabled {
+                color: #999;
+                border-bottom-color: #900;
+            }
+        }
+        .label {
+            position: relative;
+            display: inline-block;
+            width: 43px;
+            height: 24px;
+            
+            .toggle-checkbox {
+                height: 0;
+                width: 0;
+                display: inline-block;
+    
+                &:checked + .toggle {
+                    background-color: #b32;
+                    &::before {
+                        left: 20px;
+                    }
+                }
+            }
+            .toggle {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #4da2ff;
+                transition: .3s;
+                border-radius: 24px;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    height: 22px;
+                    width: 22px;
+                    background-color: #fff;
+                    border-radius: 50%;
+                    left: 1px;
+                    bottom: 1px;
+                    transition: .3s;
+                }
+            }
+            .label-text {
+                position: absolute;
+                left: 100%;
+                width: max-content;
+                line-height: 32px;
+                cursor: pointer;
+                line-height: 24px;
+                font-size: 20px;
+                font-weight: 700;
+                padding-left: 12px;
+            }
         }
     }
     .spellbook-main {
@@ -71,39 +132,79 @@ const StyledSoldiersContainer = styled.section`
         .spell-name-description {
             padding: 24px 0;
             min-height: 160px;
+
             .name {
                 font-weight: 700;
                 margin-right: 12px;
             }
-            .description {
+        }
+        &.change-locked {
+            .spell-button {
+                color: #800;
                 
+                &.known-spell {
+                    color: #fff;
+                    background-color: #4da2ff;
+        
+                    &:after {
+                        background-color: #4da2ff;
+                    }
+                }
             }
         }
+    }
+    .spellbook-rows {
+        height: 100%;
     }
     .school-row {
         display: grid;
-        grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+        grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
         width: 100%;
         height: 10%;
+        border-bottom: 1px solid #aaa;
 
         &.primary {
-            color: #fff;
-            background-color: #65e;
-        }
-        &.aligned {
-            background-color: #ced4ff;
-        }
-        &.opposed {
-            color: #910;
-            background-color: #ffb3b3;
+            color: #000;
 
-            .spell-button {
-                background-color: #b32;
+            .school-field {
+                text-transform: uppercase;
             }
         }
+        &.aligned {
+            color: #333;
+        }
+        &.opposed {
+            color: #e99;
+        }
     }
-    .school-row:not(:last-child) {   
-        border-bottom: 1px solid #aaa;
+    .spell-button {
+        position: relative;
+        height: calc(100% - 12px);
+        width: calc(100% - 12px);
+        background-color: #add4ff;
+        border: 0;
+        border-radius: 12px;
+        color: #111;
+
+        &.known-spell {
+            color: #fff;
+            background-color: #4da2ff;
+
+            &:after {
+                background-color: #4da2ff;
+            }
+        }
+
+        &:after {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            content: attr(data-casting-number);
+            background-color: #add4ff;
+            padding: 2px 0;
+            width: 20px;
+            border-radius: 50%;
+        }
     }
     .school-field {
         display: flex;
@@ -118,17 +219,6 @@ const StyledSoldiersContainer = styled.section`
         justify-content: center;
         align-items: center;
     }
-    .spell-button {
-        height: calc(100% - 12px);
-        width: calc(100% - 12px);
-        background-color: #32b;
-        /* border: 1px solid #ccc; */
-        border: 0;
-        border-radius: 12px;
-        color: #eee;
-    }
-
-
 `;
 
 export default StyledSoldiersContainer;

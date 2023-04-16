@@ -13,7 +13,7 @@ const StyledFrostgraveWarbandContainer = styled.main`
         align-items: center;
         .add-soldier {
             margin-right: 24px;
-            padding: 12px;
+            padding: 6px 24px;
             font-weight: 700;
             border-radius: 6px;
             border: 0;

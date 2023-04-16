@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { localStorageKeys } from '../../helpers/constants';
-import { getRandomCharacterName, getSoldiersCost, isString, saveToLocalStorage, 
+import { casterTypes, localStorageKeys } from '../../helpers/constants';
+import { getRandomCharacterName, getSoldiersCost, saveToLocalStorage, 
 	saveWarbandDataInLocalStorage } from '../../helpers/helperFunctions';
 import { BsPersonPlusFill } from 'react-icons/bs';
 import SoldiersContainer from '../../components/SoldiersContainer/SoldiersContainer';
@@ -20,16 +20,36 @@ const FrostgraveWarbandContainer = () => {
 	const [soldierToRemoveData, setSoldierToRemoveData] = useState({});
 	const [statToBeTested, setStatsToBeTested] = useState();
 
+	const getValueFromTarget = value => {
+		if (value === "true") return true;
+		if (value === "false") return false;
+		if (parseInt(value) > 0) return parseInt(value);
+		return value;
+	}
+
 	const updateCastersData = e => {
-		const {type, property} = e.currentTarget.dataset;
+		const target = e.currentTarget || e.target;
+		const {type, property} = target.dataset;
 		const newCastersData = {...castersData};
-		const newValue = isString(e.currentTarget.value) ? e.currentTarget.value : parseInt(e.currentTarget.value);
+		const newValue = getValueFromTarget(target.getValueFromTarget);
 		newCastersData[type][property] = newValue;
 		setCastersData(newCastersData);
 		saveToLocalStorage(localStorageKeys.CASTERS_DATA, newCastersData);
 	}
 	const updateWizardSpells = spellData => {
-		console.log(spellData);
+		const spellName = spellData.name;
+		const newSpellList = {...castersData[casterTypes.WIZ].spellList};
+		const newCastersData = {...castersData};
+		if (newSpellList[spellName]) {
+			delete newCastersData[casterTypes.WIZ].spellList[spellName];
+		} else {
+			newCastersData[casterTypes.WIZ].spellList = {
+				...newSpellList,
+				[spellName]: spellData.castingNumber
+			}
+		}
+		setCastersData(newCastersData);
+		saveToLocalStorage(localStorageKeys.CASTERS_DATA, newCastersData);
 	}
 	const updateSoldiersList = (newSoldiersList) => {
 		setSoldiersList(newSoldiersList);
@@ -137,6 +157,7 @@ const FrostgraveWarbandContainer = () => {
 			{showSpellbookModal && <SpellbookModal 
 				handleClose={handleSpellbookClose}
 				castersData={castersData}
+				setCastersData={setCastersData}
 				updateCastersData={updateCastersData}
 				updateWizardSpells={updateWizardSpells}
 			/>}
@@ -145,4 +166,4 @@ const FrostgraveWarbandContainer = () => {
   )
 }
 
-export default FrostgraveWarbandContainer
+export default FrostgraveWarbandContainer;
