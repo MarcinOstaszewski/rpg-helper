@@ -11,7 +11,7 @@ const NavigationHeaderStyled = styled.header`
             justify-content: flex-start;
             list-style: none;
             li {
-                a {
+                span {
                     color: #111;
                     border-right: 1px solid black;
                     padding: 12px 24px;

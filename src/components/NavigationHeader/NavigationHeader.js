@@ -1,34 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import NavigationHeaderStyled from './NavigationHeader.styled';
 
-const NavigationHeader = props => {
+const NavigationHeader = ({pages, currentPage, handleNavbarClick}) => {
+	const links = pages.map(el => {
+		return <li key={el}>
+			<span 
+				className={currentPage === el ? 'active' : ''} 
+				onClick={handleNavbarClick}>
+					{el}
+			</span>
+		</li>
+	});
+
   return (
     <NavigationHeaderStyled>
-        <nav>
-            <ul>
-                <li>
-                    <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}dice`}>
-                        Dice
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}field`}>
-                        Field
-                    </NavLink>
-                </li>
-                {/* <li>
-                    <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}direction`}>
-                        Direction
-                    </NavLink>
-                </li> */}
-                <li>
-                    <NavLink className={navData => navData.isActive ? 'active' : ''} to={`${props.pageRoot}frostgrave`}>
-                        Wizard & Warband
-                    </NavLink>
-                </li>
-            </ul>
-        </nav>
+			<nav>
+				<ul>{links}</ul>
+			</nav>
     </NavigationHeaderStyled>
   )
 }
