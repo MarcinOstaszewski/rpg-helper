@@ -17,11 +17,10 @@ const StyledCasterContainer = styled.section`
     }
 
     .character-header {
-        border-top: 1px solid #ccc;
         display: grid;
 
         &.wizard {
-            grid-template-columns: 2fr 6fr 2fr 3fr 3fr;
+            grid-template-columns: 2fr 8fr 5fr 3fr;
             .highlighted {
                 background-color: #24c;
                 border: 1px solid #24b;
@@ -35,12 +34,12 @@ const StyledCasterContainer = styled.section`
                 
                 svg {
                     font-size: 24px;
-                    margin: 0 0 -4px 24px;
+                    margin: 0 0 -4px 6px;
                 }
             }
         }
         &.apprentice {
-            grid-template-columns: 2fr 6fr 8fr;
+            grid-template-columns: 2fr 8fr 3fr 5fr;
         }
 
         .name-input-container {
@@ -51,19 +50,19 @@ const StyledCasterContainer = styled.section`
 
         .highlighted {
             color: #fff;
-            font-weight: 700;
             background-color: #45f;
             border: 1px solid #35e;
         }
 
         .name-input {
-            width: calc(100% - 30px);
+            width: calc(100% - 45px);
         }
 
         .name-input, .magic-school-field {
             text-transform: uppercase;
             font-weight: 700;
-            padding: 0px 6px;
+            padding: 0 0 0 12px;
+            text-align: left;
         }
         
         .magic-school-field {
@@ -71,9 +70,8 @@ const StyledCasterContainer = styled.section`
             line-height: 30px;
         }
         .random-change-name {
-            width: 50px;
+            width: 40px;
             height: 28px;
-            border: 0;
             margin: 1px 2px;
             font-size: 24px;
             background-color: #fff;
@@ -92,7 +90,7 @@ const StyledCasterContainer = styled.section`
 
     .stats-line {
         display: grid;
-        grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+        grid-template-columns: 2fr 2fr 2fr 2fr 2fr 3fr 2fr 3fr;
 
         span {
             font-weight: 700;
@@ -111,8 +109,9 @@ const StyledCasterContainer = styled.section`
         .health-field {
 			flex-direction: row;
 			justify-content: center;
+            padding: 6px 0;
             .divider {
-                margin: 0 12px;
+                margin: 0 2px;
             }
             .health-select {
                 font-size: inherit;

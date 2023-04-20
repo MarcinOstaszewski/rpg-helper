@@ -2,7 +2,7 @@ import React from 'react';
 import StyledCasterContainer from './CasterContainer.styled';
 import { GiBookmarklet } from 'react-icons/gi';
 import { 
-  createStatLine, getCasterNameField, getCasterTypeField, getSchoolField 
+  createStatLine, getCasterNameField, getCasterTypeField 
 } from '../../helpers/helperFunctions';
 import { casterTypes } from '../../helpers/constants';
 
@@ -26,10 +26,9 @@ const CasterContainer = (
       <div className={`character-header ${casterType.toLowerCase()}`}>
         {getCasterTypeField(casterType)}
         {getCasterNameField({casterType, castersData, updateCastersData})}
-        {getSchoolField(casterType)}
         <span className='magic-school-field'>{wizardsSchool}</span>
         {isWizard ? <span className='spell-book' onClick={handleSpellbookClicked}>
-          <strong>SPELLBOOK</strong><GiBookmarklet /></span> : ''}
+          <GiBookmarklet /></span> : ''}
       </div>
       <div>
         {statLine}

@@ -7,19 +7,19 @@ const StyledSoldiersContainer = styled.section`
 	margin-top: 12px;
 
 	.highlighted {
-		color: #111;
-		background-color: #cdd;
-		border-bottom: 3px solid #bcc;
+		color: #fff;
+		background-color: #680; 
+		border: 1px solid #680;
 		padding-bottom: 3px;
 	}
 
 	.soldier-header {
 		width: 100%;
 		display: grid;
-		grid-template-columns: 2fr 6fr 2fr 4fr 2fr;
+		grid-template-columns: 2fr 8fr 5fr 3fr;
 		&.specialist .highlighted {
-			background-color: #cdc;
-			border-bottom: 3px solid #bcb;
+			background-color: #270;
+			border: 1px solid #270;
 		}
 	}
 
@@ -34,14 +34,17 @@ const StyledSoldiersContainer = styled.section`
 		font-size: 16px;
 		text-align: left;
 		padding-left: 12px;
+		font-weight: 700;
 	}
 
 	.soldier-type {
 		border: 0;
 		outline: none;
+		text-transform: uppercase;
 		width: 100%;
 		text-align: left;
-		padding-left: 12px;
+		font-size: 12px;
+		font-weight: 700;
 	}
 	.soldier-remove {
 		font-weight: 700;
@@ -56,7 +59,7 @@ const StyledSoldiersContainer = styled.section`
 	
 	.stats-line {
 		display: grid;
-		grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
+		grid-template-columns: 2fr 2fr 2fr 2fr 2fr 3fr 2fr 3fr;
 		
 		span {
 			&:not(:last-child) {
@@ -82,8 +85,10 @@ const StyledSoldiersContainer = styled.section`
 		.health-field {
 			flex-direction: row;
 			justify-content: center;
+			padding: 6px 0px;
+
             .divider {
-                margin: 0 12px;
+                margin: 0 2px;
             }
             .health-select {
                 font-size: inherit;

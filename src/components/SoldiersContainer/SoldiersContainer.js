@@ -36,7 +36,6 @@ const SoldiersContainer = ({
 							value={name}
 							onChange={handleSoldierChange}/>
 					</span>
-					<span className='highlighted'>Type</span>
 					{createSoldierTypeSelect({handleSoldierChange, type, index})}
 					<span className='soldier-remove' 
 						onClick={handleShowRemoveModal}>
