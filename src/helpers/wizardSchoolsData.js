@@ -87,13 +87,13 @@ export const wizardSchoolsData = {
         castingNumber: 10,
         category: SIGHT,
         description:
-          "This spell is cast upon a weapon. The next time the figure wielding this weapon wins a round of combat and does at least 1 point of damage, this weapon inflicts an additional 5 points of elemental magic damage. If cast on a normal weapon, which is then used against a creature that is Immune to Normal Weapons, this weapon will only deal the 5 points of elemental magic damage. If cast on a bow or crossbow the spell only applies to the next attack.",
+          "Cast upon a weapon. When used and does at least 1 point of damage, inflicts 5 additional points of elemental magic damage. Only deal this 5 points if used against a creature Immune to Normal Weapons. If cast on a bow or crossbow, applies only to the next attack.",
       },
       "Elemental ball": {
         castingNumber: 12,
         category: SIGHT,
         description:
-          "The spellcaster selects an enemy figure within 16” and line of sight and hurls a ball of destructive elemental energy at it. The target and every figure within 1” and line of sight of the target immediately suffers a +5 elemental magic shooting attack. Roll this shooting attack separately for each figure. Treat the target figure as the origin of the attack for the purposes of determining cover or intervening terrain for all other figures suffering the attack. This spell may not target an enemy figure that is even partially obscured by another figure.",
+          "Hurls a ball of destructive elemental energy at an enemy figure within 16” and line of sight. Enemy and every figure within 1” and line of sight suffers a +5 elemental magic shooting attack. Roll separately for each figure. Treat the target for determining cover or intervening terrain. May not target a figure even partially obscured by another figure.",
       },
       Scattershot: {
         castingNumber: 12,
@@ -423,7 +423,7 @@ export const wizardSchoolsData = {
         castingNumber: 12,
         category: SIGHT,
         description:
-          "This spell may only be cast on a permanent or temporary member of the spellcaster's own warband, except the wizard, apprentice, or demons. The target is possessed by a demon and gains +2 Fight, +1 Armour, and -2 Will and counts as a demon (i.e. it will be affected by Banish, Control Demon, Circle of Protection, etc.). This figure may not be part of a group activation. If removed from the game for any reason (such as being hit by a Banish spell), check for the character's survival as normal. A spellcaster may only have one Possess spell active at a time.",
+          "This spell may only be cast on a member of own warband, except the wizard, apprentice, or demons. The target is possessed by a demon and gains +2 Fight, +1 Armour, and -2 Will and counts as a demon (i.e. it will be affected by Banish, Control Demon, Circle of Protection, etc.). This figure may not be part of a group activation. If removed from the game for any reason (such as being hit by a Banish spell), check for the character's survival as normal. A spellcaster may only have one Possess spell active at a time.",
       },
       Imp: {
         castingNumber: 10,
@@ -477,7 +477,7 @@ export const wizardSchoolsData = {
         castingNumber: 16,
         category: AFTER,
         description:
-          "Wizard only. This spell may be used in several different ways. A successful casting of this spell will remove all permanent injuries from one figure. For example, a wizard suffering from Lost Fingers regrows all their missing digits, regardless of how many times they have suffered that particular injury. Or, it may be cast on a Badly Wounded figure - if successful, the soldier is healed and may participate in the next game with no penalty. Finally, it may be used to attempt to bring a figure back from the dead. The figure must have died in the game just played, and using the spell in this fashion incurs a -4 penalty to the Casting Roll. If successful, the figure is restored to life, and may participate in the next game with no penalty. If Miraculous Cure is cast using a scroll, it cannot be used to resurrect the dead.",
+          "Wizard only, various uses. Successful casting will remove all permanent injuries from a figure. Eg. in Lost Fingers it can regrow them all. It may be cast on a Badly Wounded figure - so it may participate in the next game with no penalty. It may be used to revive a figure that died in the game just played, and using the spell in this fashion incurs a -4 penalty to the Casting Roll - the restored figure suffers no penalty. Cast using a scroll, cannot be used to resurrect the dead.",
       },
       "Blinding light": {
         castingNumber: 8,
@@ -537,7 +537,7 @@ export const wizardSchoolsData = {
         castingNumber: 12,
         category: BEFORE,
         description:
-          "The spellcaster creates one Lesser Potion of their choice (page 86) that may be sold, stored in the wizard's vault, or given to a member of the warband. A wizard (and only a wizard) may use this spell to create a Greater Potion (page 87). First, they must declare what potion they are attempting to brew and pay the listed ingredients cost. The wizard should then roll to cast Brew Potion with a -4 to the Casting Roll. If successful, the potion is created and can be immediately assigned to a figure in the warband, sold, or stored in the wizard's vault. If unsuccessful, the potion is not created and the money spent on ingredients is lost.",
+          "Creates a Lesser Potion (from page 86) that may be sold, stored in the wizard's vault, or given to a member of the warband. (Only a wizard) may also create a Greater Potion (page 87). First, they must declare what potion they are attempting to brew and pay the listed ingredients cost, then roll with a -4 modifier. If unsuccessful, the money spent on ingredients is lost.",
       },
       Fog: {
         castingNumber: 8,
