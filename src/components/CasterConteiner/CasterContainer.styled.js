@@ -21,15 +21,15 @@ const StyledCasterContainer = styled.section`
         display: grid;
 
         &.wizard {
-            grid-template-columns: 2fr 6fr 2fr 2fr 4fr;
+            grid-template-columns: 2fr 6fr 2fr 3fr 3fr;
             .highlighted {
-                background-color: #abe;
-                border-bottom: 3px solid #9ad;
+                background-color: #24c;
+                border: 1px solid #24b;
             }
             .spell-book {
                 font-weight: 700;
                 color: #fff;
-                background-color: #3c68ee;
+                background-color: #24c;
                 padding: 2px 12px;
                 cursor: pointer;
                 
@@ -50,10 +50,10 @@ const StyledCasterContainer = styled.section`
         }
 
         .highlighted {
-            color: #111;
-            background-color: #bce;
-            border-bottom: 3px solid #abd;
-            padding-bottom: 3px;
+            color: #fff;
+            font-weight: 700;
+            background-color: #45f;
+            border: 1px solid #35e;
         }
 
         .name-input {
