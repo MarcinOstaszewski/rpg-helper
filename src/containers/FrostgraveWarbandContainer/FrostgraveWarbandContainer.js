@@ -31,8 +31,9 @@ const FrostgraveWarbandContainer = () => {
 		const target = e.currentTarget || e.target;
 		const {type, property} = target.dataset;
 		const newCastersData = {...castersData};
-		const newValue = getValueFromTarget(target.getValueFromTarget);
+		const newValue = getValueFromTarget(target.value);
 		newCastersData[type][property] = newValue;
+		console.log(type, property, newValue, newCastersData);
 		setCastersData(newCastersData);
 		saveToLocalStorage(localStorageKeys.CASTERS_DATA, newCastersData);
 	}
@@ -111,20 +112,24 @@ const FrostgraveWarbandContainer = () => {
   return (
     <StyledFrostgraveWarbandContainer>
 			<div className='top-container'>
-				<h1>Frostgrave Warband Sheet</h1>
-				<div className='buttons-container'>
-					<button onClick={addSoldier} className='add-soldier'>
-						<BsPersonPlusFill />Add Soldier
-					</button>
-				</div>
-				<div className='wizards-gold'>
-					<span>Wizards gold: </span>
-					<span>400 gc</span>
-				</div>
-				<div className='warband-cost'>
-					<span>Warband cost: </span>
-					<span className={warbandCost > 400 ? 'text-danger' : ''}>{warbandCost} gc</span>
-				</div>
+				<header>
+					<h1 className='top-container-header'>Warband Creator for Frostgrave 2nd ed.</h1>
+				</header>
+				<main>
+					<div className='wizards-gold'>
+						<span>Wizards gold: </span>
+						<span>400 gc</span>
+					</div>
+					<div className='warband-cost'>
+						<span>Warband cost: </span>
+						<span className={warbandCost > 400 ? 'text-danger' : ''}>{warbandCost} gc</span>
+					</div>
+					<div className='buttons-container'>
+						<button onClick={addSoldier} className='add-soldier'>
+							<BsPersonPlusFill />Add Soldier
+						</button>
+					</div>
+				</main>
 			</div>
 
 			<CasterContainer
