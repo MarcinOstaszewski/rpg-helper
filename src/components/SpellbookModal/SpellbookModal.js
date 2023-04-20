@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import StyledSoldiersContainer from './SpellbookModal.styled';
+import StyledSpellbookModal from './SpellbookModal.styled';
 import { wizardSchoolsData } from '../../helpers/wizardSchoolsData';
 import { casterTypes, propertyNames } from '../../helpers/constants';
+import { getRandomFromRange } from '../../helpers/helperFunctions';
+import { TbMathEqualGreater, TbMathLower } from 'react-icons/tb';
 
 const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWizardSpells}) => {
 	const [spellAndDescription, setSpellAndDescription] = useState({name: 'Click a spell above', description: "to see it's description"});
-	const [isSchoolChangeLocked, setIsSchoolChangeLocked] = useState(castersData[casterTypes.WIZ].isSchoolChangeLocked || false); 
+	const [isSchoolChangeLocked, setIsSchoolChangeLocked] = useState(castersData[casterTypes.WIZ].isSchoolChangeLocked || false);
+	const [spellCastingResult, setSpellCastingResult] = useState('');
 	const allSpellsList = {}; 
 	for (let school in wizardSchoolsData) {
 		for (let spell in wizardSchoolsData[school].spells) {
@@ -18,13 +21,47 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 		setIsSchoolChangeLocked(!isSchoolChangeLocked);
 		updateCastersData(e);
 	}
+	const getCastingModifier = (schoolData, spellIsFromSchool) => {
+		if (wizardsSchool === spellIsFromSchool) return 0;
+		if (schoolData.aligned.includes(spellIsFromSchool)) return 2;
+		if (schoolData.opposed === spellIsFromSchool) return 6;
+		return 4
+	}
+	const getResultSign = (diceThrow, castingSum) => {
+		if (diceThrow >= castingSum) return [<TbMathEqualGreater/>, 'success'];
+		if (diceThrow < castingSum) return [<TbMathLower/>, 'failure'];
+	}
+	const getDamageFromFailure = result => {
+		if (result > 19) return 5;
+		if (result > 9) return 2;
+		if (result > 4) return 1;
+		return 0;
+	}
 	const onSpellButtonClick = e => {
 		if (e.target.tagName !== 'BUTTON') return;
 		const name = e.target.innerText;
 		const spellData = {name, ...allSpellsList[name]};
 		setSpellAndDescription(spellData);
-		if (isSchoolChangeLocked) return;
-		updateWizardSpells(spellData);
+		if (isSchoolChangeLocked) {
+			const { castingNumber, school } = allSpellsList[name];
+			const castingModifier = getCastingModifier(wizardSchoolsData[wizardsSchool], school);
+			const diceThrow = getRandomFromRange(20, 1);
+			const castingSum = castingNumber + castingModifier;
+			const [resultSign, resultName] = getResultSign(diceThrow, castingSum);
+			setSpellCastingResult(<>
+				<p className={`casting-result ${resultName}`}>
+					<strong className='color-important'>{name}</strong> casting number + school modifier: {castingNumber} + {castingModifier} = 
+					<strong className='color-important'>{castingSum} {resultSign} {diceThrow}</strong> (D20 result)
+				</p>
+				<p className={`casting-result ${resultName} second`}>
+					<strong>{resultName.toUpperCase()}</strong>
+					{(diceThrow < castingSum && <strong>Damage: {getDamageFromFailure(castingSum - diceThrow)}</strong>)}
+				</p>
+			</>);
+		} else {
+			setSpellCastingResult('');
+			updateWizardSpells(spellData);
+		}
 	}
 	const { wizardsSchool } = castersData[casterTypes.WIZ];
 
@@ -70,13 +107,14 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 	});
 
   return (
-    <StyledSoldiersContainer>
-			<div className='spellbook-content'>
-				<div className='modal-close' onClick={handleClose}>&times;</div>
-				<header className='spellbook-header primary-color'>
-					<span className='header-text'>Primary Wizard School</span>
-					<span className='school-select-container'>{wizardsSchoolSelect}</span>
+    <StyledSpellbookModal>
+		<div className='spellbook-content'>
+			<div className='modal-close' onClick={handleClose}>&times;</div>
+			<header className='spellbook-header primary-color'>
+				<span className='header-text'>Primary Wizard School</span>
+				<span className='school-select-container'>{wizardsSchoolSelect}</span>
 
+				<span>
 					<label className='label'>
 						<input name='toggle-checkbox' 
 							className='toggle-checkbox' 
@@ -89,31 +127,35 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 						<span className='toggle'/>
 						<span className='label-text' htmlFor='toggle-checkbox'>{isSchoolChangeLocked ? 'Unlock' : 'Lock'}</span>
 					</label>
-					
-					{/* <span className='header-text'>Learn new spell</span> */}
-					{/* <span className='header-text'>Improve spell</span> */}
-				</header>
+				</span>
+				
+				{/* <span className='header-text'>Learn new spell</span> */}
+				{/* <span className='header-text'>Improve spell</span> */}
+			</header>
 
-				<main className={`spellbook-main ${isSchoolChangeLocked ? 'change-locked' : ''}`}>
-					<section className='spellbook-rows' onClick={onSpellButtonClick}>
-						{magicSchoolRows}
-					</section>
-					<section className='spellbook-description'>
-						<p className='spell-name-description primary-color'>
-							{(spellAndDescription && 
-								<>
-									<span className='name'>
-										{spellAndDescription.name}
-										{(spellAndDescription.castingNumber && <i> (casting number {spellAndDescription.castingNumber})</i>)}
-									</span>
-									<span className='description'>{spellAndDescription.description}</span>
-								</>
-							)}
-						</p>
-					</section>
-				</main>
-			</div>
-    </StyledSoldiersContainer>
+			<main className={`spellbook-main ${isSchoolChangeLocked ? 'change-locked' : ''}`}>
+				<section className='spellbook-rows' onClick={onSpellButtonClick}>
+					{magicSchoolRows}
+				</section>
+				<section className='spellbook-description'>
+					<p className='spell-name-description primary-color'>
+						{(spellAndDescription && 
+							<>
+								<span className='name'>
+									{<strong>{spellAndDescription.name}</strong>}
+									{(spellAndDescription.castingNumber && <i> (casting number {spellAndDescription.castingNumber})</i>)}
+								</span>
+								<span className='description'>{spellAndDescription.description}</span>
+							</>
+						)}
+					</p>
+				</section>
+				<section className='casting-result-container primary-color'>
+					{spellCastingResult}
+				</section>
+			</main>
+		</div>
+    </StyledSpellbookModal>
   )
 }
 

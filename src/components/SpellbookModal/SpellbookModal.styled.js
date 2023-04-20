@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const StyledSoldiersContainer = styled.section`
+const StyledSpellbookModal = styled.section`
     background-color: #000000bb;
 	position: absolute;
 	left: 0;
@@ -71,6 +71,7 @@ const StyledSoldiersContainer = styled.section`
             display: inline-block;
             width: 43px;
             height: 24px;
+            margin-right: 100px;
             
             .toggle-checkbox {
                 height: 0;
@@ -129,15 +130,6 @@ const StyledSoldiersContainer = styled.section`
         align-items: flex-start;
         justify-content: space-around;
 
-        .spell-name-description {
-            padding: 24px 0;
-            min-height: 160px;
-
-            .name {
-                font-weight: 700;
-                margin-right: 12px;
-            }
-        }
         &.change-locked {
             .spell-button {
                 color: #800;
@@ -155,6 +147,12 @@ const StyledSoldiersContainer = styled.section`
     }
     .spellbook-rows {
         height: 100%;
+    }
+    .spellbook-description {
+        height: 60px;
+        max-height: 60px;
+        overflow: scroll;
+        margin: 24px 0 0;
     }
     .school-row {
         display: grid;
@@ -219,6 +217,55 @@ const StyledSoldiersContainer = styled.section`
         justify-content: center;
         align-items: center;
     }
+
+    .spell-name-description {
+        .name {
+            margin-right: 12px;
+        }
+        .description {
+            padding: 12px 0;
+        }
+    }
+
+    .casting-result-container {
+        margin: 12px 0 0;
+        height: 40px;
+        max-height: 40px;
+        font-size: 16px;
+        width: 100%;
+        
+        .casting-result {
+            display: inline-block;
+            text-align: center;
+            width: 70%;
+
+            &.second {
+                width: 30%;
+            }
+            strong {
+                font-size: 24px;
+                margin: 0 6px;
+                color: #777;
+            }
+            svg {
+                margin-bottom: -4px;
+            }
+            &.success {
+                border: 2px solid #069;
+
+                strong {
+                    color: #047;
+                }
+            }
+            &.failure {
+                border: 2px solid #c20;
+                
+                strong {
+                    color: #c20;
+                }
+            }
+        }
+    }
 `;
 
-export default StyledSoldiersContainer;
+export default StyledSpellbookModal;
