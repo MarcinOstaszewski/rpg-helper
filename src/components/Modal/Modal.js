@@ -89,7 +89,7 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 		}
 	}
 	const handleSetWeaponDamageModifier = e => {
-		const newModifier = e.target.dataset.weaponDamageModifier
+		const newModifier = e.target.dataset.weaponDamageModifier;
 		if (newModifier === weaponDamageModifier) {
 			setWeaponDamageModifier(0);
 		} else {
@@ -104,7 +104,19 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 		if (yourSum() > opponentSum()) return <TbMathGreater/>;
 		if (yourSum() < opponentSum()) return <TbMathLower/>;
 		return < TbEqual/>;
-	}
+	};
+
+	const displayField = (title, value, className = '') => {
+		return (
+			<div className={`value ${className}`}>
+				<span>{title}</span>
+				<span>{value}</span>
+			</div>
+		);
+	};
+	const signSpan = sign => <span className='sign'>{sign}</span>;
+	const titleStrong = text => <strong className='title'>{text}</strong>;
+	const spanStrong = text => <span><strong>{text}:</strong></span>;
 
 	const statTestContent = showStatTestContent && (
 		<div className='stat-test content-container'>
@@ -112,39 +124,24 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 			<div className='tests-container'>
 				<div className={`target-numbers-and-modifiers ${opponentStat > -1 ? 'unfocus' : ''}`}>
 					<h3>Stat Test - <strong>{statToBeTested.stat}: {yourStatValue}</strong></h3>
-					<strong className='title'>choose Target Number</strong>
+					{titleStrong('choose Target Number')}
 					<div className='target-numbers' onClick={handleButtonClick}>
 						{targetNumbersButtons}
 					</div>
-					<strong className='title'>add Modifier?</strong>
+					{titleStrong('add Modifier?')}
 					<div className='modifiers' onClick={handleButtonClick}>
 						{createModifierButtons(yourModifier, false)}
 					</div>
 					<div className='display-results'>
-						<div>
-							<span>{statToBeTested.stat}</span>
-							<span>{yourStatValue}</span>
-						</div>
-						<span><TbPlus/></span>
-						<div>
-							<span>mod</span>
-							<span>{yourModifier > 0 ? '+' : ''}{yourModifier}</span>
-						</div>
-						<span><TbPlus/></span>
-						<div>
-							<span>dice</span>
-							<span>{showYourResults ? yourDiceResult : '?'}</span>
-						</div>
-						<span> <TbEqual/> </span>
-						<div className='text-bold'>
-							<span>SUM</span>
-							<span>{showYourResults ? yourSum() : '?'}</span>
-						</div>
-						<span className='text-bold'>{yourDiceResult && (wasTestSuccessful ? <TbMathEqualGreater/> : <TbMathLower/>)}</span>
-						<div className='text-bold'>
-							<span>TN</span>
-							<span>{(yourTN ? yourTN : '?')}</span>
-						</div>
+						{displayField(statToBeTested.stat, yourStatValue)}
+						{signSpan(<TbPlus/>)}
+						{displayField('mod', ((yourModifier > 0 ? '+' : '') + yourModifier))}
+						{signSpan(<TbPlus/>)}
+						{displayField('dice', (showYourResults ? yourDiceResult : '?'))}
+						{signSpan(<TbEqual/>)}
+						{displayField('SUM', (showYourResults ? yourSum() : '?'), 'text-bold')}
+						<span className='text-bold'>{yourDiceResult ? (wasTestSuccessful ? <TbMathEqualGreater/> : <TbMathLower/>) : '.....'}</span>
+						{displayField('TN', (yourTN ? yourTN : '?'), 'text-bold')}
 					</div>
 					<strong className={`display-results ${getResultFieldClassName({isCombat: false, yourSum, opponentSum})}`}>
 						<span>{showYourResults ? yourSum() : '.'}</span>
@@ -159,59 +156,35 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 				{(showCombatSettings && <div className={`combat-settings ${yourTN > 5 ? 'unfocus' : ''}`}>
 					<div className='combat-settings-and-modifiers'>
 						<h3>Combat Roll</h3>
-						<strong className='title'>choose opponent's Fight Stat</strong>
+						{titleStrong("choose opponent's Fight Stat")}
 						<div className='combat-opponent-fight' onClick={handleButtonClick}>
 							{createOpponentFightButtons(opponentStat)}
 						</div>
-						<strong className='title'>add opponent's Modifier?</strong>
+						{titleStrong("add opponent's Modifier?")}
 						<div className='modifiers' onClick={handleButtonClick}>
 							{createModifierButtons(opponentModifier, true)}
 						</div>
 					</div>
 
 					<div className='display-results'>
-						<span><strong>YOU:</strong></span>
-						<div>
-							<span>{statToBeTested.stat}</span>
-							<span>{yourStatValue}</span>
-						</div>
-						<span><TbPlus/></span>
-						<div>
-							<span>mod</span>
-							<span>{yourModifier > 0 ? '+' : ''}{yourModifier}</span>
-						</div>
-						<span><TbPlus/></span>
-						<div>
-							<span>dice</span>
-							<span>{yourDiceResult ? yourDiceResult : '?'}</span>
-						</div>
-						<span> <TbEqual/> </span>
-						<div className='text-bold'>
-							<span>SUM</span>
-							<span>{yourDiceResult ? yourSum() : '?'}</span>
-						</div>
+						{spanStrong('YOU')}
+						{displayField(statToBeTested.stat, yourStatValue)}
+						{signSpan(<TbPlus/>)}
+						{displayField('mod', ((yourModifier > 0 ? '+' : '') + yourModifier))}
+						{signSpan(<TbPlus/>)}
+						{displayField('dice', (yourDiceResult ? yourDiceResult : '?'))}
+						{signSpan(<TbEqual/>)}
+						{displayField('SUM', (yourDiceResult ? yourSum() : '?'))}
 					</div>
 					<div className='display-results'>
-						<span><strong>Opponent:</strong></span>
-						<div>
-							<span>Stat</span>
-							<span>{opponentStat}</span>
-						</div>
-						<span><TbPlus/></span>
-						<div>
-							<span>mod</span>
-							<span>{opponentModifier > 0 ? '+' : ''}{opponentModifier}</span>
-						</div>
-						<span><TbPlus/></span>
-						<div>
-							<span>dice</span>
-							<span>{opponentDiceResult ? opponentDiceResult : '?'}</span>
-						</div>
-						<span> <TbEqual/> </span>
-						<div className='text-bold'>
-							<span>SUM</span>
-							<span>{opponentDiceResult ? opponentSum() : '?'}</span>
-						</div>
+						{spanStrong('Opponent')}
+						{displayField('Stat', (opponentStat ? opponentStat : '?'))}
+						{signSpan(<TbPlus/>)}
+						{displayField('mod', ((opponentModifier > 0 ? '+' : '') + opponentModifier))}
+						{signSpan(<TbPlus/>)}
+						{displayField('dice', (opponentDiceResult ? opponentDiceResult : '?'))}
+						{signSpan(<TbEqual/>)}
+						{displayField('SUM', (opponentDiceResult ? opponentSum() : '?'))}
 					</div>
 					<strong className={`display-results ${getResultFieldClassName({isCombat: true, yourSum, opponentSum})}`}>
 						<span>{opponentDiceResult ? yourSum() : '.'}</span>
@@ -225,34 +198,25 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 
 				<div className={`damage-settings ${yourTN < 6 && ((yourSum() > opponentSum())) ? '' : 'disabled'}`}>
 					<h3>Damage count</h3>
-					<strong className='title'>opponent's Armour</strong>
+					{titleStrong("opponent's Armour")}
 					<div className='damage-opponent-armour'>
 						{createOpponentArmourButtons({opponentArmour, handleSetOpponentArmour})}
 					</div>
-					<strong className='title'>Damage modifier</strong>
+					{titleStrong("Damage modifier")}
 					<div className='damage-weapon-modifiers'>
 						{createWeaponDamageModifierButtons({weaponDamageModifier, handleSetWeaponDamageModifier})}
 					</div>
 
 					<div className='display-results'>
-						<div>
-							<span>Sum</span>
-							<span>{(opponentDiceResult ? yourSum() : '?')}</span>
-						</div>
-						<span><TbMinus/></span>
-						<div>
-							<span>Armour</span>
-							<span>{opponentArmour ? opponentArmour : '?'}</span>
-						</div>
-						<span><TbPlus/></span>
-						<div>
-							<span>Mod</span>
-							<span>{weaponDamageModifier ? weaponDamageModifier : '?'}</span>
-						</div>
+						{displayField('Sum', (opponentDiceResult ? yourSum() : '?'))}
+						{signSpan(<TbMinus/>)}
+						{displayField('Armour', (opponentArmour ? opponentArmour : '?'))}
+						{signSpan(<TbPlus/>)}
+						{displayField('Mod', (weaponDamageModifier ? weaponDamageModifier : '0'))}
 					</div>
 
 					{(opponentArmour >= 0 && <strong className={`display-results ${getResultFieldClassName({isCombat: true, yourSum, opponentSum})}`}>
-						<span>DAMAGE</span>
+						<span className='display-results-damage'>DAMAGE</span>&nbsp;
 						<span>{(opponentArmour >= 0 && opponentDiceResult ? yourSum() - parseInt(opponentArmour) + parseInt(weaponDamageModifier) : '?')}</span>
 					</strong>)}
 				</div>

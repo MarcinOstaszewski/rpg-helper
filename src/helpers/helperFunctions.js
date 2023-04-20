@@ -36,11 +36,7 @@ const getCasterNameField = ({casterType, castersData, updateCastersData}) => {
 				<GiRollingDices />
 			</button>
 		</span>
-)
-}
-
-const getSchoolField = casterType => { 
-	return casterType === casterTypes.WIZ ? <span className='type highlighted'>School</span> : '';
+	)
 }
 
 const getApprenticeStats = wizardStats => {
@@ -207,7 +203,7 @@ const createModifierButtons = (chosenModifier, isOpponent) => {
 
 const createOpponentArmourButtons = ({opponentArmour, handleSetOpponentArmour}) => {
 	return opponentArmourArray.map((number,i) => {
-		const numberDisplay = number > 15 ? `[ ${number} ]` : number;
+		const numberDisplay = number > 15 ? `[${number}]` : number;
 		return (
 			<button key={i}
 				data-opponent-armour={number}
@@ -317,7 +313,6 @@ export {
 	getRandomFromRange,
 	getCasterTypeField,
 	getCasterNameField,
-	getSchoolField,
 	getApprenticeStats,
 	getSoldiersFullStats,
 	createStatLine,

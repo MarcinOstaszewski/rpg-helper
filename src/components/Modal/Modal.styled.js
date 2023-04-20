@@ -112,21 +112,27 @@ const StyledModal = styled.section`
 			flex-direction: column;
 			justify-content: flex-start;
 			align-items: center;
+			max-width: 320px;
 		}
 		.tests-container {
 			display: flex;
-			width: 100%;
+			max-width: 100%;
+			overflow: auto;
 		}
 
 		.display-results {
 			display: flex;
-			padding: 12px 48px;
+			padding: 12px;
+			font-size: 12px;
+			width: 80%;
+			justify-content: center;
 
-			div {
+			.value {
 				display: flex;
 				align-items: center;
 				padding: 0px;
 				flex-direction: column;
+
 				span {
 					padding: 1px;
 				}
@@ -143,12 +149,12 @@ const StyledModal = styled.section`
 				margin-bottom: 1px;
 			}
 			span {
-				margin: 0 3px;
+				margin: 0;
+
 				strong {
 					margin-right: 12px;
 				}
 			}
-			font-size: 16px;
 
 			&.results-display {
 				margin-top: 12px;
@@ -171,6 +177,9 @@ const StyledModal = styled.section`
 			&.draw {
 				color: #fff;
 				background-color: #666;
+			}
+			&-damage {
+				margin-right: 12px;
 			}
 
 			svg {
@@ -231,7 +240,7 @@ const StyledModal = styled.section`
 			display: flex;
 			flex-direction: column;
 			width: 40%;
-			min-width: 160px;
+			min-width: 220px;
 
 			&.disabled {
 				pointer-events: none;
