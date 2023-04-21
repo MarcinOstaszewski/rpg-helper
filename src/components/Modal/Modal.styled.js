@@ -118,6 +118,7 @@ const StyledModal = styled.section`
 			display: flex;
 			max-width: 100%;
 			overflow: auto;
+			padding-bottom: 24px;
 		}
 
 		.display-results {

@@ -4,11 +4,15 @@ import { wizardSchoolsData } from '../../helpers/wizardSchoolsData';
 import { casterTypes, propertyNames } from '../../helpers/constants';
 import { getRandomFromRange } from '../../helpers/helperFunctions';
 import { TbMathEqualGreater, TbMathLower } from 'react-icons/tb';
+import Toggle from '../Toggle/Toggle';
+import DirectionSwitch from '../DirectionSwitch/DirectionSwitch';
 
 const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWizardSpells}) => {
 	const [spellAndDescription, setSpellAndDescription] = useState({name: 'Click a spell above', description: "to see it's description"});
 	const [isSchoolChangeLocked, setIsSchoolChangeLocked] = useState(castersData[casterTypes.WIZ].isSchoolChangeLocked || false);
 	const [spellCastingResult, setSpellCastingResult] = useState('');
+	const [isDisplayVertical, setIsDisplayVertical] = useState(true);
+
 	const allSpellsList = {}; 
 	for (let school in wizardSchoolsData) {
 		for (let spell in wizardSchoolsData[school].spells) {
@@ -20,6 +24,9 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 		newCastersData[casterTypes.WIZ].isSchoolChangeLocked = !isSchoolChangeLocked;
 		setIsSchoolChangeLocked(!isSchoolChangeLocked);
 		updateCastersData(e);
+	}
+	const handleChangeDirection = () => {
+		setIsDisplayVertical(!isDisplayVertical);
 	}
 	const getCastingModifier = (schoolData, spellIsFromSchool) => {
 		if (wizardsSchool === spellIsFromSchool) return 0;
@@ -37,6 +44,31 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 		if (result > 4) return 1;
 		return 0;
 	}
+	const getCastingResultMessage = (spellName, castingNumber, castingModifier) => {
+		const diceThrow = getRandomFromRange(20, 1);
+		const castingSum = castingNumber + castingModifier;
+		const [resultSign, resultText] = getResultSign(diceThrow, castingSum);
+		const isSuccess = diceThrow >= castingSum;
+		const damageTaken = getDamageFromFailure(castingSum - diceThrow);
+		return (
+			<div className={`casting-result ${resultText}`}>
+				<p>
+					Casting <strong className='color-important'>{spellName} ({castingNumber})</strong>
+					was a <strong>{resultText.toUpperCase()}</strong>
+					{(!isSuccess && 
+						(damageTaken > 0
+							? <span>receive <strong>-{damageTaken} HP</strong></span>
+							: <span>no damage</span>
+						)
+					)}
+				</p>
+				<p>
+					(D20 result) <strong className='color-important'>{diceThrow} {resultSign} {castingSum}</strong>
+					({castingNumber} + {castingModifier} = CastingNumber + modifier)
+				</p>
+			</div>
+		);
+	}
 	const onSpellButtonClick = e => {
 		if (e.target.tagName !== 'BUTTON') return;
 		const name = e.target.innerText;
@@ -45,19 +77,9 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 		if (isSchoolChangeLocked) {
 			const { castingNumber, school } = allSpellsList[name];
 			const castingModifier = getCastingModifier(wizardSchoolsData[wizardsSchool], school);
-			const diceThrow = getRandomFromRange(20, 1);
-			const castingSum = castingNumber + castingModifier;
-			const [resultSign, resultName] = getResultSign(diceThrow, castingSum);
-			setSpellCastingResult(<>
-				<p className={`casting-result ${resultName}`}>
-					<strong className='color-important'>{name}</strong> casting number + school modifier: {castingNumber} + {castingModifier} = 
-					<strong className='color-important'>{castingSum} {resultSign} {diceThrow}</strong> (D20 result)
-				</p>
-				<p className={`casting-result ${resultName} second`}>
-					<strong>{resultName.toUpperCase()}</strong>
-					{(diceThrow < castingSum && <strong>Damage: {getDamageFromFailure(castingSum - diceThrow)}</strong>)}
-				</p>
-			</>);
+			setSpellCastingResult(
+				getCastingResultMessage(name, castingNumber, castingModifier)
+			);
 		} else {
 			setSpellCastingResult('');
 			updateWizardSpells(spellData);
@@ -100,7 +122,7 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 		
 		return (
 			<div className={`school-row ${schoolTypeClassName}`} key={i}>
-				<span className='school-field'>{school}</span>
+				<div className='school-field'><div className='school-name'>{school}</div></div>
 				{spellButtons}
 			</div>
 		)
@@ -108,28 +130,15 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 
   return (
     <StyledSpellbookModal>
-		<div className='spellbook-content'>
+		<div className={`spellbook-content ${isDisplayVertical ? 'display-vertical' : ''}`}>
 			<div className='modal-close' onClick={handleClose}>&times;</div>
+			<DirectionSwitch isDisplayVertical={isDisplayVertical} handleChangeDirection={handleChangeDirection} />
 			<header className='spellbook-header primary-color'>
-				<span className='header-text'>Primary Wizard School</span>
+				<span className='header-text'>Wizard's School</span>
 				<span className='school-select-container'>{wizardsSchoolSelect}</span>
 
-				<span>
-					<label className='label'>
-						<input name='toggle-checkbox' 
-							className='toggle-checkbox' 
-							type='checkbox' 
-							defaultChecked={isSchoolChangeLocked}
-							data-property={'isSchoolChangeLocked'}
-							data-type={casterTypes.WIZ}
-							value={!isSchoolChangeLocked}
-							onClick={onToggleClick} />
-						<span className='toggle'/>
-						<span className='label-text' htmlFor='toggle-checkbox'>{isSchoolChangeLocked ? 'Unlock' : 'Lock'}</span>
-					</label>
-				</span>
+				<Toggle onToggleClick={onToggleClick} isSchoolChangeLocked={isSchoolChangeLocked} />
 				
-				{/* <span className='header-text'>Learn new spell</span> */}
 				{/* <span className='header-text'>Improve spell</span> */}
 			</header>
 
@@ -137,6 +146,9 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 				<section className='spellbook-rows' onClick={onSpellButtonClick}>
 					{magicSchoolRows}
 				</section>
+			</main>
+
+			<footer className='spellbook-footer'>
 				<section className='spellbook-description'>
 					<p className='spell-name-description primary-color'>
 						{(spellAndDescription && 
@@ -153,7 +165,7 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 				<section className='casting-result-container primary-color'>
 					{spellCastingResult}
 				</section>
-			</main>
+			</footer>
 		</div>
     </StyledSpellbookModal>
   )

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const StyledSpellbookModal = styled.section`
+const StyledSpellbookModal = styled.div`
     background-color: #000000bb;
 	position: absolute;
 	left: 0;
@@ -22,18 +22,31 @@ const StyledSpellbookModal = styled.section`
 		height: 95%;
 		display: flex;
         flex-direction: column;
-		justify-content: center;
+		justify-content: flex-start;
 		padding: 32px;
 		border: 3px solid #32b;
 		border-radius: 12px;
 		background-color: #fff;
 		position: relative;
 
+        &.display-vertical {
+            padding: 32px 40px;
+        }
+
+        .direction-switch {
+            position: absolute;
+            left: 6px;
+            top: 6px;
+            &.checked {
+                left: -22px;
+                top: 34px;
+            }
+        }
         .modal-close {
-			position: absolute;
-			top: 0;
+            position: absolute;
+            top: 0;
 			right: 0;
-			padding: 6px 12px;
+            padding: 6px 12px;
 			font-size: 32px;
 			line-height: 32px;
 			font-weight: 700;
@@ -41,15 +54,17 @@ const StyledSpellbookModal = styled.section`
     }
 
     .spellbook-header {
-        min-height: 24px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
 
         .header-text {
-            padding: 6px 0;
+            padding: 6px 0 0;
             font-size: 20px;
             font-weight: 700;
         }
         .school-select-container {
-            margin: 0 24px;
+            margin: 0 12px;
         }
         .school-select {
             outline: none;
@@ -66,69 +81,15 @@ const StyledSpellbookModal = styled.section`
                 border-bottom-color: #900;
             }
         }
-        .label {
-            position: relative;
-            display: inline-block;
-            width: 43px;
-            height: 24px;
-            margin-right: 100px;
-            
-            .toggle-checkbox {
-                height: 0;
-                width: 0;
-                display: inline-block;
-    
-                &:checked + .toggle {
-                    background-color: #b32;
-                    &::before {
-                        left: 20px;
-                    }
-                }
-            }
-            .toggle {
-                position: absolute;
-                cursor: pointer;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #4da2ff;
-                transition: .3s;
-                border-radius: 24px;
-
-                &::before {
-                    content: '';
-                    position: absolute;
-                    height: 22px;
-                    width: 22px;
-                    background-color: #fff;
-                    border-radius: 50%;
-                    left: 1px;
-                    bottom: 1px;
-                    transition: .3s;
-                }
-            }
-            .label-text {
-                position: absolute;
-                left: 100%;
-                width: max-content;
-                line-height: 32px;
-                cursor: pointer;
-                line-height: 24px;
-                font-size: 20px;
-                font-weight: 700;
-                padding-left: 12px;
-            }
-        }
     }
     .spellbook-main {
         margin-top: 24px;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 260px);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        justify-content: space-around;
+        justify-content: flex-start;
 
         &.change-locked {
             .spell-button {
@@ -148,24 +109,20 @@ const StyledSpellbookModal = styled.section`
     .spellbook-rows {
         height: 100%;
     }
-    .spellbook-description {
-        height: 60px;
-        max-height: 60px;
-        overflow: scroll;
-        margin: 24px 0 0;
-    }
     .school-row {
         display: grid;
         grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
         width: 100%;
         height: 10%;
-        border-bottom: 1px solid #aaa;
-
+        &:not(:last-of-type) {
+            border-bottom: 1px solid #aaa;
+        }
         &.primary {
             color: #000;
 
             .school-field {
                 text-transform: uppercase;
+                font-size: 14px;
             }
         }
         &.aligned {
@@ -205,6 +162,7 @@ const StyledSpellbookModal = styled.section`
         }
     }
     .school-field {
+        height: 100%;
         display: flex;
         align-items: center;
         font-weight: 700;
@@ -218,33 +176,33 @@ const StyledSpellbookModal = styled.section`
         align-items: center;
     }
 
-    .spell-name-description {
+    .spellbook-footer {
+        height: 160px;
+    }
+    .spellbook-description {
+        height: 40%;
+        overflow: scroll;
+        padding: 12px 12px 0 0;
+
         .name {
             margin-right: 12px;
         }
-        .description {
-            padding: 12px 0;
-        }
     }
-
     .casting-result-container {
         margin: 12px 0 0;
-        height: 40px;
-        max-height: 40px;
+        height: 60%;
         font-size: 16px;
         width: 100%;
         
         .casting-result {
-            display: inline-block;
+            display: block;
             text-align: center;
-            width: 70%;
+            padding: 12px 0;
+            height: 100%;
 
-            &.second {
-                width: 30%;
-            }
             strong {
-                font-size: 24px;
-                margin: 0 6px;
+                font-size: 16px;
+                margin: 0 4px 0 0;
                 color: #777;
             }
             svg {
@@ -264,6 +222,47 @@ const StyledSpellbookModal = styled.section`
                     color: #c20;
                 }
             }
+        }
+    }
+    .spellbook-content.display-vertical {
+		display: block;
+
+        .spellbook-rows {
+            width: 100%;
+            padding-right: 24px;
+            overflow-y: scroll;
+        }
+        .school-row {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            height: 160px;
+        }
+        .spell-button {
+            position: absolute;
+            height: 48px;
+            width: 140px;
+            transform-origin: 0 0;
+            transform: rotate(270deg) translate(0, -50%);
+            bottom: -40px;
+            left: 50%;
+        }
+        .school-field {
+            width: 100%;
+            height: 160px;
+            position: relative;
+            text-align: left;
+            top: 0; left: 0; right: 0; bottom: 0;
+            margin-right: auto;
+            
+            .school-name {
+                transform-origin: 0 0;
+                transform: rotate(270deg) translate(0, -50%);
+                position: absolute;
+                bottom: 0; left: 50%;
+            }
+        }
+        .spell-field {
+            height: 160px;
+            position: relative;
         }
     }
 `;
