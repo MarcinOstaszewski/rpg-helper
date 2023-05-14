@@ -6,46 +6,44 @@ const StyledCasterContainer = styled.section`
     flex-wrap: nowrap;
     margin-top: 12px;
 
-    span {
-        border: 1px solid #ddd;
-        padding: 6px;
-        text-align: center;
-
-        &.spell-book {
-            border-color: #3c68ee;
-        }
-    }
-
     .character-header {
+        font-size: .75rem;
         display: grid;
 
+        span {
+            border: 1px solid #ddd;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        svg {
+            font-size: 1.5rem;
+        }
+
         &.wizard {
-            grid-template-columns: 2fr 8fr 5fr 3fr;
+            grid-template-columns: 4fr 6fr 6fr 3fr;
+            
             .highlighted {
                 background-color: #24c;
                 border: 1px solid #24b;
             }
             .spell-book {
-                font-weight: 700;
                 color: #fff;
                 background-color: #24c;
-                padding: 2px 12px;
+                border-color: #3c68ee;
                 cursor: pointer;
-                
-                svg {
-                    font-size: 24px;
-                    margin: 0 0 -4px 6px;
-                }
+                padding: 0;
             }
         }
         &.apprentice {
-            grid-template-columns: 2fr 8fr 3fr 5fr;
+            grid-template-columns: 4fr 6fr 4fr 5fr;
         }
 
         .name-input-container {
             display: flex;
             align-items: center;
-            padding: 0 0 0 6px;
         }
 
         .highlighted {
@@ -59,21 +57,17 @@ const StyledCasterContainer = styled.section`
         }
 
         .name-input, .magic-school-field {
+            font-size: 1rem;
+            font-weight: var(--bold);
             text-transform: uppercase;
-            font-weight: 700;
-            padding: 0 0 0 12px;
-            text-align: left;
+            padding: 0 0 0 6px;
         }
         
-        .magic-school-field {
-            font-size: 12px;
-            line-height: 30px;
-        }
         .random-change-name {
             width: 40px;
-            height: 28px;
+            height: 2rem;
             margin: 1px 2px;
-            font-size: 24px;
+            font-size: 1.2rem;
             background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 6px;
@@ -90,40 +84,56 @@ const StyledCasterContainer = styled.section`
 
     .stats-line {
         display: grid;
-        grid-template-columns: 2fr 2fr 2fr 2fr 2fr 3fr 2fr 3fr;
-
-        span {
-            font-weight: 700;
+        grid-template-columns: 2fr 2fr 2fr 2fr 2fr 4fr 2fr 3fr;
+        font-size: .75rem;
+        
+        .stats-field {
             display: flex;
             flex-direction: column;
-        }
-
-        .stats-field {
+            justify-content: center;
+            align-items: center;
             border: 0;
             padding: 0;
-            
-            span:last-child {
-                height: 20px;
-            }
+
+
+        }
+        span {
+            border: 1px solid #ddd;
+            padding: 6px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
         .health-field {
 			flex-direction: row;
 			justify-content: center;
-            padding: 6px 0;
+            align-items: center;
+            align-items: center;
+            padding: 5px 0;
+
             .divider {
-                margin: 0 2px;
+                margin: 0 2px 0 4px;
             }
             .health-select {
                 font-size: inherit;
                 font-family: inherit;
                 font-weight: inherit;
+                background-color: transparent;
                 border: none;
-                width: 40%;
+                width: 48px;
+                
                 :focus {
-                    outline: 0;
+                    outline: 1;
                 }
             }
 		}
+    }
+
+    @media screen and (min-width: 600px) {
+        .character-header, .stats-line {
+            font-size: 1rem;
+        }
     }
 `
 export default StyledCasterContainer;

@@ -53,9 +53,17 @@ const StyledToggle = styled.div`
             line-height: 32px;
             cursor: pointer;
             line-height: 24px;
-            font-size: 20px;
+            font-size: 12px;
             font-weight: 700;
             padding-left: 12px;
+
+            &.locked {
+                color: #aaa;
+            }
+
+            @media screen and (min-width: 600px) {
+                font-size: 20px;
+            }
         }
     }
 `;

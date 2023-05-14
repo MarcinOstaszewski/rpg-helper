@@ -23,7 +23,6 @@ const SoldiersContainer = ({
 			showTestModal,
 			handleSoldierChange,
 			index
-			// handleHealthChange
 		});
 		
 		return (
@@ -38,7 +37,8 @@ const SoldiersContainer = ({
 					</span>
 					{createSoldierTypeSelect({handleSoldierChange, type, index})}
 					<span className='soldier-remove' 
-						onClick={handleShowRemoveModal}>
+						onClick={handleShowRemoveModal}
+						index={index}>
 						<BsPersonXFill />
 					</span>
 				</div>

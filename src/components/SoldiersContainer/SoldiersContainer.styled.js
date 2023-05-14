@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const StyledSoldiersContainer = styled.section`
-  display: flex;
+	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	margin-top: 12px;
@@ -10,13 +10,14 @@ const StyledSoldiersContainer = styled.section`
 		color: #fff;
 		background-color: #680; 
 		border: 1px solid #680;
-		padding-bottom: 3px;
 	}
 
 	.soldier-header {
 		width: 100%;
 		display: grid;
-		grid-template-columns: 2fr 8fr 5fr 3fr;
+		font-size: 1rem;
+		grid-template-columns: 4fr 6fr 6fr 3fr;
+
 		&.specialist .highlighted {
 			background-color: #270;
 			border: 1px solid #270;
@@ -31,23 +32,23 @@ const StyledSoldiersContainer = styled.section`
 
 	.soldier-name {
 		width: 100%;
-		font-size: 16px;
+		font-size: 1rem;
+		font-weight: var(--bold);
 		text-align: left;
-		padding-left: 12px;
-		font-weight: 700;
+		padding-left: 6px;
 	}
 
 	.soldier-type {
 		border: 0;
 		outline: none;
+		background-color: transparent;
 		text-transform: uppercase;
 		width: 100%;
 		text-align: left;
-		font-size: 12px;
-		font-weight: 700;
+		font-size: .75rem;
+		font-weight: var(--bold);
 	}
 	.soldier-remove {
-		font-weight: 700;
 		color: #d22;
 
 		svg {
@@ -59,12 +60,11 @@ const StyledSoldiersContainer = styled.section`
 	
 	.stats-line {
 		display: grid;
-		grid-template-columns: 2fr 2fr 2fr 2fr 2fr 3fr 2fr 3fr;
+		grid-template-columns: 2fr 2fr 2fr 2fr 2fr 4fr 2fr 3fr;
+        font-size: .75rem;
 		
 		span {
-			&:not(:last-child) {
-				font-weight: 700;
-			}
+			min-height: 33px;
 			display: flex;
 			flex-direction: column;
 		}
@@ -73,35 +73,45 @@ const StyledSoldiersContainer = styled.section`
 			border: 0;
 			padding: 0;
 
-			span:last-child {
-				height: 20px;
-			}
-			&:last-child span:last-child {
-				font-size: 75%;
-				display: flex;
-				justify-content: center;
+			&:last-child {
+				span:last-child {
+					font-size: .5rem;
+					display: flex;
+					justify-content: center;
+					overflow: hidden;
+					max-height: 33px;
+				}
 			}
 		}
 		.health-field {
 			flex-direction: row;
 			justify-content: center;
-			padding: 6px 0px;
+			align-items: center;
+			padding: 5px 0px;
 
             .divider {
-                margin: 0 2px;
+                margin: 0 2px 0 4px;
             }
             .health-select {
                 font-size: inherit;
                 font-family: inherit;
                 font-weight: inherit;
+                background-color: transparent;
                 border: none;
-                width: 40%;
+                width: 48px;
+                align-items: center;
+
                 :focus {
                     outline: 0;
                 }
             }
 		}
 	}
+	@media screen and (min-width: 600px) {
+        .soldier-header, .stats-line {
+            font-size: 1rem;
+        }
+    }
 `
 
 export default StyledSoldiersContainer;

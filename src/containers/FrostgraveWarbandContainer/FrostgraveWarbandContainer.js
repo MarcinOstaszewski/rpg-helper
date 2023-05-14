@@ -86,6 +86,7 @@ const FrostgraveWarbandContainer = () => {
 	}
 	const handleShowRemoveModal = e => {
 		const index = e.target.parentElement.parentElement.dataset.index;
+		console.log(index, soldiersList[index]);
 		const soldierName = soldiersList[index].name;
 		setSoldierToRemoveData({index: index, name: soldierName});
 		setShowRemoveContent(true)
@@ -111,61 +112,61 @@ const FrostgraveWarbandContainer = () => {
 
   return (
     <StyledFrostgraveWarbandContainer>
-			<div className='top-container'>
-				<header>
-					<h1 className='top-container-header'>Warband Creator for Frostgrave 2nd ed.</h1>
-				</header>
-				<main>
-					<div className='wizards-gold'>
-						<span>Wizards gold: </span>
-						<span>400 gc</span>
-					</div>
-					<div className='warband-cost'>
-						<span>Warband cost: </span>
-						<span className={warbandCost > 400 ? 'text-danger' : ''}>{warbandCost} gc</span>
-					</div>
-					<div className='buttons-container'>
-						<button onClick={addSoldier} className='add-soldier'>
-							<BsPersonPlusFill />Add Soldier
-						</button>
-					</div>
-				</main>
-			</div>
+		<div className='top-container'>
+			<header>
+				<h1 className='top-container-header'>Warband Creator for Frostgrave 2nd ed.</h1>
+			</header>
+			<main>
+				<div className='wizards-gold'>
+					<span>Wizards gold: </span>
+					<span>400 gc</span>
+				</div>
+				<div className='warband-cost'>
+					<span>Warband cost: </span>
+					<span className={warbandCost > 400 ? 'text-danger' : ''}>{warbandCost} gc</span>
+				</div>
+				<div className='buttons-container'>
+					<button onClick={addSoldier} className='add-soldier'>
+						<BsPersonPlusFill />Add Soldier
+					</button>
+				</div>
+			</main>
+		</div>
 
-			<CasterContainer
-				isWizard={true}
-				castersData={castersData}
-				updateCastersData={updateCastersData}
-				handleSpellbookClicked={handleSpellbookClicked}
-				showTestModal={showTestModal}/>
-			<CasterContainer
-				isWizard={false}
-				castersData={castersData}
-				updateCastersData={updateCastersData}
-				showTestModal={showTestModal}/>
+		<CasterContainer
+			isWizard={true}
+			castersData={castersData}
+			updateCastersData={updateCastersData}
+			handleSpellbookClicked={handleSpellbookClicked}
+			showTestModal={showTestModal}/>
+		<CasterContainer
+			isWizard={false}
+			castersData={castersData}
+			updateCastersData={updateCastersData}
+			showTestModal={showTestModal}/>
 
-			<SoldiersContainer
-				soldiersList={soldiersList}
-				handleSoldierChange={handleSoldierChange}
-				handleShowRemoveModal={handleShowRemoveModal}
-				showTestModal={showTestModal}/>
-			
-			{showModal && <Modal 
-				handleRemove={handleModalRemove} 
-				handleCancel={handleModalCancel}
-				showRemoveContent={showRemoveContent}
-				showStatTestContent={showStatTestContent}
-				soldierData={soldierToRemoveData}
-				statToBeTested={statToBeTested}
-			/>}
+		<SoldiersContainer
+			soldiersList={soldiersList}
+			handleSoldierChange={handleSoldierChange}
+			handleShowRemoveModal={handleShowRemoveModal}
+			showTestModal={showTestModal}/>
+		
+		{showModal && <Modal 
+			handleRemove={handleModalRemove} 
+			handleCancel={handleModalCancel}
+			showRemoveContent={showRemoveContent}
+			showStatTestContent={showStatTestContent}
+			soldierData={soldierToRemoveData}
+			statToBeTested={statToBeTested}
+		/>}
 
-			{showSpellbookModal && <SpellbookModal 
-				handleClose={handleSpellbookClose}
-				castersData={castersData}
-				setCastersData={setCastersData}
-				updateCastersData={updateCastersData}
-				updateWizardSpells={updateWizardSpells}
-			/>}
+		{showSpellbookModal && <SpellbookModal 
+			handleClose={handleSpellbookClose}
+			castersData={castersData}
+			setCastersData={setCastersData}
+			updateCastersData={updateCastersData}
+			updateWizardSpells={updateWizardSpells}
+		/>}
 
     </StyledFrostgraveWarbandContainer>
   )

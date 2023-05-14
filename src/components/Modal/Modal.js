@@ -7,7 +7,7 @@ import StyledModal from './Modal.styled';
 import { statsEligibleForCombatTest } from '../../helpers/constants';
 
 const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestContent, soldierData, statToBeTested}) => {
-	const yourStatValue = parseInt(statToBeTested.value);
+	const yourStatValue = statToBeTested ? parseInt(statToBeTested.value) : null;
 	const [yourTN, setYourTN] = useState(0);
 	const [yourModifier, setYourModifier] = useState(0);
 	const [opponentArmour, setOpponentArmour] = useState(undefined);
@@ -18,7 +18,7 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 	const [opponentStat, setOpponentStat] = useState(undefined);
 	const [opponentModifier, setOpponentModifier] = useState(0);
 	const targetNumbersButtons = createTangetNumberButtons(yourTN);
-	const showCombatSettings = statsEligibleForCombatTest.includes(statToBeTested.stat);
+	const showCombatSettings = statToBeTested ? statsEligibleForCombatTest.includes(statToBeTested.stat) : null;
 
 	const handleButtonClick = e => {
 		updateAllTestVariables({

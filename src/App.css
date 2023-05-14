@@ -1,28 +1,25 @@
-body, input, select {
+* {
     box-sizing: border-box;
+}
+body, input, select, button {
     font-family: 'Lato', Verdana, 'Geneva', Tahoma, sans-serif;
-    font-size: 16px;
     color: #333;
 }
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    font-weight: 700;
+    font-weight: var(--normal);
 }
 
-h1 {font-size: 32px;}
-h2 {font-size: 28px;}
-h3 {font-size: 22px;}
-h4 {font-size: 18px;}
-h5 {font-size: 16px;}
-h6 {font-size: 12px;}
+h1 {font-size: 2rem;}
+h2 {font-size: 1.6rem;}
+h3 {font-size: 1.4rem;}
+h4 {font-size: 1.2rem;}
+h5 {font-size: 1rem;}
+h6 {font-size: .75rem;}
 
 .flex-column {
     flex-direction: column;
-}
-
-.font-bold {
-    font-weight: 700;
 }
 
 .mx-auto {

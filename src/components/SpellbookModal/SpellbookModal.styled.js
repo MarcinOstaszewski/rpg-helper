@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 
 const StyledSpellbookModal = styled.div`
+    --header-height: 40px;
+    --footer-height: 120px;
+    --casting-result-height: 48px;
     background-color: #000000bb;
 	position: absolute;
 	left: 0;
@@ -18,9 +21,10 @@ const StyledSpellbookModal = styled.div`
     }
 
     .spellbook-content {
-		width: 95%;
-		height: 95%;
+		width: 100%;
+		height: 100%;
 		display: flex;
+        flex-wrap: wrap;
         flex-direction: column;
 		justify-content: flex-start;
 		padding: 32px;
@@ -30,7 +34,7 @@ const StyledSpellbookModal = styled.div`
 		position: relative;
 
         &.display-vertical {
-            padding: 32px 40px;
+            padding: 32px 20px;
         }
 
         .direction-switch {
@@ -52,15 +56,16 @@ const StyledSpellbookModal = styled.div`
 			font-weight: 700;
 		}
     }
-
     .spellbook-header {
-        height: 40px;
+        height: var(--header-height);
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
 
         .header-text {
+            display: block;
             padding: 6px 0 0;
-            font-size: 20px;
+            font-size: 12px;
             font-weight: 700;
         }
         .school-select-container {
@@ -74,7 +79,11 @@ const StyledSpellbookModal = styled.div`
             background-color: transparent;
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 20px;
+            font-size: 12px;
+
+            @media screen and (min-width: 600px) {
+                font-size: 20px;
+            }
 
             &:disabled {
                 color: #999;
@@ -83,17 +92,21 @@ const StyledSpellbookModal = styled.div`
         }
     }
     .spellbook-main {
-        margin-top: 24px;
+        margin: 12px 0;
+        padding-right: 12px;
         width: 100%;
-        height: calc(100% - 260px);
+        height: calc(100% - var(--header-height) - var(--footer-height) - 12px);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
+        overflow-x: scroll;
 
         &.change-locked {
             .spell-button {
                 color: #800;
+                width: calc(100% - 12px);
+                height: calc(100% - 12px);
                 
                 &.known-spell {
                     color: #fff;
@@ -106,17 +119,18 @@ const StyledSpellbookModal = styled.div`
             }
         }
     }
-    .spellbook-rows {
-        height: 100%;
-    }
+     /* .spellbook-rows {
+        // TODO: add styles for webkit scrollbar alway visible
+        // and same for spell description in footer
+    } */
     .school-row {
         display: grid;
         grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr;
         width: 100%;
         height: 10%;
-        &:not(:last-of-type) {
-            border-bottom: 1px solid #aaa;
-        }
+        min-height: 60px;
+        border-bottom: 1px solid #aaa;
+
         &.primary {
             color: #000;
 
@@ -134,12 +148,11 @@ const StyledSpellbookModal = styled.div`
     }
     .spell-button {
         position: relative;
-        height: calc(100% - 12px);
-        width: calc(100% - 12px);
         background-color: #add4ff;
         border: 0;
         border-radius: 12px;
         color: #111;
+        font-size: .75rem;
 
         &.known-spell {
             color: #fff;
@@ -149,24 +162,34 @@ const StyledSpellbookModal = styled.div`
                 background-color: #4da2ff;
             }
         }
-
+        
         &:after {
+            font-size: .6rem;
             position: absolute;
             top: -5px;
             right: -5px;
             content: attr(data-casting-number);
             background-color: #add4ff;
             padding: 2px 0;
+            height: 16px;
+            line-height: 16px;
             width: 20px;
             border-radius: 50%;
         }
     }
     .school-field {
-        height: 100%;
         display: flex;
-        align-items: center;
-        font-weight: 700;
-        padding-left: 12px;
+        align-items: flex-end;
+        padding: 12px 6px;
+        position: relative;
+
+        &::after {
+            position: absolute;
+            top: 12px;
+            right: 6px;
+            content: attr(data-school-type) ": +" attr(data-school-modifier);
+            font-size: .7rem;
+        }
     }
     .spell-field {
         height: 100%;
@@ -177,27 +200,45 @@ const StyledSpellbookModal = styled.div`
     }
 
     .spellbook-footer {
-        height: 160px;
+        position: fixed;
+        bottom: 12px;
+        left: 16px;
+        right: 16px;
     }
     .spellbook-description {
-        height: 40%;
-        overflow: scroll;
-        padding: 12px 12px 0 0;
+        height: calc(var(--footer-height) - var(--casting-result-height));
+        padding: 6px 0;
+        margin: 0 6px 0 12px;
+        
+        .spell-name-description {
+            overflow: scroll;
+            height: 100%;
+            padding-right: 6px;
+        }
 
         .name {
             margin-right: 12px;
         }
     }
     .casting-result-container {
-        margin: 12px 0 0;
-        height: 60%;
+        height: var(--casting-result-height);
         font-size: 16px;
         width: 100%;
-        
-        .casting-result {
-            display: block;
+
+        .choose-your-spells {
             text-align: center;
-            padding: 12px 0;
+            line-height: 1.5rem;
+            text-transform: uppercase;
+            font-weight: var(--bold);
+            background-color: #4da2ff;
+            color: #fff;
+        }
+        .casting-result {
+            text-transform: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             height: 100%;
 
             strong {
@@ -225,11 +266,11 @@ const StyledSpellbookModal = styled.div`
         }
     }
     .spellbook-content.display-vertical {
-		display: block;
+		display: flex;
 
         .spellbook-rows {
             width: 100%;
-            padding-right: 24px;
+            padding-right: 12px;
             overflow-y: scroll;
         }
         .school-row {
@@ -238,11 +279,11 @@ const StyledSpellbookModal = styled.div`
         }
         .spell-button {
             position: absolute;
-            height: 48px;
+            height: 24px;
             width: 140px;
             transform-origin: 0 0;
             transform: rotate(270deg) translate(0, -50%);
-            bottom: -40px;
+            bottom: -20px;
             left: 50%;
         }
         .school-field {
@@ -264,6 +305,25 @@ const StyledSpellbookModal = styled.div`
             height: 160px;
             position: relative;
         }
+    }
+
+    @media screen and (min-width: 600px) {
+        .spellbook-content,
+        .spellbook-content.display-vertical {
+            padding: 12px;
+
+            .spellbook-header {
+                flex-wrap: nowrap;
+                .header-text {
+                    font-size: 20px;
+                }
+            }
+            .spell-button {
+                width: calc(100% - 12px);
+                height: calc(100% - 12px);
+            }
+        }
+    
     }
 `;
 

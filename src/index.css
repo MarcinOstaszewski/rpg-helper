@@ -1,6 +1,21 @@
+:root {
+  --thin: 300;
+  --normal: 400;
+  --bold: 700;
+}
+html, body {
+  font-size: 12px;
+  margin: 0; height: 100%; overflow: overlay
+}
+
+@media screen and (min-width: 600px) {
+  html, body {
+    font-size: 16px;
+  }
+}
+
 body, ul, li, nav, div, input, p {
   border: 0;
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -11,8 +26,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
-  font-weight: 300;
+  font-weight: var(--normal);
 }
 
 code {

@@ -11,7 +11,7 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 	const [spellAndDescription, setSpellAndDescription] = useState({name: 'Click a spell above', description: "to see it's description"});
 	const [isSchoolChangeLocked, setIsSchoolChangeLocked] = useState(castersData[casterTypes.WIZ].isSchoolChangeLocked || false);
 	const [spellCastingResult, setSpellCastingResult] = useState('');
-	const [isDisplayVertical, setIsDisplayVertical] = useState(true);
+	const [isDisplayVertical, setIsDisplayVertical] = useState(false);
 
 	const allSpellsList = {}; 
 	for (let school in wizardSchoolsData) {
@@ -24,6 +24,7 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 		newCastersData[casterTypes.WIZ].isSchoolChangeLocked = !isSchoolChangeLocked;
 		setIsSchoolChangeLocked(!isSchoolChangeLocked);
 		updateCastersData(e);
+		setSpellCastingResult('');
 	}
 	const handleChangeDirection = () => {
 		setIsDisplayVertical(!isDisplayVertical);
@@ -101,10 +102,20 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 	);
 
 	const magicSchoolRows =  Object.keys(wizardSchoolsData).map((school, i) => {
-		let schoolTypeClassName;
-		if (school === wizardsSchool) {schoolTypeClassName = 'primary'}
-		else if (wizardSchoolsData[school].aligned.includes(wizardsSchool)) {schoolTypeClassName = 'aligned'}
-		else if (wizardSchoolsData[school].opposed === wizardsSchool) {schoolTypeClassName = 'opposed'}
+		let schoolTypeClassName = "neutral";
+		let schoolModifier = 4;
+		if (school === wizardsSchool) {
+			schoolTypeClassName = 'primary';
+			schoolModifier = 0;
+		}
+		else if (wizardSchoolsData[school].aligned.includes(wizardsSchool)) {
+			schoolTypeClassName = 'aligned';
+			schoolModifier = 2;
+		}
+		else if (wizardSchoolsData[school].opposed === wizardsSchool) {
+			schoolTypeClassName = 'opposed';
+			schoolModifier = 6;
+		}
 		const spellButtons = Object.keys(wizardSchoolsData[school].spells).map(spell => {
 			const castingNumber = castersData[casterTypes.WIZ].spellList[spell];
 			const knownSpellClassname = !!castingNumber ? ' known-spell' : '';
@@ -122,7 +133,9 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 		
 		return (
 			<div className={`school-row ${schoolTypeClassName}`} key={i}>
-				<div className='school-field'><div className='school-name'>{school}</div></div>
+				<div className='school-field' data-school-modifier={schoolModifier} data-school-type={schoolTypeClassName}>
+					<div className='school-name'>{school}</div>
+				</div>
 				{spellButtons}
 			</div>
 		)
@@ -162,8 +175,14 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 						)}
 					</p>
 				</section>
-				<section className='casting-result-container primary-color'>
-					{spellCastingResult}
+				<section className='casting-result-container primary-color' data-dupa={isSchoolChangeLocked ? 'ddd' : 'aaa'}>
+					{((spellCastingResult === '' && !isSchoolChangeLocked)
+						?  <div className='choose-your-spells'>
+								<p>You can now choose your spells</p>
+								<p>from the list above</p>
+							</div>
+						: spellCastingResult
+					)}
 				</section>
 			</footer>
 		</div>

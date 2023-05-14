@@ -81,7 +81,7 @@ const createHealthChangeSelect = ({maxHealth, currentHealth, updateCastersData, 
 		)
 	}
 	return <select 
-		className='health-select' 
+		className='health-select'
 		onChange={onChangeFunction}
 		value={currentHealth}
 		data-type={type}

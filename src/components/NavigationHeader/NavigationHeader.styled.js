@@ -16,6 +16,7 @@ const NavigationHeaderStyled = styled.header`
                     border-right: 1px solid black;
                     padding: 12px 24px;
                     text-decoration: none;
+                    font-weight: var(--thin);
                     transition: all .3s;
                     &:hover {
                         background-color: #70c2de;

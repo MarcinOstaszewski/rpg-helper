@@ -31,7 +31,6 @@ const StyledModal = styled.section`
 			padding: 6px 12px;
 			font-size: 32px;
 			line-height: 32px;
-			font-weight: 700;
 		}
 	}
 
