@@ -85,11 +85,11 @@ const FrostgraveWarbandContainer = () => {
 		setShowSpellbookModal(false);
 	}
 	const handleShowRemoveModal = e => {
-		const index = e.target.parentElement.parentElement.dataset.index;
-		console.log(index, soldiersList[index]);
+		const { index }= e.currentTarget.dataset;
 		const soldierName = soldiersList[index].name;
-		setSoldierToRemoveData({index: index, name: soldierName});
-		setShowRemoveContent(true)
+		const soldierType = soldiersList[index].type;
+		setSoldierToRemoveData({index: index, name: soldierName, type: soldierType});
+		setShowRemoveContent(true);
 		setShowModal(true);
 	}
 	const showTestModal = e => {

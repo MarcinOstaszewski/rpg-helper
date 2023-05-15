@@ -5,7 +5,7 @@ import { statNames } from '../../helpers/constants';
 import { createSoldierTypeSelect, createStatLine, getSoldiersFullStats } from '../../helpers/helperFunctions';
 
 const SoldiersContainer = ({
-	soldiersList, handleSoldierChange, handleShowRemoveModal, showTestModal, handleHealthChange
+	soldiersList, handleSoldierChange, handleShowRemoveModal, showTestModal
 }) => {
 	const soldiersFullStats = getSoldiersFullStats(statNames);
 	const soldiersMarkup = soldiersList.map((soldier, index) => {
@@ -26,20 +26,25 @@ const SoldiersContainer = ({
 		});
 		
 		return (
-			<StyledSoldiersContainer key={index} data-index={index}>
-				<div className={`soldier-header ${stats.Type.toLowerCase()}`} data-index={index}>
+			<StyledSoldiersContainer 
+				key={index} data-index={index}>
+				<div className={`soldier-header ${stats.Type.toLowerCase()}`}>
 					<span className='highlighted'>{stats.Type}</span>
-					<span>
-						<input data-property={name}
-							className='soldier-name js-name-input' 
+					<span className='padding-0'>
+						<input data-property="name"
+							className='soldier-name'
 							value={name}
+							data-index={index}
 							onChange={handleSoldierChange}/>
 					</span>
 					{createSoldierTypeSelect({handleSoldierChange, type, index})}
-					<span className='soldier-remove' 
-						onClick={handleShowRemoveModal}
-						index={index}>
-						<BsPersonXFill />
+					<span className='soldier-remove padding-0'>
+						<a onClick={handleShowRemoveModal}
+							data-index={index}
+							data-name={soldiersList[index].name}
+						>
+							<BsPersonXFill />
+						</a>
 					</span>
 				</div>
 				<div className='soldier-stats'>

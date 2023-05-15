@@ -24,9 +24,8 @@ const getCasterNameField = ({casterType, castersData, updateCastersData}) => {
 				value={name}
 				data-type={casterType}
 				data-property={propertyNames.NAME}
-				placeholder='Choose a name...'
 			/>
-			<button 
+			<button
 				className='random-change-name'
 				onClick={updateCastersData}
 				value={getRandomCharacterName(true)}
@@ -134,9 +133,9 @@ const createSoldierTypeSelect = ({handleSoldierChange, type, index}) => {
 			</option>
 		))
 	return <>
-		<span>
+		<span className='padding-0'>
 			<select 
-				className='soldier-type'
+				className='soldier-type-select'
 				data-property={propertyNames.TYPE}
 				data-index={index}
 				onChange={handleSoldierChange}
@@ -251,7 +250,7 @@ const saveWarbandDataInLocalStorage = ({ setSoldiersList, setWarbandCost, setCas
 			},
 			Apprentice : {
 				name: getRandomCharacterName(true),
-				stats, 
+				stats,
 				currentHealth
 			}
 		};

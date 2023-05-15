@@ -32,29 +32,48 @@ const StyledSoldiersContainer = styled.section`
 
 	.soldier-name {
 		width: 100%;
+		height: 100%;
 		font-size: 1rem;
 		font-weight: var(--bold);
 		text-align: left;
 		padding-left: 6px;
+
+		&:focus {
+			outline: 1px solid #24c;
+		}
 	}
 
-	.soldier-type {
+	.padding-0 {
+		padding: 0;
+	}
+	.soldier-type-select {
 		border: 0;
 		outline: none;
 		background-color: transparent;
 		text-transform: uppercase;
-		width: 100%;
+		width: calc(100% - 12px);
+		height: 100%;
 		text-align: left;
 		font-size: .75rem;
 		font-weight: var(--bold);
+
+		&:focus {
+			outline: 1px solid #24c;
+		}
 	}
 	.soldier-remove {
 		color: #d22;
 
+		a {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+		}
 		svg {
 			width: 20px;
 			height: 20px;
-			margin-bottom: -4px;
 		}
 	}
 	
