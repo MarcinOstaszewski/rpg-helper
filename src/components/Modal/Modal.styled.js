@@ -14,12 +14,12 @@ const StyledModal = styled.section`
 	
 	.modal-content {
 		padding: 0 2.5%;
-		width: ${props => props.showRemoveContent ? "50%" : "95%"};
-		height: ${props => props.showRemoveContent ? "50%" : "85%"};
+		width: ${props => props.showRemoveContent ? "75%" : "100%"};
+		height: ${props => props.showRemoveContent ? "75%" : "100%"};
 		display: flex;
 		justify-content: center;
 		padding: 12px 0;
-		border: 6px solid #666;
+		border: 2px solid #666;
 		border-radius: 12px;
 		background-color: #fcfcfe;
 		position: relative;
@@ -35,10 +35,11 @@ const StyledModal = styled.section`
 	}
 
 	.remove-soldier {
-		.soldier-name {
+		.soldier-description {
 			font-size: 28px;
 			font-weight: 700;
 			color: #e33;
+			text-align: center;
 			span {
 				font-size: 28px;
 			}
@@ -46,17 +47,20 @@ const StyledModal = styled.section`
 	}
 
 	.buttons {
+		padding: 12px 0 0 0;
 		display: flex;
 		width: 100%;
 		justify-content: space-around;
 
 		button {
-			padding: 12px 24px;
-			font-size: 24px;
-			border-radius: 12px;
+			padding: 12px;
+			font-size: 16px;
+			border-radius: 6px;
 			border: 0;
 			&:disabled {
-				background-color: #ccc;
+				background-color: #ddd;
+				color: #999;
+				cursor: not-allowed;
 			}
 		}
 		.danger {
@@ -117,7 +121,7 @@ const StyledModal = styled.section`
 			display: flex;
 			max-width: 100%;
 			overflow: auto;
-			padding-bottom: 24px;
+			padding-bottom: 12px;
 		}
 
 		.display-results {

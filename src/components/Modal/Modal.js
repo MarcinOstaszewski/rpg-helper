@@ -48,8 +48,8 @@ const Modal = ({handleRemove, handleCancel, showRemoveContent, showStatTestConte
 	const removeSoldierContent = showRemoveContent && (
 		<div className='remove-soldier content-container'>
 			<h3>Are you sure you want to</h3>
-			<div className='soldier-name'>
-				remove soldier: {soldierData.index}. <span>{soldierData.name}?</span>
+			<div className='soldier-description'>
+				REMOVE the <span>{soldierData.type.toUpperCase()}</span> called <span>{soldierData.name.toUpperCase()}?</span>
 			</div>
 			<div className='buttons'>
 				<button className='danger' onClick={handleRemove}>Remove</button>
