@@ -8,37 +8,43 @@ const DiceStyled = styled.main`
             display: flex;
             margin-bottom: 6px;
             padding-bottom: 6px;
+
+            &:last-of-type {
+                margin-bottom: 24px;
+            }
         }
 
         &__multipliers {
             display: flex;
             flex-wrap: wrap;
-            height: 90px;
-            max-width: 90px;
-            min-width: 90px;
+            align-items: center;
+            height: 80px;
+            width: 200px;
+
             button {
                 background-color: #16a0ce;
                 border: 0;
                 border-radius: 6px;
                 color: #fff;
-                max-height: 30px;
-                margin: 1px;
-                min-width: 30.3%;
+                height: 36px;
+                margin-right: 4px;
+                width: 36px;
+
                 &:hover {
                     background-color: #70c2de;
                 }
             }
         }
-        &__value,
+        &__max,
         &__display {
             align-content: center;
             font-weight: 700;
             display: flex;
             flex-wrap: wrap;
         }
-        &__value {
-            font-size: 48px;
-            min-width: 120px;
+        &__max {
+            font-size: 32px;
+            min-width: 100px;
             justify-content: flex-start;
             align-items: baseline;
         }
