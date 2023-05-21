@@ -24,7 +24,6 @@ const Dice = () => {
              );
         })
     }
-    console.log(createDiceReults(initialDiceSet));
 
     return (
         <DiceStyled>
