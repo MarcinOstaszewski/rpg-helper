@@ -5,6 +5,7 @@ const SizeInputField = props => {
     return (
         <SizeInputFieldStyled 
             {...props}
+            className={`field-size-input ${props.isHorizontal ? 'vertical' : ''}`}
             data-is-horizontal={props.isHorizontal}
             onChange={props.handleSizeChange}
             type="number"

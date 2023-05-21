@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 
 const FieldContainerStyled = styled.main`
-    padding: ${props => props.maxSize / 3}px;
+    height: calc(100vh - 28px);
+    padding: ${props => props.maxSize / 2}px;
     display: flex;
     .field {
         &__container {
@@ -12,31 +13,31 @@ const FieldContainerStyled = styled.main`
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                width: ${props => props.maxSize}px;
+                width: 18px;
             }
             &--middle {
-                width: calc(100% - ${props => props.maxSize * 3}px);
+                width: calc(100vw - ${props => props.maxSize * 3}px);
             }
 
         }
 
         &__size-input,
         &__display-canvas,
-        &__range-selector,
-        &__sets {
+        &__range-selector {
             display: flex;
-            min-height: ${props => props.maxSize}px;
+            min-height: 18px;
         }
         &__size-input {
             justify-content: space-evenly;
         }
-        &__display-canvas,
-        &__sets {
-            padding: ${props => props.maxSize / 5}px;
+        &__display-canvas {
+            padding: 18px;
         }
         &__range-selector {
-            justify-content: center;
             align-items: center;
+            display: flex;
+            text-align: center;
+            justify-content: center;
         }
     }
 `;

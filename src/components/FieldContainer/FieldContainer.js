@@ -6,12 +6,11 @@ import SizeInput from '../SizeInput/SizeInput';
 import FieldContainerStyled from './FieldContainer.styled';
 
 const FieldContainer = () => {
-    const [verticalLines, setVerticalLines] = useState(30);
-    const [horizontalLines, setHorizontalLines] = useState(30);
+    const [verticalLines, setVerticalLines] = useState(90);
+    const [horizontalLines, setHorizontalLines] = useState(60);
     const [randomHori, setRandomHori] = useState(-1);
     const [randomVert, setRandomVert] = useState(-1);
-
-    let maxSize = window.innerHeight / 24;
+    const maxSize = 18;
 
     const handleSizeChange = e => {
         const isHorizontal = e.target.dataset.isHorizontal;
@@ -56,6 +55,35 @@ const FieldContainer = () => {
                     maxSize={maxSize} 
                     onClick={handleRandomizeButtonClick}/>
                 <div className="field__size-input flex-column">
+                    
+                </div>
+                <RandomizeButton maxSize={maxSize} />
+            </div>
+            <div className="field__container--middle">
+                <div className="field__size-input">
+                    {randomDisplay}
+                </div>
+                <div className="field__display-canvas">
+                    <Canvas 
+                        width={window.innerWidth - maxSize}
+                        height={window.innerHeight - maxSize * 4}
+                        verticalLines={verticalLines}
+                        horizontalLines={horizontalLines}
+                        randomHori={randomHori}
+                        randomVert={randomVert}
+                    />
+                </div>
+                <div className="field__range-selector">
+                    <SizeInput 
+                        handleSizeChange={handleSizeChange}
+                        value={verticalLines}
+                        maxSize={maxSize}
+                    />
+                </div>
+            </div>
+            <div className="field__container--right">
+                <RandomizeButton maxSize={maxSize} />
+                <div className="field__range-selector">
                     <SizeInput
                         handleSizeChange={handleSizeChange}
                         isHorizontal={true}
@@ -66,39 +94,6 @@ const FieldContainer = () => {
                     />
                 </div>
                 <RandomizeButton maxSize={maxSize} />
-            </div>
-            <div className="field__container--middle">
-                <div className="field__size-input">
-                    {randomDisplay}
-                    <SizeInput 
-                        handleSizeChange={handleSizeChange}
-                        value={verticalLines}
-                        xMargin={maxSize / 10}
-                        yMargin={0}
-                        maxSize={maxSize}
-                    />
-                </div>
-                <div className="field__display-canvas">
-                    <Canvas 
-                        width={window.innerWidth - maxSize * 4}
-                        height={window.innerHeight - maxSize * 4}
-                        verticalLines={verticalLines}
-                        horizontalLines={horizontalLines}
-                        randomHori={randomHori}
-                        randomVert={randomVert}
-                    />
-                </div>
-                <div className="field__range-selector">range</div>
-            </div>
-            <div className="field__container--right">
-                <RandomizeButton maxSize={maxSize} />
-                <div className="field__range-selector">range</div>
-                <RandomizeButton maxSize={maxSize} />
-            </div>
-            <div className="field__container--sets">
-                <div className="field__sets">
-                    sets
-                </div>
             </div>
         </FieldContainerStyled>
     )

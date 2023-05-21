@@ -4,12 +4,10 @@ import RandomValuesDisplayStyled from './RandomValuesDisplay.styled'
 const RandomValuesDisplay = props => {
     const display = (props.randomVert >= 0) 
         ? (
-            <div className="display flex-column mx-auto">
-                <p className="display--text">Random coords:</p>
+            <div className="display-random-coordinates">
                 <p>
-                    <strong className="display--values">
-                        {props.randomVert}, {props.randomHori}
-                    </strong>
+                    Random coordinates:
+                    <strong> {props.randomVert}</strong> (width), <strong>{props.randomHori}</strong> (height)
                 </p>
             </div>
         )

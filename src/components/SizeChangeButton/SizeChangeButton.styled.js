@@ -6,7 +6,7 @@ const SizeChangeButtonStyled = styled.button`
     min-height: ${props => props.maxSize}px;
     min-width: ${props => props.maxSize}px;
     border: 0;
-    margin: ${props => props.yMargin}px ${props => props.xMargin}px;
+    margin: 0;
 `
 
 export default SizeChangeButtonStyled;

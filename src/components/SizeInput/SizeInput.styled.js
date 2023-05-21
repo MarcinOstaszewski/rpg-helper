@@ -3,14 +3,20 @@ import styled from '@emotion/styled';
 const SizeInputStyled = styled.div`
     justify-content: space-between;
 
-    input {
-        font-size: ${props => props.maxSize / 3}px;
-        font-weight: 700;
-        height: ${props => props.maxSize}px;
+    .field-size-input {
+        font-size: 16px;
+        height: 18px;
         border-bottom: 1px solid black;
-        background-color: #f6f6f6;
-        width: ${props => props.maxSize}px; 
+        width: 60px;
         text-align: center;
+
+        &.vertical {
+            width: 60px;
+            position: relative;
+            /* left: -50%; */
+            transform: rotate(90deg);
+        }
+
     }
 `
 
