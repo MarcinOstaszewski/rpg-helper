@@ -17,6 +17,7 @@ const FrostgraveWarbandContainer = () => {
 	const [showRemoveContent, setShowRemoveContent] = useState(false);
 	const [showStatTestContent, setShowStatTestContent] = useState(false);
 	const [showSpellbookModal, setShowSpellbookModal] = useState(false);
+	const [showFullScreenNotes, setShowFullScreenNotes] = useState(false);
 	const [soldierToRemoveData, setSoldierToRemoveData] = useState({});
 	const [statToBeTested, setStatsToBeTested] = useState();
 
@@ -103,10 +104,14 @@ const FrostgraveWarbandContainer = () => {
 	const handleSpellbookClicked = e => {
 		setShowSpellbookModal(true);
 	}
+	const handleCastersNotesClicked = () => {
+		console.log('showFullScreenNotes', showFullScreenNotes);
+		setShowFullScreenNotes(!showFullScreenNotes);
+	}
 
 	useEffect(() => {
 		saveWarbandDataInLocalStorage({
-			setCastersData, setSoldiersList, setWarbandCost, setCastersData
+			setCastersData, setSoldiersList, setWarbandCost
 		});
 	},[]);
 
@@ -143,6 +148,8 @@ const FrostgraveWarbandContainer = () => {
 			isWizard={false}
 			castersData={castersData}
 			updateCastersData={updateCastersData}
+			showFullScreenNotes={showFullScreenNotes}
+			handleCastersNotesClicked={handleCastersNotesClicked}
 			showTestModal={showTestModal}/>
 
 		<SoldiersContainer
@@ -163,7 +170,6 @@ const FrostgraveWarbandContainer = () => {
 		{showSpellbookModal && <SpellbookModal 
 			handleClose={handleSpellbookClose}
 			castersData={castersData}
-			setCastersData={setCastersData}
 			updateCastersData={updateCastersData}
 			updateWizardSpells={updateWizardSpells}
 		/>}

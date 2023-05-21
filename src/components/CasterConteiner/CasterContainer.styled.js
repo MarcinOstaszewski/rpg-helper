@@ -29,12 +29,18 @@ const StyledCasterContainer = styled.section`
                 background-color: #24c;
                 border: 1px solid #24b;
             }
-            .spell-book {
-                color: #fff;
-                background-color: #24c;
-                border-color: #3c68ee;
-                cursor: pointer;
-                padding: 0;
+        }
+        .spell-book,
+        .casters-notes {
+            color: #fff;
+            background-color: #24c;
+            border-color: #3c68ee;
+            cursor: pointer;
+            padding: 0;
+        }
+        .casters-notes {
+            svg {
+                margin-left: 24px;
             }
         }
         &.apprentice {
@@ -59,6 +65,7 @@ const StyledCasterContainer = styled.section`
         .name-input, .magic-school-field {
             font-size: 1rem;
             font-weight: var(--bold);
+            justify-content: flex-start;
             text-transform: uppercase;
             padding: 0 0 0 6px;
         }
@@ -84,8 +91,12 @@ const StyledCasterContainer = styled.section`
 
     .stats-line {
         display: grid;
-        grid-template-columns: 2fr 2fr 2fr 2fr 2fr 4fr 2fr 3fr;
         font-size: .75rem;
+        grid-template-columns: 2fr 2fr 2fr 2fr 2fr 4fr 2fr 3fr;
+
+        &.apprentice {
+            grid-template-columns: 2fr 2fr 2fr 2fr 2fr 4fr 5fr;
+        }
         
         .stats-field {
             display: flex;
@@ -104,6 +115,50 @@ const StyledCasterContainer = styled.section`
             display: flex;
             justify-content: center;
             width: 100%;
+            &.casters-notes-field {
+                height: 100%;
+                padding: 6px 0 6px 6px;
+
+                &-close {
+                    display: none;
+                }
+                textarea {
+                    padding: 0 6px 0 0;
+                    height: 100%;
+                    width: 100%;
+                    border: 0;
+                    overflow-y: auto;
+                    resize: none;
+
+                }
+                &.absolute {
+                    position: absolute;
+                    width: 100%;
+                    top: 0px;
+                    left: 0px;
+                    padding: 24px 32px;
+                    background-color: #000000bb;
+                    border: 1px solid #000000bb;
+
+                    .casters-notes-field-close {
+                        display: block;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        width: 32px;
+                        font-size: 32px;
+                        line-height: 20px;
+                        color: #fff;
+                        border: none;
+                    }
+
+                    textarea {
+                        padding: 12px;
+                        border-radius: 6px;
+                        border: 3px solid #000000aa;
+                    }
+                }
+            }
         }
         .health-field {
 			flex-direction: row;

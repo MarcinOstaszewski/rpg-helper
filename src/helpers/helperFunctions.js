@@ -46,8 +46,9 @@ const getApprenticeStats = wizardStats => {
 		Armour: wizardStats.Armour,
 		Will: wizardStats.Will - 2,
 		Health: wizardStats.Health - 2,
+		Notes: ''
 	} : {};
-	const currentHealth = wizardStats ? wizardStats.Health - 2 : 0;
+	const currentHealth = wizardStats ? stats.Health : 0;
 	return {stats, currentHealth};
 };
 
@@ -91,22 +92,40 @@ const createHealthChangeSelect = ({maxHealth, currentHealth, updateCastersData, 
 	</select>;
 }
 
-const createStatLine = ({characterData, showTestModal, type, updateCastersData, handleSoldierChange, index}) => {
+// e => console.log(e); 
+
+const createStatLine = ({
+	characterData, showTestModal, showFullScreenNotes, handleCastersNotesClicked, 
+	type, updateCastersData, handleSoldierChange, index
+}) => {
 	const { name, currentHealth, stats } = characterData;
-	return <div className='stats-line'>
+	return <div className={`stats-line ${type.toLowerCase()}`}>
 		{Object.keys(stats).map((key, i) => {
 			if (i > 7) return; // TODO: create editable Level and Experience fields */
 			const value = stats[key];
 			let statField;
-			if (i === 5) {
-				const maxHealth = stats.Health;
-				statField = <span className='health-field'>
-					<div>{value}</div>
-					<div className='divider'>/</div>
-					{createHealthChangeSelect({maxHealth, currentHealth, updateCastersData, type, handleSoldierChange, index})}
+			if (type === casterTypes.APP && i === 6) {
+				statField = <span className={`casters-notes-field ${showFullScreenNotes ? 'absolute' : ''}`}>
+					<span className='casters-notes-field-close' onClick={handleCastersNotesClicked}>&times;</span>
+					<textarea
+						value={characterData.notes}
+						onChange={updateCastersData}
+						data-type={casterTypes.APP}
+						data-property='notes'
+					/>
 				</span>
+			} else if (i === 5) {
+				const maxHealth = stats.Health;
+				statField = <>
+					<span>{key}</span>
+					<span className='health-field'>
+						<div>{value}</div>
+						<div className='divider'>/</div>
+						{createHealthChangeSelect({maxHealth, currentHealth, updateCastersData, type, handleSoldierChange, index})}
+					</span>
+				</>
 			} else {
-				statField = <span>{conditionallyAddSign(i, value)}{value}</span>
+				statField = <><span>{key}</span><span>{conditionallyAddSign(i, value)}{value}</span></>
 			}
 			return (
 				<span key={i}
@@ -117,7 +136,6 @@ const createStatLine = ({characterData, showTestModal, type, updateCastersData, 
 					data-index={i}
 					data-name={name}
 				>
-					<span>{key}</span>
 					{statField}
 				</span>
 			);
@@ -241,14 +259,14 @@ const saveWarbandDataInLocalStorage = ({ setSoldiersList, setWarbandCost, setCas
 		const baseStats = {...wizardStats};
 		const { stats, currentHealth } = getApprenticeStats(baseStats);
 		const tmpCastersData = {
-			Wizard: {
+			[casterTypes.WIZ]: {
 				name: getRandomCharacterName(true),
 				stats: baseStats,
 				currentHealth: baseStats.Health,
 				wizardsSchool: magicSchools[getRandomFromRange(10, 0)],
 				spellList: {}
 			},
-			Apprentice : {
+			[casterTypes.APP] : {
 				name: getRandomCharacterName(true),
 				stats,
 				currentHealth

@@ -1,15 +1,16 @@
 import React from 'react';
 import StyledCasterContainer from './CasterContainer.styled';
 import { GiBookmarklet } from 'react-icons/gi';
+import { IoIosExpand } from 'react-icons/io';
 import { 
   createStatLine, getCasterNameField, getCasterTypeField 
 } from '../../helpers/helperFunctions';
 import { casterTypes } from '../../helpers/constants';
 
-const CasterContainer = (
-  { isWizard, castersData, updateCastersData, showTestModal, handleSpellbookClicked
-  }
-) => {
+const CasterContainer = ({ 
+  isWizard, castersData, updateCastersData, showTestModal, 
+  showFullScreenNotes, handleCastersNotesClicked, handleSpellbookClicked 
+}) => {
   const casterType = isWizard ? casterTypes.WIZ : casterTypes.APP;
   if (castersData[casterType] === undefined) return;
   const casterData = castersData[casterType];
@@ -18,7 +19,9 @@ const CasterContainer = (
     type: casterType,
     characterData: casterData,
     updateCastersData,
-    showTestModal
+    showTestModal,
+    handleCastersNotesClicked,
+    showFullScreenNotes
   });
 
   return (
@@ -27,8 +30,12 @@ const CasterContainer = (
         {getCasterTypeField(casterType)}
         {getCasterNameField({casterType, castersData, updateCastersData})}
         <span className='magic-school-field'>{wizardsSchool}</span>
-        {isWizard ? <span className='spell-book' onClick={handleSpellbookClicked}>
-          <GiBookmarklet /></span> : ''}
+        {isWizard 
+          ? <span className='spell-book' onClick={handleSpellbookClicked}>
+              <GiBookmarklet />
+            </span>
+          : <span className='casters-notes' onClick={handleCastersNotesClicked}>NOTES <IoIosExpand /></span>
+        }
       </div>
       <div>
         {statLine}
