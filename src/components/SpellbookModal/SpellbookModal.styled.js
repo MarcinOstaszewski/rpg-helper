@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 
 const StyledSpellbookModal = styled.div`
     --header-height: 40px;
-    --footer-height: 160px;
+    --footer-height: 140px;
 
     @media screen and (min-width: 800px) {
-        --footer-height: 120px;
+        --footer-height: 100px;
     }
     --casting-result-height: 48px;
     background-color: #000000bb;
