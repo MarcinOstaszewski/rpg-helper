@@ -7,9 +7,16 @@ const StyledSoldiersContainer = styled.section`
 	margin-top: 12px;
 
 	.highlighted {
+		position: relative;
 		color: #fff;
 		background-color: #680; 
 		border: 1px solid #680;
+		&::before {
+			content: "^";
+			position: absolute;
+			left: 12px;
+			font-size: 24px;
+		}
 	}
 
 	.soldier-header {

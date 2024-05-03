@@ -5,18 +5,18 @@ import { statNames } from '../../helpers/constants';
 import { createSoldierTypeSelect, createStatLine, getSoldiersFullStats } from '../../helpers/helperFunctions';
 
 const SoldiersContainer = ({
-	soldiersList, handleSoldierChange, handleShowRemoveModal, showTestModal
+	soldiersList, handleSoldierChange, handleShowRemoveModal, showTestModal, changeSoldierOrder
 }) => {
 	const soldiersFullStats = getSoldiersFullStats(statNames);
 	const soldiersMarkup = soldiersList.map((soldier, index) => {
 		const { name, currentHealth, type } = soldier;
+		const stats = soldiersFullStats[type].stats;
 		const characterData = {
 			name, 
 			currentHealth, 
 			type,
-			stats: soldiersFullStats[type].stats
+			stats: stats
 		}
-		const stats = soldiersFullStats[type].stats;
 		const statLine = createStatLine({
 			type: 'Soldier',
 			characterData,
@@ -29,7 +29,13 @@ const SoldiersContainer = ({
 			<StyledSoldiersContainer 
 				key={index} data-index={index}>
 				<div className={`soldier-header ${stats.Type.toLowerCase()}`}>
-					<span className='highlighted'>{stats.Type}</span>
+					<span
+						className='highlighted'
+						onClick={changeSoldierOrder}
+						data-index={index}
+					>
+						{stats.Type}
+					</span>
 					<span className='padding-0'>
 						<input data-property="name"
 							className='soldier-name'

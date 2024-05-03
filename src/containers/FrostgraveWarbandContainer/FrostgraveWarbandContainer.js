@@ -107,6 +107,17 @@ const FrostgraveWarbandContainer = () => {
 		console.log('showFullScreenNotes', showFullScreenNotes);
 		setShowFullScreenNotes(!showFullScreenNotes);
 	}
+	const changeSoldierOrder = e => {
+		const { index } = e.target.dataset;
+		console.log(index);
+		if (index < 1) return;
+		const currentSoldier = soldiersList[index];
+		const soldierToSwap = soldiersList[index - 1];
+		const newSoldiersList = [...soldiersList];
+		newSoldiersList[index] = soldierToSwap;
+		newSoldiersList[index - 1] = currentSoldier;
+		setSoldiersList(newSoldiersList);
+	}
 
 	useEffect(() => {
 		saveWarbandDataInLocalStorage({
@@ -155,6 +166,7 @@ const FrostgraveWarbandContainer = () => {
 			soldiersList={soldiersList}
 			handleSoldierChange={handleSoldierChange}
 			handleShowRemoveModal={handleShowRemoveModal}
+			changeSoldierOrder={changeSoldierOrder}
 			showTestModal={showTestModal}/>
 		
 		{showModal && <Modal 
