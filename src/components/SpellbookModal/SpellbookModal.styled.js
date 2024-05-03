@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 
 const StyledSpellbookModal = styled.div`
-    --header-height: 40px;
-    --footer-height: 140px;
+    --header-height: 30px;
+    --footer-height: 120px;
 
     @media screen and (min-width: 800px) {
-        --footer-height: 100px;
+        --footer-height: 90px;
     }
     --casting-result-height: 48px;
     background-color: #000000bb;
@@ -77,7 +77,7 @@ const StyledSpellbookModal = styled.div`
         }
         .school-select {
             outline: none;
-            padding: 6px;
+            padding: 2px;
             border: 0;
             border-bottom: 1px solid #4da2ff;
             background-color: transparent;
@@ -281,7 +281,7 @@ const StyledSpellbookModal = styled.div`
             overflow-y: scroll;
         }
         .school-row {
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
             height: 160px;
         }
         .spell-button {
