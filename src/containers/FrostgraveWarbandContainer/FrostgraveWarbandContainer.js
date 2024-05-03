@@ -69,10 +69,9 @@ const FrostgraveWarbandContainer = () => {
 		newSoldiersList.push({name: getRandomCharacterName(false), type: 'Thug'});
 		updateSoldiersList(newSoldiersList);
 	}
-	const handleModalRemove = e => {
-		const index =  e.target.parentElement.parentElement.dataset.index;
+	const handleModalRemove = () => {
 		const newSoldiersList = [...soldiersList];
-		newSoldiersList.splice(index, 1);
+		newSoldiersList.splice(soldierToRemoveData.index, 1);
 		updateSoldiersList(newSoldiersList);
 		setShowModal(false);
 		setShowRemoveContent(false);
@@ -86,7 +85,7 @@ const FrostgraveWarbandContainer = () => {
 		setShowSpellbookModal(false);
 	}
 	const handleShowRemoveModal = e => {
-		const { index }= e.currentTarget.dataset;
+		const { index } = e.currentTarget.dataset;
 		const soldierName = soldiersList[index].name;
 		const soldierType = soldiersList[index].type;
 		setSoldierToRemoveData({index: index, name: soldierName, type: soldierType});
