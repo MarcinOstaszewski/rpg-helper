@@ -13,7 +13,7 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 	const [spellCastingResult, setSpellCastingResult] = useState('');
 	const [isDisplayVertical, setIsDisplayVertical] = useState(false);
 
-	const allSpellsList = {}; 
+	const allSpellsList = {};
 	for (let school in wizardSchoolsData) {
 		for (let spell in wizardSchoolsData[school].spells) {
 			allSpellsList[spell] = {...wizardSchoolsData[school].spells[spell], school};
@@ -175,11 +175,10 @@ const SpellbookModal = ({handleClose, castersData, updateCastersData, updateWiza
 						)}
 					</p>
 				</section>
-				<section className='casting-result-container primary-color' data-dupa={isSchoolChangeLocked ? 'ddd' : 'aaa'}>
+				<section className='casting-result-container primary-color'>
 					{((spellCastingResult === '' && !isSchoolChangeLocked)
 						?  <div className='choose-your-spells'>
-								<p>You can now choose your spells</p>
-								<p>from the list above</p>
+								<div>You can now choose your spells from the list above</div>
 							</div>
 						: spellCastingResult
 					)}

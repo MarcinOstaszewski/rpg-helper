@@ -2,7 +2,11 @@ import styled from '@emotion/styled';
 
 const StyledSpellbookModal = styled.div`
     --header-height: 40px;
-    --footer-height: 120px;
+    --footer-height: 220px;
+
+    @media screen and (min-width: 800px) {
+        --footer-height: 160px;
+    }
     --casting-result-height: 48px;
     background-color: #000000bb;
 	position: absolute;
@@ -204,6 +208,7 @@ const StyledSpellbookModal = styled.div`
         bottom: 12px;
         left: 16px;
         right: 16px;
+        background-color: #fff;
     }
     .spellbook-description {
         height: calc(var(--footer-height) - var(--casting-result-height));
@@ -221,11 +226,13 @@ const StyledSpellbookModal = styled.div`
         }
     }
     .casting-result-container {
-        height: var(--casting-result-height);
+        max-height: var(--casting-result-height);
         font-size: 16px;
         width: 100%;
 
         .choose-your-spells {
+            display: flex;
+            justify-content: center;
             text-align: center;
             line-height: 1.5rem;
             text-transform: uppercase;
